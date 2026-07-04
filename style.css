@@ -1,20 +1,20 @@
-/* Base Layout & Dynamic Background */
+/* Base Layout & Clean Dark Background */
 body {
     font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    background: linear-gradient(135deg, #0f0c20, #15102a, #060409);
+    background: #12111a;
     color: #ffffff;
     margin: 0;
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     min-height: 100vh;
 }
 
 /* Main Wrapper */
 .container {
     width: 100%;
-    max-width: 480px;
+    max-width: 500px;
     padding: 40px 20px;
     box-sizing: border-box;
 }
@@ -26,8 +26,8 @@ body {
 }
 
 .avatar {
-    width: 100px;
-    height: 100px;
+    width: 110px;
+    height: 110px;
     border-radius: 50%;
     border: 3px solid #00ff88;
     box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
@@ -36,13 +36,14 @@ body {
 }
 
 .avatar:hover {
-    transform: scale(1.05) rotate(5deg);
+    transform: scale(1.05) rotate(3deg);
 }
 
 h1 {
     font-size: 1.8rem;
     margin: 15px 0 5px 0;
     letter-spacing: 0.5px;
+    text-align: center;
 }
 
 .tagline {
@@ -50,6 +51,7 @@ h1 {
     color: #00ff88;
     margin: 0;
     font-weight: 500;
+    text-align: center;
 }
 
 /* Social Media Icons Bar */
@@ -62,8 +64,9 @@ h1 {
 
 .social-icons a {
     color: #a0a0c0;
-    font-size: 1.5rem;
+    font-size: 1.4rem;
     transition: all 0.2s ease;
+    text-decoration: none;
 }
 
 .social-icons a:hover {
@@ -71,53 +74,53 @@ h1 {
     transform: translateY(-3px);
 }
 
-/* General Layout Cards */
-.section-box, .links-section {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+/* Beautiful modern Card Layout boxes */
+.section-box {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 16px;
-    padding: 20px;
+    padding: 24px;
     margin-bottom: 24px;
-    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
 
 h3 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     margin-top: 0;
-    margin-bottom: 15px;
-    color: #e0e0fc;
+    margin-bottom: 16px;
+    color: #ffffff;
     text-align: left;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 8px;
 }
 
 p {
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: #b0b0d0;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #cdd1e4;
     margin: 0;
     text-align: left;
 }
 
-/* Link Button System */
-.links-section {
+/* Quick Links Button Layout - Vertical List fixes the overlap */
+.links-container {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
 }
 
 .link-btn {
     display: flex;
     align-items: center;
-    gap: 12px;
-    background: rgba(255, 255, 255, 0.05);
+    gap: 14px;
+    background: rgba(255, 255, 255, 0.06);
     color: #ffffff;
     text-decoration: none;
     padding: 14px 18px;
     border-radius: 12px;
     font-weight: 600;
     font-size: 0.95rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     transition: all 0.25s ease;
 }
 
@@ -129,53 +132,48 @@ p {
 
 .link-btn:hover {
     background: #00ff88;
-    color: #120f24;
+    color: #12111a;
     border-color: #00ff88;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 255, 136, 0.25);
 }
 
-/* Projects Showcase Grid */
+/* Projects Showcase Layout - Stacked vertically for better readability */
 .project-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .project-card {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 10px;
-    padding: 14px;
+    border-radius: 12px;
+    padding: 16px;
     text-align: left;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
 }
 
 .project-card h4 {
-    margin: 0 0 6px 0;
-    font-size: 0.95rem;
+    margin: 0 0 8px 0;
+    font-size: 1.05rem;
     color: #ffffff;
 }
 
 .project-card p {
-    font-size: 0.8rem;
-    color: #8a8aab;
-    margin-bottom: 10px;
+    font-size: 0.88rem;
+    color: #a0a5c0;
+    margin-bottom: 12px;
 }
 
-/* Clear, borderless Blue Links under projects */
+/* Plain Blue Project Links (No Box) */
 .project-card a {
     color: #38bdf8;
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 0.88rem;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    margin-top: auto;
-    width: fit-content;
     transition: color 0.2s ease;
 }
 
@@ -191,7 +189,7 @@ p {
 }
 
 .footer p {
-    font-size: 0.75rem;
-    color: #606080;
+    font-size: 0.8rem;
+    color: #60647c;
     text-align: center;
 }
