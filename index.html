@@ -1,26 +1,70 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meine Links</title>
+    <title>My Links & Projects</title>
+    <!-- FontAwesome for modern social media icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
-        <div class="profile">
-            <img src="https://github.com/identicons/johndoe.png" alt="Profilbild" class="avatar">
-            <h1>Dein Name / Username</h1>
-            <p class="bio">Hier ist eine kurze Beschreibung über mich oder mein Projekt.</p>
+        <!-- Profile Section -->
+        <header class="profile">
+            <img src="https://github.com/identicons/johndoe.png" alt="Profile Picture" class="avatar">
+            <h1>BenBroc</h1>
+            <p class="tagline">Developer & Creator</p>
+        </header>
+
+        <!-- Social Icons Bar -->
+        <div class="social-icons">
+            <a href="https://github.com/benbroc" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://instagram.com" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://discord.com" target="_blank" title="Discord"><i class="fab fa-discord"></i></a>
+            <a href="mailto:your-email@example.com" title="Email"><i class="fas fa-envelope"></i></a>
         </div>
 
-        <div class="links">
-            <a href="https://github.com/benbroc" target="_blank" class="link-btn">GitHub</a>
-            <a href="https://youtube.com/@benkormos" target="_blank" class="link-btn">Youtube</a>
-            <a href="https://twitch.tv/benkormos" target="_blank" class="link-btn">Twitch</a>
-            <a href="mailto:benkormos@proton.me" class="link-btn">Contact Me</a>
-        </div>
+        <!-- About Me Section -->
+        <section class="section-box">
+            <h3>About Me 👋</h3>
+            <p>Welcome to my page! I love building codes, tinkering with code, and sharing my latest projects and favorite links right here with you.</p>
+        </section>
+
+        <!-- Main Links -->
+        <main class="links-section">
+            <h3>Links 🔗</h3>
+            <a href="https://github.com/benbroc" target="_blank" class="link-btn">
+                <i class="fas fa-code"></i> My GitHub Repository
+            </a>
+            <a href="https://youtube.com/@benkormos" target="_blank" class="link-btn">
+                <i class="fab fa-youtube"></i> My YouTube Channel
+            </a>
+            <a href="https://twitch.tv/benkormos" target="_blank" class="link-btn">
+                <i class="fab fa-twitch"></i> Live on Twitch
+            </a>
+        </main>
+
+        <!-- Projects Section -->
+        <section class="section-box">
+            <h3>My Projects 🚀</h3>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h4>Project 1</h4>
+                    <p>So Basicly I made a Virus for entertainment purposes only.</p>
+                </div>
+                <div class="project-card">
+                    <h4>Project 2</h4>
+                    <p>Another cool project that you are proud of.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2024 ~ 2026 BenBroc. Built with ❤️ and GitHub Pages.</p>
+        </footer>
     </div>
 
 </body>
