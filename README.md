@@ -20,18 +20,19 @@ Welcome to the central Link-in-Bio and Project Showcase Hub of **SynergyStation*
 ## 📂 Project Structure
 
 ```text
-├── index.html               # Main web page (Hub) with built-in GitHub API update checking
-├── style.css                # Global stylesheet and core layout configurations
-├── benkormos.html           # Profile page for BenKormos
-├── benkormos.profilbild.jpg # Profile picture for BenKormos
-├── julian.html              # Profile page for Julian442 (with custom background & blur support)
-├── julian.profilbild.png    # Profile picture for Julian442
-├── julian.hintergrund.png   # Optional custom background image for Julian442
-├── mexo.html                # Profile page for Mexo
-├── favicon.png              # Global favicon of the website
-├── verify.png               # Verification asset
-├── template.html            # Base template for creating new member profile pages
-├── updates/                 # Directory containing release updates (Format: YYYY.MM.DD/)
-└── README.md                # Project documentation (this file)
+├── index.html                  # Main web page (Hub) with built-in GitHub API update checking
+├── style.css                   # Global stylesheet and core layout configurations
+├── benkormos.html              # Profile page for BenKormos
+├── benkormos.profilbild.jpg    # Profile picture for BenKormos
+├── julian.html                 # Profile page for Julian442 (with custom background & blur support)
+├── julian.profilbild.png       # Profile picture for Julian442
+├── julian.hintergrund.png      # Optional custom background image for Julian442
+├── mexo.html                   # Profile page for Mexo
+├── template.html               # Base template for creating new member profile pages
+├── updates                     # Containing the Profile Pictures for the Profiles
+├   └─ benkormos.profilbild.jpg
+├   └─ julian.profilbild.png
+├   └─ mexo.profilbild.png
+└── README.md                   # Project documentation (this file)
 ```
 © 2026 SynergyStation Development. Built with ❤️ and driven by OpenSource.
