@@ -17,6 +17,7 @@
             --border-glow: #00f0ff;
             --border-dim: #161622;
             --emerald: #00ff87;
+            --purple: #bd00ff;
             --text-pure: #ffffff;
             --text-main: #e1e1e6;
             --text-muted: #4e4e63;
@@ -358,6 +359,72 @@
         .profile-node:nth-child(3):hover h4 { color: var(--emerald); text-shadow: 0 0 10px rgba(0, 255, 135, 0.2); }
         .profile-node:nth-child(3):hover i.avatar-fallback { color: var(--emerald); }
 
+        /* --- OPEN SOURCE GITHUB MODULE --- */
+        #github-panel::after { border-color: transparent var(--purple) transparent transparent; }
+        
+        .oss-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid rgba(189, 0, 255, 0.1);
+            padding: 24px;
+            text-decoration: none;
+            color: var(--text-main);
+        }
+
+        .oss-container:hover {
+            border-color: var(--purple);
+            background: rgba(189, 0, 255, 0.02);
+            box-shadow: 0 0 20px rgba(189, 0, 255, 0.1);
+        }
+
+        .oss-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .oss-meta i.fa-github {
+            font-size: 2.5rem;
+            color: var(--text-muted);
+        }
+
+        .oss-container:hover i.fa-github {
+            color: var(--purple);
+            text-shadow: 0 0 15px rgba(189, 0, 255, 0.6);
+        }
+
+        .oss-details h4 {
+            font-family: var(--font-cyber);
+            font-size: 1rem;
+            letter-spacing: 1px;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .oss-container:hover .oss-details h4 {
+            color: var(--purple);
+        }
+
+        .oss-details p {
+            font-size: 0.85rem;
+            color: #8c8c9e;
+            font-family: var(--font-mono);
+        }
+
+        .oss-stats {
+            display: flex;
+            gap: 15px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .oss-stats span i {
+            margin-right: 4px;
+        }
+
         /* --- ONBOARDING FOOTPRINT INTERFACE --- */
         .join-interface {
             display: flex;
@@ -410,6 +477,8 @@
         /* --- MOBILE HUD RESPONSIVENESS --- */
         @media (max-width: 800px) {
             .holo-grid { grid-template-columns: 1fr; }
+            .oss-container { flex-direction: column; gap: 20px; text-align: center; }
+            .oss-meta { flex-direction: column; gap: 10px; }
             .join-interface { flex-direction: column; gap: 25px; text-align: center; }
             .action-link { width: 100%; }
         }
@@ -430,7 +499,7 @@
 <body>
 
     <nav class="navbar">
-        <a href="#" class="nav-logo">SYNERGY//<span>STATION</span></a>
+        <a href="#" class="nav-logo">SYNERGY//<span>MATRIX</span></a>
         <div class="nav-links">
             <a href="developer.html" class="nav-btn dev-btn">
                 <img src="pictures/benkormos.profilbild.jpg" alt="Ben" class="nav-avatar">
@@ -449,7 +518,7 @@
                 <img src="pictures/benkormos.profilbild.jpg" alt="Hub Mainframe" class="hub-avatar">
             </div>
             <div class="typewriter-box">
-                <h1 class="hub-title">SynergyStation </h1>
+                <h1 class="hub-title">SynergyStation Hub</h1>
             </div>
             <p class="hub-tagline">Central Access Node / Select Profile Grid</p>
         </header>
@@ -476,22 +545,41 @@
                 <a href="benkormos" class="profile-node">
                     <i class="fas fa-user-astronaut avatar-fallback"></i>
                     <h4>BenKormos</h4>
-                    <span>Creator & Developer</span>
+                    <span>Core Architect</span>
                 </a>
                 
                 <a href="julian" class="profile-node">
                     <i class="fas fa-user-shield avatar-fallback"></i>
                     <h4>Julian442</h4>
-                    <span>Developer</span>
+                    <span>Security Op</span>
                 </a>
 
                 <a href="mexo" class="profile-node">
                     <i class="fas fa-user-ninja avatar-fallback"></i>
                     <h4>Mexo</h4>
-                    <span>Developer</span>
+                    <span>Infiltrator</span>
                 </a>
                 
             </div>
+        </section>
+
+        <section class="panel" id="github-panel">
+            <div class="panel-title">
+                <span><i class="fas fa-code-branch" style="color: var(--purple);"></i> OPEN_SOURCE_CORE_MATRIX</span>
+            </div>
+            <a href="https://github.com/synergystation/synergystation.github.io" target="_blank" class="oss-container">
+                <div class="oss-meta">
+                    <i class="fab fa-github"></i>
+                    <div class="oss-details">
+                        <h4>synergystation.github.io</h4>
+                        <p>Public deployment framework / Inspect core assets & stylesheets</p>
+                    </div>
+                </div>
+                <div class="oss-stats">
+                    <span><i class="fas fa-star"></i> Public</span>
+                    <span><i class="fas fa-code"></i> HTML/CSS/JS</span>
+                </div>
+            </a>
         </section>
 
         <section class="panel">
