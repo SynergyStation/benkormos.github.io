@@ -1,29 +1,37 @@
-# 🌐 My Links & Projects
+# 🌐 SynergyStation Hub & Profiles
 
-Welcome to my personal link-in-bio and project showcase page! This is a clean, modern, and mobile-responsive website built with HTML and CSS, hosted completely for free via **GitHub Pages**.
+Welcome to the central Link-in-Bio and Project Showcase Hub of **SynergyStation**! This is a clean, modern, and mobile-responsive website built with pure HTML and CSS, hosted completely for free via **GitHub Pages**.
 
 ## 🚀 Features
 
-- 📱 **Fully Responsive:** Optimized for mobile phones, tablets, and desktops.
-- 🎨 **Modern Dark Design:** A clean, dark-themed UI featuring a glowing avatar and card layouts.
-- 🔗 **Quick Links:** Direct access to my GitHub, YouTube, Twitch, and Discord.
-- 🛠️ **Project Showcase:** A dedicated space highlighting my latest coding projects with direct repository links.
-- ⚡ **Lightweight:** Pure HTML5 and CSS3 with zero heavy JavaScript frameworks.
+- 📱 **Fully Responsive:** Perfectly optimized for mobile phones, tablets, and desktops.
+- 🎨 **Modern Dark Design:** A clean, dark-themed UI featuring glowing avatars, glassmorphism card layouts, and custom background blur effects.
+- 🚀 **Automated Update Detection:** The hub automatically checks the `updates/` folder using the GitHub API to display recent releases organized by date subfolders (e.g., `2026.12.17`).
+- 🔗 **Social Hub:** Direct access to GitHub, YouTube, Twitch, and Discord profiles for all members.
+- ⚡ **Lightweight & Secure:** Built with pure HTML5, CSS3, and Vanilla JS for fast loading speeds without heavy frameworks.
 
 ## 🛠️ Built With
 
-- **HTML5** – Structured semantic content.
-- **CSS3** – Custom styling, flexbox layouts, hover animations, and dark mode aesthetics.
-- **FontAwesome (v6.4.0)** – High-quality modern vector icons for links and social media.
+- **HTML5** – Structured semantic web content.
+- **CSS3** – Custom styling, flexbox layouts, hover animations, backdrop filters, and image blurring.
+- **JavaScript (ES6)** – Dynamic asynchronous GitHub REST API calls for update scanning and profile picture validation.
+- **FontAwesome (v6.4.0)** – High-quality modern vector icons for seamless social media navigation.
 
 ## 📂 Project Structure
 
 ```text
-├── index.html            # Main web page structure & content
-├── style.css             # Custom styles, layout configurations, and animations
-├── channels4_profile.jpg # Profile picture used for the avatar
-├── favicon.png           # Favicon of the Page
-└── README.md             # Project documentation (this file)
-
-```    
+├── index.html              # Main web page (Hub) with built-in GitHub API update checking
+├── style.css               # Global stylesheet and core layout configurations
+├── benkormos.html          # Profile page for BenKormos
+├── benkormos.profilbild.jpg# Profile picture for BenKormos
+├── julian.html             # Profile page for Julian442 (with custom background & blur support)
+├── julian.profilbild.png   # Profile picture for Julian442
+├── julian.hintergrund.png  # Optional custom background image for Julian442
+├── mexo.html               # Profile page for Mexo
+├── favicon.png             # Global favicon of the website
+├── verify.png              # Verification asset
+├── template.html           # Base template for creating new member profile pages
+├── updates/                # Directory containing release updates (Format: YYYY.MM.DD/)
+└── README.md               # Project documentation (this file)
+```
 © 2026 SynergyStation Development. Built with ❤️ and driven by OpenSource.
