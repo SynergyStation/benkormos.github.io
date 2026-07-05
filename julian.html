@@ -14,7 +14,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Relativer Pfad zum Ordner "background" */
             background: url('background/bg_Julian442.png') no-repeat center center fixed;
             background-size: cover;
             color: #ffffff;
@@ -53,7 +52,6 @@
 </head>
 <body>
 
-    <!-- Relativer Pfad zum Ordner "music" -->
     <audio id="bg-audio" loop>
         <source src="music/song_Julian442.mp3" type="audio/mpeg">
     </audio>
@@ -64,7 +62,6 @@
     </div>
 
     <div class="card">
-        <!-- Relativer Pfad zum Ordner "pictures" -->
         <img src="pictures/julian.profilbild.png" class="avatar" alt="Avatar">
         <h1>Julian</h1>
         <p>CONTENT CREATOR • SHARING VIBES</p>
@@ -80,25 +77,35 @@
         const audio = document.getElementById('bg-audio');
         const playBtn = document.getElementById('play-pause-btn');
         const playIcon = document.getElementById('play-icon');
-        const volBtn = document.getElementById('volume-btn');
-        const volIcon = document.getElementById('vol-icon');
 
-        playBtn.onclick = () => {
+        // Funktion zum Starten der Musik
+        function startAudio() {
+            audio.play().then(() => {
+                playIcon.className = "fas fa-pause";
+            }).catch(e => console.log("Autoplay blockiert, warte auf Klick."));
+        }
+
+        // Musik startet automatisch beim ersten Klick irgendwo auf die Seite
+        document.body.addEventListener('click', () => {
+            startAudio();
+        }, { once: true });
+
+        // Manuelle Steuerung
+        playBtn.onclick = (e) => {
+            e.stopPropagation();
             if (audio.paused) {
-                audio.play().then(() => {
-                    playIcon.className = "fas fa-pause";
-                }).catch(err => {
-                    alert("Datei 'music/song_Julian442.mp3' konnte nicht geladen werden.");
-                });
+                audio.play();
+                playIcon.className = "fas fa-pause";
             } else {
                 audio.pause();
                 playIcon.className = "fas fa-play";
             }
         };
 
-        volBtn.onclick = () => {
+        document.getElementById('volume-btn').onclick = (e) => {
+            e.stopPropagation();
             audio.muted = !audio.muted;
-            volIcon.className = audio.muted ? "fas fa-volume-mute" : "fas fa-volume-up";
+            document.getElementById('vol-icon').className = audio.muted ? "fas fa-volume-mute" : "fas fa-volume-up";
         };
     </script>
 </body>
