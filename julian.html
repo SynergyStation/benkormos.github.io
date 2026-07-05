@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Modernes Stealth & Gold Design */
+        /* Japan Modern Dark Style */
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #0b0a0f; 
+            background-color: #0d0c10; 
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -24,24 +24,25 @@
             overflow-x: hidden;
         }
 
-        /* Hintergrundbild mit edlem Abdunklungs- und Blur-Effekt */
+        /* Traditionelles Seigaiha (Wellen) Muster als dezenter CSS-Hintergrund */
         body::before {
             content: "";
             position: fixed;
-            top: -10px;
-            left: -10px;
-            width: calc(100% + 20px);
-            height: calc(100% + 20px);
-            background: linear-gradient(rgba(11, 10, 15, 0.82), rgba(11, 10, 15, 0.82)), 
-                        url('julian.hintergrund.png') no-repeat center center fixed;
-            background-size: cover;
-            filter: blur(8px);
-            -webkit-filter: blur(8px);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0d0c10;
+            background-image: 
+                radial-gradient(circle at 100% 150%, #0d0c10 24%, #16141a 24%, #16141a 28%, #0d0c10 28%, #0d0c10 36%, #16141a 36%, #16141a 40%, #0d0c10 40%, #0d0c10 48%, #16141a 48%, #16141a 52%, #0d0c10 52%),
+                radial-gradient(circle at 0% 150%, #0d0c10 24%, #16141a 24%, #16141a 28%, #0d0c10 28%, #0d0c10 36%, #16141a 36%, #16141a 40%, #0d0c10 40%, #0d0c10 48%, #16141a 48%, #16141a 52%, #0d0c10 52%);
+            background-size: 60px 30px;
+            opacity: 0.4;
             z-index: -1;
             pointer-events: none;
         }
 
-        /* Haupt-Container - verbreitert für das Nebeneinander-Layout */
+        /* Haupt-Container (Nebeneinander-Layout) */
         .container {
             width: 100%;
             max-width: 1100px;
@@ -49,14 +50,14 @@
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            gap: 24px;
+            gap: 30px;
             position: relative;
             z-index: 1;
         }
 
         /* Zurück zum Hub Link */
         .back-link {
-            color: #7c7890;
+            color: #6d697f;
             text-decoration: none;
             font-size: 0.9rem;
             display: inline-flex;
@@ -64,11 +65,12 @@
             gap: 6px;
             transition: all 0.2s;
             align-self: flex-start;
+            border-bottom: 1px dashed transparent;
         }
         
         .back-link:hover {
-            color: #ffaa00;
-            transform: translateX(-3px);
+            color: #ff79c6;
+            border-color: #ff79c6;
         }
 
         /* Profil-Bereich */
@@ -77,101 +79,126 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 10px;
         }
 
         .avatar-container {
-            width: 125px;
-            height: 125px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            border: 3px solid #ffaa00;
-            box-shadow: 0 0 25px rgba(255, 170, 0, 0.25);
-            background-color: #171520;
+            border: 2px solid #ff79c6;
+            box-shadow: 0 0 20px rgba(255, 121, 198, 0.2);
+            background-color: #16141c;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.3s ease;
             margin-bottom: 15px;
+            position: relative;
+        }
+
+        /* Kleiner roter Kreis (Sonne) hinter dem Avatar beim Hover */
+        .avatar-container::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 85, 85, 0.1);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .avatar-container:hover {
-            transform: scale(1.06) rotate(-3deg);
+            transform: scale(1.04);
+        }
+        .avatar-container:hover::after {
+            opacity: 1;
         }
 
         .avatar-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            z-index: 2;
         }
 
         .avatar-fallback {
-            font-size: 2.8rem;
-            color: #4e4a60;
+            font-size: 2.5rem;
+            color: #4a465a;
+            z-index: 2;
         }
 
         h1 {
-            font-size: 2.2rem;
-            margin: 0 0 6px 0;
-            background: linear-gradient(45deg, #ffaa00, #ff6600);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 0.5px;
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+            letter-spacing: 1px;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
         }
 
         .tagline {
-            font-size: 0.9rem;
-            color: #a39eb9;
+            font-size: 0.85rem;
+            color: #ff79c6;
             margin: 0;
-            font-weight: 600;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
         }
 
         /* --- GRID FÜR NEBENIEINANDER-LAYOUT --- */
         .main-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr; /* 3 Spalten nebeneinander */
-            gap: 20px;
+            grid-template-columns: 1fr 1fr 1fr; /* 3 Boxen nebeneinander */
+            gap: 24px;
             width: 100%;
         }
 
-        /* Gläserne Premium-Cards */
+        /* Japanische Minimalismus-Cards */
         .section-box {
-            background: rgba(23, 21, 32, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 20px;
+            background: #14121a;
+            border-left: 4px solid #ff5555; /* Roter Akzentbalken links */
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+            border-right: 1px solid rgba(255, 255, 255, 0.03);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 4px 16px 16px 4px; /* Oben links eckig, Rest abgerundet */
             padding: 26px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
             box-sizing: border-box;
-            transition: border-color 0.3s ease, transform 0.3s ease;
+            transition: all 0.3s ease;
             display: flex;
             flex-direction: column;
         }
 
         .section-box:hover {
-            border-color: rgba(255, 170, 0, 0.25);
-            transform: translateY(-2px);
+            border-left-color: #ff79c6; /* Wechselt zu Sakura-Rosa beim Hover */
+            transform: translateY(-3px);
+            background: #181620;
         }
 
         h3 {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             margin-top: 0;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
             color: #ffffff;
-            border-bottom: 2px solid rgba(255, 170, 0, 0.15);
-            padding-bottom: 8px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between; /* Platz für die Kanjis rechts */
+        }
+
+        /* Das japanische Schriftzeichen rechts im Titel */
+        h3 .kanji {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 400;
         }
 
         p {
             font-size: 0.95rem;
-            line-height: 1.6;
-            color: #d2cfe2;
+            line-height: 1.65;
+            color: #b9b6cb;
             margin: 0 0 10px 0;
         }
         
@@ -182,13 +209,12 @@
         /* Organisation / Project Styling */
         .project-card h4 {
             margin: 0 0 12px 0;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             color: #ffffff;
-            letter-spacing: 0.5px;
         }
 
         .project-card a {
-            color: #ffaa00;
+            color: #ff79c6;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.95rem;
@@ -199,8 +225,7 @@
         }
 
         .project-card a:hover {
-            color: #ff6600;
-            text-decoration: underline;
+            color: #ff5555;
         }
 
         /* Link-Buttons */
@@ -208,62 +233,62 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-top: auto; /* Schiebt die Buttons ans untere Ende der Box */
+            margin-top: auto;
         }
 
         .link-btn {
             display: flex;
             align-items: center;
             gap: 14px;
-            background: rgba(255, 255, 255, 0.04);
-            color: #ffffff;
+            background: rgba(255, 255, 255, 0.02);
+            color: #e2e0ec;
             text-decoration: none;
             padding: 13px 16px;
-            border-radius: 12px;
+            border-radius: 8px;
             font-weight: 600;
             font-size: 0.95rem;
-            border: 1px solid rgba(255, 255, 255, 0.04);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.2s ease;
         }
 
         .link-btn i {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             width: 20px;
             text-align: center;
-            color: #ffaa00;
-            transition: color 0.25s;
+            color: #ff5555;
+            transition: transform 0.2s;
         }
 
         .link-btn:hover {
-            background: linear-gradient(45deg, #ffaa00, #ff6600);
-            color: #0b0a0f;
-            border-color: #ffaa00;
-            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.2);
+            background: #ffffff;
+            color: #0d0c10;
+            border-color: #ffffff;
         }
 
         .link-btn:hover i {
-            color: #0b0a0f;
+            color: #ff5555;
+            transform: scale(1.1);
         }
 
         /* Footer */
         .footer {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         .footer p {
             font-size: 0.85rem;
-            color: #555166;
+            color: #4a465a;
         }
 
-        /* --- RESPONSIVE LAYOUT (Tablets & Handys) --- */
+        /* --- RESPONSIVE LAYOUT (Handys) --- */
         @media (max-width: 900px) {
             .main-grid {
-                grid-template-columns: 1fr; /* Untereinander auf kleineren Bildschirmen */
-                gap: 24px;
+                grid-template-columns: 1fr; /* Untereinander auf Smartphones */
+                gap: 20px;
             }
             .container {
-                max-width: 550px;
+                max-width: 500px;
                 padding: 25px 15px;
             }
         }
@@ -283,33 +308,42 @@
                 <i class="fas fa-user avatar-fallback" id="fallback-icon"></i>
             </div>
             <h1>Julian</h1>
-            <p class="tagline">Developer</p>
+            <p class="tagline">Developer • 開発者</p>
         </header>
 
-        <!-- Start des neuen Grid-Layouts (Nebeneinander) -->
+        <!-- Start des Grid-Layouts (Nebeneinander) -->
         <main class="main-grid">
 
             <!-- Box 1: About Me -->
             <section class="section-box">
-                <h3><i class="far fa-smile"></i> About Me</h3>
+                <h3>
+                    <span><i class="far fa-smile"></i> About Me</span>
+                    <span class="kanji">私について</span>
+                </h3>
                 <p>Ich bin der Julian442.</p>
                 <p>Ich bin sehr tuff.</p>
             </section>
 
             <!-- Box 2: Organisation -->
             <section class="section-box">
-                <h3><i class="fas fa-sitemap"></i> Organisation</h3>
+                <h3>
+                    <span><i class="fas fa-sitemap"></i> Organisation</span>
+                    <span class="kanji">組織</span>
+                </h3>
                 <div class="project-card">
                     <h4>SYNERGYstation</h4>
                     <a href="https://github.com/SynergyStation" target="_blank">
                         <i class="fab fa-github"></i> View Organisation
                     </a>
                 </div>
-            </section> <!-- Fehler im alten Code hier behoben (Zweites </div> fehlte) -->
+            </section>
 
             <!-- Box 3: Links -->
             <section class="section-box">
-                <h3><i class="fas fa-link"></i> Links</h3>
+                <h3>
+                    <span><i class="fas fa-link"></i> Links</span>
+                    <span class="kanji">リンク</span>
+                </h3>
                 <div class="links-container">
                     <a href="https://github.com/julixn442" target="_blank" class="link-btn">
                         <i class="fab fa-github"></i> GitHub
