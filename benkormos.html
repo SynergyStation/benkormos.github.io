@@ -15,7 +15,7 @@
     <style>
         :root {
             --bg-main: #0a0a0f;
-            --bg-card: #12121f;
+            --bg-card: rgba(18, 18, 31, 0.75); /* Leicht transparent für den Hintergrund */
             --accent-cyan: #00f0ff;
             --accent-purple: #9d4edd;
             --text-main: #f0f0f5;
@@ -24,8 +24,9 @@
         }
 
         body {
-            font-family: 'Consolas', 'Courier New', Courier, monospace; /* Entwickler/Terminal Vibe */
-            background: var(--bg-main);
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            background: linear-gradient(rgba(10, 10, 15, 0.6), rgba(10, 10, 15, 0.85)), url('image_365029.png') no-repeat center center fixed;
+            background-size: cover;
             color: var(--text-main);
             margin: 0;
             padding: 0;
@@ -46,19 +47,20 @@
             grid-template-columns: 320px 1fr;
             gap: 25px;
             box-sizing: border-box;
+            backdrop-filter: blur(8px); /* Sanfter Unschärfe-Effekt über dem Hintergrundbild */
         }
 
-        /* LINKER PANEL: Profil & Status */
+        /* LINKER PANEL: Profil & Status & Musik */
         .left-panel {
             background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
             padding: 30px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
             height: fit-content;
         }
 
@@ -84,7 +86,7 @@
         .avatar {
             width: 130px;
             height: 130px;
-            border-radius: 20px; /* Quadratisch abgerundet statt Kreis */
+            border-radius: 20px;
             object-fit: cover;
             border: 2px solid var(--accent-cyan);
             box-shadow: 0 0 20px var(--border-glow);
@@ -96,11 +98,104 @@
             box-shadow: 0 0 30px rgba(0, 240, 255, 0.3);
         }
 
+        /* --- CYBER MUSIC PLAYER --- */
+        .audio-player {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 240, 255, 0.2);
+            border-radius: 14px;
+            padding: 12px;
+            margin: 15px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            box-sizing: border-box;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .player-btn {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .player-btn:hover {
+            color: var(--accent-cyan);
+            text-shadow: 0 0 8px var(--accent-cyan);
+            transform: scale(1.1);
+        }
+
+        .player-btn.play-toggle {
+            background: rgba(0, 240, 255, 0.1);
+            border: 1px solid var(--accent-cyan);
+            width: 38px;
+            height: 38px;
+        }
+
+        .player-btn.play-toggle:hover {
+            background: var(--accent-cyan);
+            color: var(--bg-main);
+            box-shadow: 0 0 12px var(--accent-cyan);
+        }
+
+        .volume-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 85%;
+        }
+
+        .volume-container i {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            width: 14px;
+        }
+
+        .volume-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            outline: none;
+            cursor: pointer;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-cyan);
+            box-shadow: 0 0 6px var(--accent-cyan);
+            transition: transform 0.1s;
+        }
+
+        .volume-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
         /* Typewriter Effekt */
         .typewriter-container {
             display: flex;
             justify-content: center;
-            margin: 20px 0 5px 0;
+            margin: 15px 0 5px 0;
+            max-width: 100%;
         }
 
         .typewriter-text {
@@ -109,7 +204,6 @@
             white-space: nowrap;
             overflow: hidden;
             border-right: 2px solid var(--accent-cyan);
-            width: 0;
             color: #ffffff;
             animation: 
                 typing 2s steps(9, end) forwards,
@@ -118,7 +212,7 @@
 
         @keyframes typing {
             from { width: 0; }
-            to { width: 9.3ch; }
+            to { width: 100%; }
         }
 
         @keyframes blink {
@@ -131,7 +225,7 @@
             color: var(--accent-purple);
             text-transform: uppercase;
             letter-spacing: 2px;
-            margin: 0 0 25px 0;
+            margin: 0 0 20px 0;
             font-weight: bold;
         }
 
@@ -139,7 +233,7 @@
         .social-dock {
             display: flex;
             gap: 15px;
-            margin-top: auto;
+            margin-top: 10px;
         }
 
         .social-icon {
@@ -163,10 +257,10 @@
 
         .card {
             background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             transition: border-color 0.3s;
         }
 
@@ -187,7 +281,7 @@
         }
 
         .card p {
-            font-family: sans-serif; /* Fließtext besser lesbar */
+            font-family: sans-serif;
             font-size: 0.95rem;
             line-height: 1.6;
             color: var(--text-muted);
@@ -279,7 +373,6 @@
             color: rgba(255, 255, 255, 0.2);
         }
 
-        /* RESPONSIVE: Wechselt mobil automatisch in One-Column Stack */
         @media (max-width: 768px) {
             .dashboard {
                 grid-template-columns: 1fr;
@@ -300,11 +393,14 @@
 </head>
 <body>
 
+    <!-- Verstecktes Audio-Element (Trage hier den korrekten Pfad zu deiner .mp3 Datei ein) -->
+    <audio id="bg-music" src="music/benm.mp3" loop></audio>
+
     <div class="dashboard">
         
         <!-- LINKES PROFIL-BOARD -->
         <aside class="left-panel">
-            <a href="/" class="back-link">
+            <a href="index.html" class="back-link">
                 <i class="fas fa-chevron-left"></i> Hub
             </a>
 
@@ -312,12 +408,27 @@
                 <img src="pictures/benkormos.profilbild.jpg" alt="BenKormos" class="avatar">
             </div>
 
+            <!-- DER NEUE MUSIKPLAYER -->
+            <div class="audio-player">
+                <div class="player-controls">
+                    <!-- 10 Sekunden zurück -->
+                    <button class="player-btn" id="rewind-btn" title="10s zurück"><i class="fas fa-backward"></i></button>
+                    <!-- Play / Pause -->
+                    <button class="player-btn play-toggle" id="play-btn" title="Play"><i class="fas fa-play" id="play-icon"></i></button>
+                    <!-- 10 Sekunden vorwärts / weiter -->
+                    <button class="player-btn" id="skip-btn" title="10s vorwärts"><i class="fas fa-forward"></i></button>
+                </div>
+                <div class="volume-container">
+                    <i class="fas fa-volume-down" id="volume-icon"></i>
+                    <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.05" value="0.5">
+                </div>
+            </div>
+
             <div class="typewriter-container">
-                <span class="typewriter-text">BenKormos</span>
+                <div class="typewriter-text">BenKormos</div>
             </div>
             <p class="tagline">Owner & Developer</p>
 
-            <!-- Direkt zugängliche Social-Icons unten gedockt -->
             <div class="social-dock">
                 <a href="https://github.com/benbroc" target="_blank" class="social-icon" title="GitHub"><i class="fab fa-github"></i></a>
                 <a href="https://youtube.com/@benkormos" target="_blank" class="social-icon" title="YouTube"><i class="fab fa-youtube"></i></a>
@@ -329,14 +440,12 @@
         <!-- RECHTER CONTENT-PANEL -->
         <main class="right-panel">
             
-            <!-- Sektion: Bio -->
             <section class="card">
                 <h3><i class="fas fa-terminal"></i> Status: Active</h3>
                 <p>Welcome to my custom terminal space!</p>
                 <p>I love building codes, tinkering with code, and sharing my latest projects and favorite links right here with you.</p>
             </section>
 
-            <!-- Sektion: Organisation -->
             <section class="card">
                 <h3><i class="fas fa-network-wired"></i> Organisation</h3>
                 <p>Hauptentwickler und Gründer des SynergyStation Netzwerks.</p>
@@ -345,7 +454,6 @@
                 </a>
             </section>
 
-            <!-- Sektion: Projekte als Kacheln -->
             <section class="card">
                 <h3><i class="fas fa-cubes"></i> Code Repository</h3>
                 <div class="project-tiles">
@@ -381,5 +489,56 @@
         </footer>
     </div>
 
+    <!-- JavaScript Steuerungslogik für den Player -->
+    <script>
+        const music = document.getElementById('bg-music');
+        const playBtn = document.getElementById('play-btn');
+        const playIcon = document.getElementById('play-icon');
+        const skipBtn = document.getElementById('skip-btn');
+        const rewindBtn = document.getElementById('rewind-btn');
+        const volumeSlider = document.getElementById('volume-slider');
+        const volumeIcon = document.getElementById('volume-icon');
+
+        // Setze Standardlautstärke auf 50%
+        music.volume = 0.5;
+
+        // Play / Pause Funktion
+        playBtn.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+                playIcon.className = 'fas fa-pause';
+                playBtn.title = 'Pause';
+            } else {
+                music.pause();
+                playIcon.className = 'fas fa-play';
+                playBtn.title = 'Play';
+            }
+        });
+
+        // Weiter springen (10 Sekunden vorwärts)
+        skipBtn.addEventListener('click', () => {
+            music.currentTime += 10;
+        });
+
+        // Zurück springen (10 Sekunden zurück)
+        rewindBtn.addEventListener('click', () => {
+            music.currentTime -= 10;
+        });
+
+        // Lautstärken-Regler Logik
+        volumeSlider.addEventListener('input', (e) => {
+            const val = e.target.value;
+            music.volume = val;
+            
+            // Icon dynamisch anpassen
+            if (val == 0) {
+                volumeIcon.className = 'fas fa-volume-mute';
+            } else if (val < 0.5) {
+                volumeIcon.className = 'fas fa-volume-down';
+            } else {
+                volumeIcon.className = 'fas fa-volume-up';
+            }
+        });
+    </script>
 </body>
 </html>
