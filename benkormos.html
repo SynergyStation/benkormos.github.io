@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BenKormos | Cyber Deck</title>
     
-    <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="pictures/benkormos.profilbild.jpg">
     
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
@@ -223,6 +221,19 @@
         }
         .card p:last-child { margin-bottom: 0; }
 
+        /* Styling für die Organisationsnamen */
+        .org-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            margin: 20px 0 4px 0;
+        }
+        .org-subtitle {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin: 0 0 15px 0;
+        }
+
         /* NEUER IMMERSIVER AUDIO PLAYER */
         .audio-deck {
             background: linear-gradient(135deg, rgba(16, 16, 36, 0.8), rgba(8, 8, 20, 0.8));
@@ -402,6 +413,7 @@
             letter-spacing: 0.5px;
             box-shadow: 0 8px 25px rgba(189, 0, 255, 0.25);
             margin-top: 5px;
+            margin-bottom: 20px;
         }
 
         .action-link-block:hover {
@@ -484,12 +496,10 @@
 </head>
 <body>
 
-    <!-- Globale Audio-Engine -->
     <audio id="bg-music" autoplay loop></audio>
 
     <div class="dashboard">
         
-        <!-- PROFILSEITE (LINKS) -->
         <aside class="profile-side">
             <a href="/" class="back-hub">
                 <i class="fas fa-arrow-left"></i> HUB
@@ -512,65 +522,31 @@
             </div>
         </aside>
 
-        <!-- MAIN-CONTENT (RECHTS) -->
         <main class="content-side">
             
-            <!-- IMMERSIVER AUDIO PLAYER -->
-            <section class="card audio-deck">
-                <h3><i class="fas fa-wave-square"></i> Audio Control Deck</h3>
-                
-                <div class="player-main">
-                    <div class="track-info">
-                        <span class="track-status" id="track-status">Offline</span>
-                        <span class="track-name" id="track-name">Kein Signal</span>
-                    </div>
-                    
-                    <div class="controls-cluster">
-                        <button class="action-btn" id="prev-btn"><i class="fas fa-backward"></i></button>
-                        <button class="action-btn master-play" id="play-btn"><i class="fas fa-play" id="play-icon"></i></button>
-                        <button class="action-btn" id="next-btn"><i class="fas fa-forward"></i></button>
-                    </div>
-                    
-                    <div class="volume-mix">
-                        <i class="fas fa-volume-low" id="volume-icon"></i>
-                        <input type="range" class="volume-bar" id="volume-slider" min="0" max="1" step="0.01" value="0.3">
-                    </div>
-                </div>
-
-                <ul class="track-list" id="playlist">
-                    <li class="track-node" data-src="music/benm.mp3">
-                        <span><i class="fas fa-dot-circle" style="margin-right: 12px;"></i>Kawaikute Gomen (German Cover)</span>
-                        <span style="color: var(--neon-pink); font-weight: 600; font-size: 0.8rem;">w</span>
-                    </li>
-                </ul>
-            </section>
-
-            <!-- STATUS CARD -->
             <section class="card">
                 <h3><i class="fas fa-terminal"></i> Core Status // Active</h3>
                 <p>Welcome to my space!</p>
                 <p>I love building codes, tinkering with code, and sharing my latest projects and favorite links right here with you.</p>
-                <p>Coding Languages i use<p>
+                <p>Coding Languages i use</p>
             </section>
 
-            <!-- ORGANISATION -->
             <section class="card">
                 <h3><i class="fas fa-layer-group"></i> Organisations</h3>
-                <p>SYNERGYstation</p>
-                <p>Owner & Developer</p>
+                
+                <div class="org-title">SYNERGYstation</div>
+                <div class="org-subtitle">Owner & Developer</div>
                 <a href="https://github.com/SynergyStation" target="_blank" class="action-link-block">
                     <i class="fab fa-github"></i> SYNERGYstation beitreten
                 </a>
 
-                </a>
-                <p>BenKormos Production</p>
-                <p>Owner & Developer</p>
+                <div class="org-title">BenKormos Production</div>
+                <div class="org-subtitle">Owner & Developer</div>
                 <a href="https://github.com/Benkormos" target="_blank" class="action-link-block">
                     <i class="fab fa-github"></i> Benkormos beitreten
                 </a>
             </section>
 
-            <!-- REPOSITORIES -->
             <section class="card">
                 <h3><i class="fas fa-code-branch"></i> Repositories</h3>
                 <div class="repo-matrix">
@@ -598,15 +574,20 @@
                 </div>
             </section>
 
+            <section class="card">
+                <h3><i class="fas fa-layer-group"></i> This Template is Open Source</h3>
+                <a href="https://github.com/BenKormos" target="_blank" class="action-link-block">
+                    <i class="fab fa-github"></i> Click here!!
+                </a>
+            </section>
+
         </main>
 
-        <!-- SYSTEM FOOTER -->
         <footer class="system-footer">
             // TERMINAL. DEPLOYED SUCCESSFULLY SYSTEM_YEAR: 2026 @BenKormos
         </footer>
     </div>
 
-    <!-- AUDIO ENGINE ARCHITECTURE -->
     <script>
         const audio = document.getElementById('bg-music');
         const playBtn = document.getElementById('play-btn');
@@ -638,15 +619,19 @@
         loadTrack(0);
 
         function setPlayUI() {
-            playIcon.className = 'fas fa-pause';
-            trackStatus.textContent = "ONLINE // PLAYING";
-            trackStatus.style.color = "var(--neon-cyan)";
+            if(playIcon) playIcon.className = 'fas fa-pause';
+            if(trackStatus) {
+                trackStatus.textContent = "ONLINE // PLAYING";
+                trackStatus.style.color = "var(--neon-cyan)";
+            }
         }
 
         function setPauseUI() {
-            playIcon.className = 'fas fa-play';
-            trackStatus.textContent = "SYSTEM // PAUSED";
-            trackStatus.style.color = "var(--neon-pink)";
+            if(playIcon) playIcon.className = 'fas fa-play';
+            if(trackStatus) {
+                trackStatus.textContent = "SYSTEM // PAUSED";
+                trackStatus.style.color = "var(--neon-pink)";
+            }
         }
 
         // Autoplay-Trigger bei Interaktion
@@ -669,34 +654,40 @@
         window.addEventListener('touchstart', triggerAutoplay);
 
         // Controls Klick-Events
-        playBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (audio.paused) {
+        if(playBtn) {
+            playBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (audio.paused) {
+                    audio.play();
+                    setPlayUI();
+                } else {
+                    audio.pause();
+                    setPauseUI();
+                }
+            });
+        }
+
+        if(nextBtn) {
+            nextBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                let next = currentTrackIndex + 1;
+                if (next >= trackNodes.length) next = 0;
+                loadTrack(next);
                 audio.play();
                 setPlayUI();
-            } else {
-                audio.pause();
-                setPauseUI();
-            }
-        });
+            });
+        }
 
-        nextBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            let next = currentTrackIndex + 1;
-            if (next >= trackNodes.length) next = 0;
-            loadTrack(next);
-            audio.play();
-            setPlayUI();
-        });
-
-        prevBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            let prev = currentTrackIndex - 1;
-            if (prev < 0) prev = trackNodes.length - 1;
-            loadTrack(prev);
-            audio.play();
-            setPlayUI();
-        });
+        if(prevBtn) {
+            prevBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                let prev = currentTrackIndex - 1;
+                if (prev < 0) prev = trackNodes.length - 1;
+                loadTrack(prev);
+                audio.play();
+                setPlayUI();
+            });
+        }
 
         trackNodes.forEach((node, idx) => {
             node.addEventListener('click', (e) => {
@@ -708,17 +699,20 @@
         });
 
         // Volume System
-        volumeSlider.addEventListener('input', (e) => {
-            const val = e.target.value;
-            audio.volume = val;
-            if(val == 0) {
-                volumeIcon.className = 'fas fa-volume-mute';
-            } else if(val < 0.5) {
-                volumeIcon.className = 'fas fa-volume-low';
-            } else {
-                volumeIcon.className = 'fas fa-volume-high';
-            }
-        });
+        if(volumeSlider) {
+            volumeSlider.addEventListener('input', (e) => {
+                const val = e.target.value;
+                audio.volume = val;
+                if(!volumeIcon) return;
+                if(val == 0) {
+                    volumeIcon.className = 'fas fa-volume-mute';
+                } else if(val < 0.5) {
+                    volumeIcon.className = 'fas fa-volume-low';
+                } else {
+                    volumeIcon.className = 'fas fa-volume-high';
+                }
+            });
+        }
     </script>
 </body>
 </html>
