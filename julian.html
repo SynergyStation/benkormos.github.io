@@ -5,23 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Julian442 - Links & Projects</title>
     
+    <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="julian.profilbild.png">
     
+    <!-- FontAwesome für moderne Social-Media-Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Integriertes CSS für maximale Unabhängigkeit mit Fallbacks -->
     <style>
-        /* Basis-Layout & Custom Background Konfiguration */
+        /* Basis-Layout & Fallback-Hintergrund */
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            
-            /* Lädt hintergrund.jpg direkt aus demselben Ordner, falls vorhanden */
-            background: linear-gradient(rgba(18, 17, 26, 0.85), rgba(18, 17, 26, 0.85)), 
-                        url('julian.hintergrund.png') no-repeat center center fixed;
-            
-            /* Schönes, dunkles Fallback-Grau, falls das Bild fehlt */
             background-color: #12111a; 
-            background-size: cover;
-            
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -29,6 +24,13 @@
             justify-content: center;
             align-items: flex-start;
             min-height: 100vh;
+        }
+
+        /* Klasse wird per JS gesetzt, wenn der Custom Background existiert */
+        body.has-bg {
+            background: linear-gradient(rgba(18, 17, 26, 0.85), rgba(18, 17, 26, 0.85)), 
+                        url('julian.hintergrund.png') no-repeat center center fixed;
+            background-size: cover;
         }
 
         /* Haupt-Container */
@@ -62,28 +64,47 @@
             text-align: center;
             margin-bottom: 30px;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        .avatar {
+        /* Avatar-Wrapper für sauberes Fallback-Icon */
+        .avatar-container {
             width: 110px;
             height: 110px;
             border-radius: 50%;
             border: 3px solid #00ff88;
             box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
-            object-fit: cover;
-            transition: transform 0.3s ease;
-            margin: 0 auto;
-            /* Falls julian.jpg fehlt, wird ein grauer Kreis mit User-Icon angezeigt */
             background-color: #2a2838;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            margin-bottom: 15px;
         }
 
-        .avatar:hover {
+        .avatar-container:hover {
             transform: scale(1.05) rotate(3deg);
+        }
+
+        .avatar-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Standard-Icon Styling falls Bild fehlt */
+        .avatar-fallback {
+            font-size: 2.5rem;
+            color: #60647c;
         }
 
         h1 {
             font-size: 1.8rem;
-            margin: 15px 0 5px 0;
+            margin: 0 0 5px 0;
             letter-spacing: 0.5px;
             text-align: center;
         }
@@ -98,7 +119,7 @@
 
         /* Boxen / Cards (Immer solide abgetönt) */
         .section-box {
-            background: rgba(30, 28, 41, 0.75); /* Kompaktes Dunkelgrau */
+            background: rgba(30, 28, 41, 0.75);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             padding: 24px;
@@ -192,7 +213,11 @@
         </a>
 
         <header class="profile">
-            <img src="julian.profilbild.png" alt="👤" class="avatar">
+            <!-- Container fängt kaputte Bildlinks ab -->
+            <div class="avatar-container" id="avatar-box">
+                <img src="julian.profilbild.png" id="profile-img" alt="Profile" style="display:none;">
+                <i class="fas fa-user avatar-fallback" id="fallback-icon"></i>
+            </div>
             <h1>Julian</h1>
             <p class="tagline">Developer</p>
         </header>
@@ -226,5 +251,31 @@
         </footer>
     </div>
 
+    <!-- JavaScript Fallback-Handler -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const profileImg = document.getElementById('profile-img');
+            const fallbackIcon = document.getElementById('fallback-icon');
+
+            // 1. Profilbild prüfen
+            profileImg.onload = function() {
+                profileImg.style.display = 'block';
+                fallbackIcon.style.display = 'none';
+            };
+            profileImg.onerror = function() {
+                profileImg.style.display = 'none';
+                fallbackIcon.style.display = 'block';
+            };
+            // Trigger laden falls gecached
+            if (profileImg.complete) profileImg.onload();
+
+            // 2. Hintergrundbild prüfen ohne 404 Fehler im UI zu triggern
+            const bgImg = new Image();
+            bgImg.src = 'julian.hintergrund.png';
+            bgImg.onload = function() {
+                document.body.classList.add('has-bg');
+            };
+        });
+    </script>
 </body>
 </html>
