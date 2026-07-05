@@ -22,6 +22,7 @@
             --accent-glow: rgba(0, 255, 136, 0.5);
             --primary-gradient: linear-gradient(135deg, #00ff88 0%, #00bcff 100%);
             --btn-hover-bg: rgba(255, 255, 255, 0.05);
+            --discord-color: #5865F2;
         }
 
         * {
@@ -39,17 +40,94 @@
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-start;
             align-items: center;
-            padding: 20px;
+            padding: 100px 20px 40px 20px; /* Platz oben für die Leiste */
         }
 
+        /* --- NEUE OBRE LEISTE (NAVBAR) --- */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background: rgba(11, 15, 25, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            z-index: 1000;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.05rem;
+            letter-spacing: -0.5px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--text-main);
+            border: 1px solid var(--card-border);
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn.dev-btn:hover {
+            border-color: rgba(0, 255, 136, 0.4);
+            background: rgba(0, 255, 136, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .nav-btn.discord-btn {
+            background: var(--discord-color);
+            border-color: var(--discord-color);
+        }
+
+        .nav-btn.discord-btn:hover {
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.4);
+            transform: translateY(-1px);
+        }
+
+        .nav-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid #00ff88;
+        }
+
+        /* --- CONTENT MAIN CONTAINER --- */
         .container {
             width: 100%;
             max-width: 540px;
             display: flex;
             flex-direction: column;
             gap: 24px;
+            margin-top: 20px;
         }
 
         /* --- HEADER --- */
@@ -159,7 +237,6 @@
             transition: transform 0.3s ease;
         }
 
-        /* Hover-Effekte für Buttons */
         .link-btn:hover {
             transform: translateY(-2px);
             background: var(--btn-hover-bg);
@@ -175,7 +252,6 @@
             transform: translateY(0);
         }
 
-        /* Discord Info Styling */
         .discord-text {
             color: var(--text-muted);
             font-size: 0.9rem;
@@ -197,9 +273,25 @@
 </head>
 <body>
 
+    <!-- DIE NEUE OBERE LEISTE -->
+    <nav class="navbar">
+        <a href="#" class="nav-logo">SynergyStation</a>
+        <div class="nav-links">
+            <!-- Developers Button mit Profilbild -->
+            <a href="developers.html" class="nav-btn dev-btn">
+                <img src="pictures/benkormos.profilbild.jpg" alt="Ben" class="nav-avatar">
+                Developers
+            </a>
+            <!-- Discord Button -->
+            <a href="https://dc.gg/ben" target="_blank" class="nav-btn discord-btn">
+                <i class="fab fa-discord"></i> Discord
+            </a>
+        </div>
+    </nav>
+
     <div class="container">
         <header class="profile">
-            <img src="benkormos.profilbild.jpg" alt="Hub Logo" class="avatar">
+            <img src="pictures/benkormos.profilbild.jpg" alt="Hub Logo" class="avatar">
             <h1>SynergyStation Hub</h1>
             <p class="tagline">Wähle ein Profil aus, um die Links & Projekte zu sehen</p>
         </header>
@@ -213,7 +305,7 @@
             <h3>Verfügbare Profile 👥</h3>
             <div class="links-container">
                 
-                <a href="benkormos" class="link-btn">
+                <a href="benkormos.html" class="link-btn">
                     <i class="fas fa-user-astronaut"></i> BenKormos
                 </a>
                 
@@ -249,11 +341,9 @@
 
             try {
                 const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`);
-                
                 if (!response.ok) return; 
 
-                const items = response.ok ? await response.json() : [];
-                
+                const items = await response.json();
                 const dateFolders = items
                     .filter(item => item.type === 'dir' && /^\d{4}\.\d{2}\.\d{2}$/.test(item.name))
                     .map(item => item.name)

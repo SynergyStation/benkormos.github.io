@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SynergyStation - Developers</title>
+    <link rel="icon" type="image/jpeg" href="pictures/hub.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(20, 26, 44, 0.6);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --primary-gradient: linear-gradient(135deg, #00ff88 0%, #00bcff 100%);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 188, 255, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 255, 136, 0.08) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container { width: 100%; max-width: 540px; display: flex; flex-direction: column; gap: 24px; }
+
+        .back-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: #00ff88; }
+
+        .section-box {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .dev-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            padding: 16px;
+            border-radius: 14px;
+            transition: all 0.25s ease;
+        }
+        
+        .dev-card:hover {
+            border-color: rgba(0, 188, 255, 0.3);
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px);
+        }
+
+        .dev-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #00ff88;
+        }
+
+        .dev-info h4 { font-size: 1.05rem; margin-bottom: 4px; }
+        .dev-info p { color: var(--text-muted); font-size: 0.85rem; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Zurück zum Hub</a>
+        
+        <section class="section-box">
+            <h2><i class="fas fa-code"></i> Team & Developers</h2>
+            
+            <div class="dev-card">
+                <img src="pictures/benkormos.profilbild.jpg" alt="BenKormos" class="dev-avatar">
+                <div class="dev-info">
+                    <h4>BenKormos</h4>
+                    <p>Founder & Lead Developer</p>
+                </div>
+            </div>
+
+            <div class="dev-card">
+                <img src="pictures/mexo.profilbild.mexo" alt="Mexo" class="dev-avatar">
+                <div class="dev-info">
+                    <h4>Mexo</h4>
+                    <p>Developer</p>
+                </div>
+            </div>
+
+            <div class="dev-card">
+                <img src="pictures/mexo.profilbild.julian" alt="Mexo" class="dev-avatar">
+                <div class="dev-info">
+                    <h4>Julian442</h4>
+                    <p>Developer</p>
+                </div>
+            </div>
+            
+            <!-- Hier kannst du später weitere Entwickler-Karten hinzufügen -->
+        </section>
+    </div>
+
+</body>
+</html>
