@@ -244,7 +244,6 @@
     <span class="sakura" style="left:90%; animation-duration:13s; animation-delay:2.5s;">🌸</span>
     <span class="sakura" style="left:96%; font-size:1.1rem; animation-duration:9s; animation-delay:4s;">🌸</span>
 
-    <!-- HIER GEÄNDERT: Führender Schrägstrich entfernt für relativen Pfad -->
     <audio id="bg-audio" loop>
         <source src="music/song_Julian442.mp3" type="audio/mpeg">
     </audio>
@@ -256,7 +255,6 @@
     </div>
 
     <div class="card">
-        <!-- Relativer Pfad zum Ordner "pictures" -->
         <img src="pictures/julian.profilbild.png" class="avatar" alt="Avatar">
         <h1>Julian 🌸</h1>
         <p class="tagline">✨ CONTENT CREATOR • SHARING VIBES 🎮</p>
@@ -290,7 +288,6 @@
         const volIcon = document.getElementById('vol-icon');
         const volSlider = document.getElementById('volume-slider');
 
-        // Standard-Lautstärke leiser eingestellt (statt 1.0 jetzt 0.3)
         audio.volume = 0.3;
 
         function updateSliderTrack() {
@@ -299,13 +296,23 @@
         }
         updateSliderTrack();
 
+        // Verhindert Überschneidungen beim Klicken des Play-Buttons
+        let isPlayPromisePending = false;
+
         playBtn.onclick = () => {
+            if (isPlayPromisePending) return;
+
             if (audio.paused) {
-                audio.play().then(() => {
-                    playIcon.className = "fas fa-pause";
-                }).catch(err => {
-                    alert("Datei 'music/song_Julian442.mp3' konnte nicht geladen werden.");
-                });
+                isPlayPromisePending = true;
+                audio.play()
+                    .then(() => {
+                        isPlayPromisePending = false;
+                        playIcon.className = "fas fa-pause";
+                    })
+                    .catch(err => {
+                        isPlayPromisePending = false;
+                        console.error("Audio-Wiedergabe fehlgeschlagen:", err);
+                    });
             } else {
                 audio.pause();
                 playIcon.className = "fas fa-play";
@@ -324,21 +331,44 @@
             updateSliderTrack();
         };
 
-        // --- Musik automatisch starten ---
+        // --- Musik sicher und ohne Konflikte per Interaktion starten ---
         function tryAutoplay() {
-            audio.play().then(() => {
-                playIcon.className = "fas fa-pause";
-            }).catch(() => {
-                const events = ['click', 'keydown', 'touchstart', 'pointerdown', 'wheel', 'scroll'];
-                const startOnInteraction = () => {
-                    if (!audio.paused) return;
-                    audio.play().then(() => { playIcon.className = "fas fa-pause"; });
-                    events.forEach(ev => document.removeEventListener(ev, startOnInteraction));
-                };
-                events.forEach(ev => document.addEventListener(ev, startOnInteraction, { once: true, passive: true }));
-            });
+            audio.play()
+                .then(() => {
+                    playIcon.className = "fas fa-pause";
+                })
+                .catch(() => {
+                    const events = ['click', 'keydown', 'touchstart', 'pointerdown'];
+                    
+                    const startOnInteraction = () => {
+                        if (isPlayPromisePending || !audio.paused) return;
+                        
+                        isPlayPromisePending = true;
+                        audio.play()
+                            .then(() => {
+                                isPlayPromisePending = false;
+                                playIcon.className = "fas fa-pause";
+                                cleanUpListeners();
+                            })
+                            .catch(() => {
+                                isPlayPromisePending = false;
+                            });
+                    };
+
+                    const cleanUpListeners = () => {
+                        events.forEach(ev => document.removeEventListener(ev, startOnInteraction));
+                    };
+
+                    events.forEach(ev => document.addEventListener(ev, startOnInteraction, { once: true, passive: true }));
+                });
         }
-        tryAutoplay();
+        
+        // Startet den Autoplay-Versuch erst, wenn das Dokument vollständig bereit ist
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', tryAutoplay);
+        } else {
+            tryAutoplay();
+        }
 
         // --- Like-Funktion ---
         const LIKE_KEY = "julian442-profile-likes-v1";
