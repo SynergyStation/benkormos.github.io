@@ -5,67 +5,243 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SynergyStation Hub</title>
     
-    <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="pictures/benkormos.profilbild.jpg">
     
-    <!-- FontAwesome for modern icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- MODERN NEON / GLASSMORPHISM THEME --- */
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: rgba(20, 26, 44, 0.6);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --accent-glow: rgba(0, 255, 136, 0.5);
+            --primary-gradient: linear-gradient(135deg, #00ff88 0%, #00bcff 100%);
+            --btn-hover-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 188, 255, 0.12) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(0, 255, 136, 0.08) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 540px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* --- HEADER --- */
+        .profile {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .avatar {
+            width: 96px;
+            height: 96px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid transparent;
+            background-image: var(--primary-gradient);
+            background-origin: border-box;
+            background-clip: content-box, border-box;
+            box-shadow: 0 8px 32px rgba(0, 255, 136, 0.2);
+            margin-bottom: 16px;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .avatar:hover {
+            transform: scale(1.08) rotate(5deg);
+        }
+
+        .profile h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+        }
+
+        .tagline {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* --- CARDS / BOXES --- */
+        .section-box {
+            background: var(--card-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-box h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Dynamic Update Banner Special Styling */
+        #update-section {
+            background: rgba(0, 255, 136, 0.03);
+            border-color: rgba(0, 255, 136, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.05);
+        }
+        #update-section h3 {
+            color: #00ff88;
+        }
+        #update-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #e5e7eb;
+        }
+
+        /* --- BUTTONS & LINKS --- */
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-btn i {
+            font-size: 1.1rem;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: transform 0.3s ease;
+        }
+
+        /* Hover-Effekte für Buttons */
+        .link-btn:hover {
+            transform: translateY(-2px);
+            background: var(--btn-hover-bg);
+            border-color: rgba(0, 188, 255, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 188, 255, 0.15);
+        }
+
+        .link-btn:hover i {
+            transform: scale(1.15);
+        }
+
+        .link-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Discord Info Styling */
+        .discord-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* --- FOOTER --- */
+        .footer {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .footer p {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.5px;
+        }
+    </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Hub Header -->
         <header class="profile">
             <img src="benkormos.profilbild.jpg" alt="Hub Logo" class="avatar">
             <h1>SynergyStation Hub</h1>
             <p class="tagline">Wähle ein Profil aus, um die Links & Projekte zu sehen</p>
         </header>
 
-        <!-- Dynamic Update Banner -->
-        <section class="section-box" id="update-section" style="display: none; border-color: rgba(0, 255, 136, 0.3);">
+        <section class="section-box" id="update-section" style="display: none;">
             <h3>Letztes Update 🚀</h3>
             <p id="update-text">Lade neueste Updates...</p>
         </section>
 
-        <!-- Profiles Selection Section -->
         <section class="section-box">
             <h3>Verfügbare Profile 👥</h3>
             <div class="links-container">
                 
                 <a href="benkormos" class="link-btn">
-                    <i class="fas fa-user"></i> BenKormos
+                    <i class="fas fa-user-astronaut"></i> BenKormos
                 </a>
                 
                 <a href="julian" class="link-btn">
-                    <i class="fas fa-user"></i> Julian442
+                    <i class="fas fa-user-shield"></i> Julian442
                 </a>
 
                 <a href="mexo" class="link-btn">
-                    <i class="fas fa-user"></i> Mexo
+                    <i class="fas fa-user-ninja"></i> Mexo
                 </a>
                 
             </div>
         </section>
 
-        <!-- Discord Info Section -->
         <section class="section-box">
-            <h3>Du willst dein eigenes Profil hinzufügen? 🛠️</h3>
-            <p style="margin-bottom: 15px;">Geh auf den Discord und melde dich, um deine eigene Page zu bekommen.</p>
+            <h3>Eigenes Profil hinzufügen? 🛠️</h3>
+            <p class="discord-text">Geh auf den Discord und melde dich, um deine eigene Page zu bekommen. Wir richten dir schnellstmöglich deinen eigenen Platz ein!</p>
         </section>
 
-        <!-- Footer -->
         <footer class="footer">
             <p>© 2026 SynergyStation Hub</p>
         </footer>
     </div>
 
-    <!-- JavaScript für die automatische Update-Erkennung via GitHub API -->
     <script>
         async function fetchLatestUpdate() {
-            // Ersetze 'DEIN_GITHUB_NAME' und 'REPOSITORY_NAME' mit deinen echten GitHub-Daten!
             const owner = 'Benbroc'; 
-            const repo = 'kaboom.github.io'; // Oder wie dein Repository heißt
+            const repo = 'kaboom.github.io'; 
             const path = 'update';
 
             const updateSection = document.getElementById('update-section');
@@ -74,24 +250,19 @@
             try {
                 const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`);
                 
-                if (!response.ok) return; // Wenn der Ordner nicht existiert oder leer ist, bleibt die Box unsichtbar
+                if (!response.ok) return; 
 
-                const items = await response.ok ? await response.json() : [];
+                const items = response.ok ? await response.json() : [];
                 
-                // Filtere nur nach Ordnern, die dem Format YYYY.MM.DD entsprechen
                 const dateFolders = items
                     .filter(item => item.type === 'dir' && /^\d{4}\.\d{2}\.\d{2}$/.test(item.name))
                     .map(item => item.name)
-                    .sort(); // Sortiert aufsteigend
+                    .sort(); 
 
                 if (dateFolders.length > 0) {
-                    // Nimm den neuesten Ordner (den letzten nach der Sortierung)
                     const latestFolder = dateFolders[dateFolders.length - 1];
-                    
-                    // Splitte das Format "2026.12.17" auf
                     const [year, month, day] = latestFolder.split('.');
                     
-                    // Monatsnamen für die deutsche Anzeige
                     const months = [
                         "Januar", "Februar", "März", "April", "Mai", "Juni",
                         "Juli", "August", "September", "Oktober", "November", "Dezember"
@@ -99,7 +270,6 @@
                     
                     const monthName = months[parseInt(month, 10) - 1];
 
-                    // Text anpassen und die Box sichtbar machen
                     updateText.innerHTML = `Am <strong>${parseInt(day, 10)}. ${monthName} ${year}</strong> wurde eine neue Update-Datei im Update-Ordner veröffentlicht.`;
                     updateSection.style.display = 'block';
                 }
@@ -108,7 +278,6 @@
             }
         }
 
-        // Führe die Funktion beim Laden der Seite aus
         document.addEventListener('DOMContentLoaded', fetchLatestUpdate);
     </script>
 </body>
