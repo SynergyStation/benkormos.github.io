@@ -6,215 +6,266 @@
     <title>Julian442 - Links & Projects</title>
     
     <link rel="icon" type="image/jpeg" href="pictures/julian.profilbild.png">
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* Basis-Layout */
+        /* Modernes Stealth & Gold Design */
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #12111a; 
+            background-color: #0b0a0f; 
             color: #ffffff;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* Eigener Layer für das Hintergrundbild, damit NUR das Bild geblurt wird */
+        /* Hintergrundbild mit edlem Abdunklungs- und Blur-Effekt */
         body::before {
             content: "";
             position: fixed;
-            top: -10px; /* Leicht vergrößert, damit an den Rändern durch den Blur kein weißer Rand entsteht */
+            top: -10px;
             left: -10px;
             width: calc(100% + 20px);
             height: calc(100% + 20px);
-            
-            /* Hier wird dein Bild geladen. Die Maske dunkelt es leicht ab, damit man Text besser liest */
-            background: linear-gradient(rgba(18, 17, 26, 0.75), rgba(18, 17, 26, 0.75)), 
+            background: linear-gradient(rgba(11, 10, 15, 0.82), rgba(11, 10, 15, 0.82)), 
                         url('julian.hintergrund.png') no-repeat center center fixed;
             background-size: cover;
-            
-            /* Der gewünschte leichte Blur-Effekt für das Hintergrundbild */
-            filter: blur(6px);
-            -webkit-filter: blur(6px);
-            
-            z-index: -1; /* Schiebt das Bild hinter den Inhalt */
+            filter: blur(8px);
+            -webkit-filter: blur(8px);
+            z-index: -1;
             pointer-events: none;
         }
 
-        /* Haupt-Container */
+        /* Haupt-Container - verbreitert für das Nebeneinander-Layout */
         .container {
             width: 100%;
-            max-width: 500px;
+            max-width: 1100px;
             padding: 40px 20px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
+            gap: 24px;
             position: relative;
             z-index: 1;
         }
 
         /* Zurück zum Hub Link */
         .back-link {
-            color: #60647c;
+            color: #7c7890;
             text-decoration: none;
             font-size: 0.9rem;
-            margin-bottom: 20px;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            transition: color 0.2s;
+            gap: 6px;
+            transition: all 0.2s;
+            align-self: flex-start;
         }
         
         .back-link:hover {
-            color: #00ff88;
+            color: #ffaa00;
+            transform: translateX(-3px);
         }
 
         /* Profil-Bereich */
         .profile {
             text-align: center;
-            margin-bottom: 30px;
-            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-bottom: 10px;
         }
 
-        /* Avatar-Wrapper für sauberes Fallback-Icon */
         .avatar-container {
-            width: 110px;
-            height: 110px;
+            width: 125px;
+            height: 125px;
             border-radius: 50%;
-            border: 3px solid #00ff88;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
-            background-color: #2a2838;
+            border: 3px solid #ffaa00;
+            box-shadow: 0 0 25px rgba(255, 170, 0, 0.25);
+            background-color: #171520;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             margin-bottom: 15px;
         }
 
         .avatar-container:hover {
-            transform: scale(1.05) rotate(3deg);
+            transform: scale(1.06) rotate(-3deg);
         }
 
         .avatar-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
         }
 
-        /* Standard-Icon Styling falls Bild fehlt */
         .avatar-fallback {
-            font-size: 2.5rem;
-            color: #60647c;
+            font-size: 2.8rem;
+            color: #4e4a60;
         }
 
         h1 {
-            font-size: 1.8rem;
-            margin: 0 0 5px 0;
+            font-size: 2.2rem;
+            margin: 0 0 6px 0;
+            background: linear-gradient(45deg, #ffaa00, #ff6600);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             letter-spacing: 0.5px;
-            text-align: center;
         }
 
         .tagline {
-            font-size: 0.95rem;
-            color: #00ff88;
+            font-size: 0.9rem;
+            color: #a39eb9;
             margin: 0;
-            font-weight: 500;
-            text-align: center;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
         }
 
-        /* Boxen / Cards (Bleiben solide dunkelgrau) */
-        .section-box {
-            background: rgba(30, 28, 41, 0.85); /* Etwas deckender für perfekte Lesbarkeit über dem Hintergrund */
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        /* --- GRID FÜR NEBENIEINANDER-LAYOUT --- */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* 3 Spalten nebeneinander */
+            gap: 20px;
             width: 100%;
+        }
+
+        /* Gläserne Premium-Cards */
+        .section-box {
+            background: rgba(23, 21, 32, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 26px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             box-sizing: border-box;
+            transition: border-color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-box:hover {
+            border-color: rgba(255, 170, 0, 0.25);
+            transform: translateY(-2px);
         }
 
         h3 {
-            font-size: 1.15rem;
+            font-size: 1.2rem;
             margin-top: 0;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             color: #ffffff;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 2px solid rgba(255, 170, 0, 0.15);
             padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         p {
             font-size: 0.95rem;
             line-height: 1.6;
-            color: #cdd1e4;
-            margin: 0 0 8px 0;
-            text-align: left;
+            color: #d2cfe2;
+            margin: 0 0 10px 0;
         }
         
         p:last-child {
             margin-bottom: 0;
         }
 
-        /* Link-Buttons Container */
+        /* Organisation / Project Styling */
+        .project-card h4 {
+            margin: 0 0 12px 0;
+            font-size: 1.2rem;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .project-card a {
+            color: #ffaa00;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+
+        .project-card a:hover {
+            color: #ff6600;
+            text-decoration: underline;
+        }
+
+        /* Link-Buttons */
         .links-container {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
+            margin-top: auto; /* Schiebt die Buttons ans untere Ende der Box */
         }
 
         .link-btn {
             display: flex;
             align-items: center;
             gap: 14px;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.04);
             color: #ffffff;
             text-decoration: none;
-            padding: 14px 18px;
+            padding: 13px 16px;
             border-radius: 12px;
             font-weight: 600;
             font-size: 0.95rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.25s ease;
-            box-sizing: border-box;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .link-btn i {
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             width: 20px;
             text-align: center;
+            color: #ffaa00;
+            transition: color 0.25s;
         }
 
         .link-btn:hover {
-            background: #00ff88;
-            color: #12111a;
-            border-color: #00ff88;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.25);
+            background: linear-gradient(45deg, #ffaa00, #ff6600);
+            color: #0b0a0f;
+            border-color: #ffaa00;
+            box-shadow: 0 6px 20px rgba(255, 170, 0, 0.2);
+        }
+
+        .link-btn:hover i {
+            color: #0b0a0f;
         }
 
         /* Footer */
         .footer {
             text-align: center;
-            margin-top: 20px;
-            width: 100%;
+            margin-top: 15px;
         }
 
         .footer p {
-            font-size: 0.8rem;
-            color: #60647c;
-            text-align: center;
+            font-size: 0.85rem;
+            color: #555166;
+        }
+
+        /* --- RESPONSIVE LAYOUT (Tablets & Handys) --- */
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr; /* Untereinander auf kleineren Bildschirmen */
+                gap: 24px;
+            }
+            .container {
+                max-width: 550px;
+                padding: 25px 15px;
+            }
         }
     </style>
 </head>
@@ -235,40 +286,48 @@
             <p class="tagline">Developer</p>
         </header>
 
-        <section class="section-box">
-            <h3>About Me 👋</h3>
-            <p>Ich bin der Julian442.</p>
-            <p>Ich bin sehr tuff.</p>
-        </section>
+        <!-- Start des neuen Grid-Layouts (Nebeneinander) -->
+        <main class="main-grid">
 
-        <section class="section-box">
-            <h3>My Organisation</h3>
-            <div class="project-grid">
+            <!-- Box 1: About Me -->
+            <section class="section-box">
+                <h3><i class="far fa-smile"></i> About Me</h3>
+                <p>Ich bin der Julian442.</p>
+                <p>Ich bin sehr tuff.</p>
+            </section>
+
+            <!-- Box 2: Organisation -->
+            <section class="section-box">
+                <h3><i class="fas fa-sitemap"></i> Organisation</h3>
                 <div class="project-card">
                     <h4>SYNERGYstation</h4>
                     <a href="https://github.com/SynergyStation" target="_blank">
                         <i class="fab fa-github"></i> View Organisation
                     </a>
                 </div>
-        </section>
+            </section> <!-- Fehler im alten Code hier behoben (Zweites </div> fehlte) -->
 
-        <section class="section-box">
-            <h3>Links 🔗</h3>
-            <div class="links-container">
-                <a href="https://github.com/julixn442" target="_blank" class="link-btn">
-                    <i class="fab fa-github"></i> GitHub
-                </a>
-                <a href="https://youtube.com/@Julian_2044" target="_blank" class="link-btn">
-                    <i class="fab fa-youtube"></i> YouTube
-                </a>
-                <a href="https://twitch.tv/julian442_" target="_blank" class="link-btn">
-                    <i class="fab fa-twitch"></i> Twitch
-                </a>
-                <a href="https://dc.gg/ben" target="_blank" class="link-btn">
-                    <i class="fab fa-discord"></i> Discord
-                </a>
-            </div>
-        </section>
+            <!-- Box 3: Links -->
+            <section class="section-box">
+                <h3><i class="fas fa-link"></i> Links</h3>
+                <div class="links-container">
+                    <a href="https://github.com/julixn442" target="_blank" class="link-btn">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://youtube.com/@Julian_2044" target="_blank" class="link-btn">
+                        <i class="fab fa-youtube"></i> YouTube
+                    </a>
+                    <a href="https://twitch.tv/julian442_" target="_blank" class="link-btn">
+                        <i class="fab fa-twitch"></i> Twitch
+                    </a>
+                    <a href="https://dc.gg/ben" target="_blank" class="link-btn">
+                        <i class="fab fa-discord"></i> Discord
+                    </a>
+                </div>
+            </section>
+
+        </main>
+        <!-- Ende des Grid-Layouts -->
 
         <footer class="footer">
             <p>© 2026 @Julian442 • Powered by SynergyStation</p>
