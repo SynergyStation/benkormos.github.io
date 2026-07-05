@@ -232,6 +232,14 @@
             margin-top: 10px;
             opacity: 0.7;
         }
+
+        /* Reset-Hinweis (nur sichtbar bei ?reset=true) */
+        #reset-log {
+            font-size: 0.75rem;
+            color: #b23a63;
+            margin-top: 6px;
+            opacity: 0.85;
+        }
     </style>
 </head>
 <body>
@@ -283,6 +291,7 @@
         </div>
 
         <div id="audio-status-log">Musik wird vorbereitet...</div>
+        <div id="reset-log"></div>
     </div>
 
     <a href="https://synergystation.github.io/" class="corner-link" target="_blank" rel="noopener noreferrer">
@@ -383,10 +392,11 @@
         const LIKE_KEY = "julian442-profile-likes-v1";
         const LIKE_HIT_URL = `https://countapi.mileshilliard.com/api/v1/hit/${LIKE_KEY}`;
         const LIKE_GET_URL = `https://countapi.mileshilliard.com/api/v1/get/${LIKE_KEY}`;
+        const LIKE_SET_URL = `https://countapi.mileshilliard.com/api/v1/set/${LIKE_KEY}?value=0`;
         const likeBtn = document.getElementById('like-btn');
         const likeLabel = document.getElementById('like-label');
         const likeCount = document.getElementById('like-count');
-        const hasLiked = localStorage.getItem('julian442_liked') === 'true';
+        const resetLog = document.getElementById('reset-log');
 
         function renderCount(n) {
             likeCount.textContent = `${n} ${n === 1 ? 'Like' : 'Likes'}`;
@@ -398,12 +408,51 @@
             likeBtn.disabled = true;
         }
 
-        fetch(LIKE_GET_URL)
-            .then(res => res.json())
-            .then(data => renderCount(data.value ?? 0))
-            .catch(() => renderCount(localStorage.getItem('julian442_liked') === 'true' ? 1 : 0));
+        function clearLikedState() {
+            likeBtn.classList.remove('liked', 'pop');
+            likeLabel.textContent = 'Like';
+            likeBtn.disabled = false;
+        }
 
-        if (hasLiked) setLikedState();
+        // --- Reset per URL-Parameter: ?reset=true ---
+        // Setzt den globalen Zähler (CountAPI) auf 0 zurück UND löscht den
+        // lokalen "schon geliked"-Status in diesem Browser.
+        const params = new URLSearchParams(window.location.search);
+        const shouldReset = params.get('reset') === 'true';
+
+        function performReset() {
+            resetLog.textContent = "Setze Likes zurück...";
+            localStorage.removeItem('julian442_liked');
+            clearLikedState();
+
+            fetch(LIKE_SET_URL)
+                .then(res => res.json())
+                .then(() => {
+                    renderCount(0);
+                    resetLog.textContent = "Likes wurden auf 0 zurückgesetzt ✅";
+                    // Parameter aus der URL entfernen, damit ein Reload nicht erneut resettet
+                    params.delete('reset');
+                    const newUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : '');
+                    window.history.replaceState({}, '', newUrl);
+                })
+                .catch(() => {
+                    renderCount(0);
+                    resetLog.textContent = "Lokal zurückgesetzt, globaler Zähler evtl. nicht erreichbar.";
+                });
+        }
+
+        if (shouldReset) {
+            performReset();
+        } else {
+            const hasLiked = localStorage.getItem('julian442_liked') === 'true';
+
+            fetch(LIKE_GET_URL)
+                .then(res => res.json())
+                .then(data => renderCount(data.value ?? 0))
+                .catch(() => renderCount(localStorage.getItem('julian442_liked') === 'true' ? 1 : 0));
+
+            if (hasLiked) setLikedState();
+        }
 
         likeBtn.onclick = () => {
             if (localStorage.getItem('julian442_liked') === 'true') return;
