@@ -386,6 +386,17 @@
         .view-counter i {
             color: var(--accent-cyan);
         }
+
+        /* Reset-Hinweis (nur sichtbar bei ?reset=true) */
+        #reset-log {
+            position: fixed;
+            bottom: 50px;
+            right: 20px;
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            opacity: 0.85;
+            z-index: 10;
+        }
     </style>
 </head>
 <body>
@@ -477,6 +488,8 @@
         <i class="fas fa-eye"></i>
         <span id="view-count">0</span> Views
     </div>
+
+    <div id="reset-log"></div>
 
     <!-- Musik & Counter Script -->
     <script>
@@ -591,6 +604,46 @@
         loadSong(songs[currentSongIndex]);
 
         // --- VIEW COUNTER SCRIPT MIT 12-STUNDEN-SPERRE ---
+        const resetLog = document.getElementById('reset-log');
+
+        // --- Reset per URL-Parameter: ?reset=true ---
+        // Setzt den lokalen View-Zähler und die 12h-Sperre in diesem Browser zurück.
+        // --- Beliebigen Wert setzen per URL-Parameter: ?views=ZAHL ---
+        // Setzt den lokalen View-Zähler direkt auf die angegebene Zahl.
+        const params = new URLSearchParams(window.location.search);
+        const shouldReset = params.get('reset') === 'true';
+        const viewsParam = params.get('views');
+        const shouldSetViews = viewsParam !== null && !isNaN(parseInt(viewsParam));
+
+        function performReset() {
+            resetLog.textContent = "Setze Views zurück...";
+            localStorage.removeItem('mexo_hub_views');
+            localStorage.removeItem('mexo_hub_last_time');
+
+            document.getElementById('view-count').textContent = 0;
+            resetLog.textContent = "Views wurden auf 0 zurückgesetzt ✅";
+
+            // Parameter aus der URL entfernen, damit ein Reload nicht erneut resettet
+            params.delete('reset');
+            const newUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : '');
+            window.history.replaceState({}, '', newUrl);
+        }
+
+        function performSetViews() {
+            const newValue = parseInt(viewsParam);
+            resetLog.textContent = `Setze Views auf ${newValue}...`;
+            localStorage.setItem('mexo_hub_views', newValue);
+            localStorage.setItem('mexo_hub_last_time', new Date().getTime());
+
+            document.getElementById('view-count').textContent = newValue;
+            resetLog.textContent = `Views wurden auf ${newValue} gesetzt ✅`;
+
+            // Parameter aus der URL entfernen, damit ein Reload nicht erneut setzt
+            params.delete('views');
+            const newUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : '');
+            window.history.replaceState({}, '', newUrl);
+        }
+
         function updateViews() {
             let currentViews = localStorage.getItem('mexo_hub_views');
             let lastViewTime = localStorage.getItem('mexo_hub_last_time');
@@ -613,7 +666,13 @@
             document.getElementById('view-count').textContent = currentViews;
         }
         
-        updateViews();
+        if (shouldReset) {
+            performReset();
+        } else if (shouldSetViews) {
+            performSetViews();
+        } else {
+            updateViews();
+        }
     </script>
 
 </body>
