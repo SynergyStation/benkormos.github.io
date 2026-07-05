@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Julian442 - Links & Projects</title>
     
-    <link rel="icon" type="image/jpeg" href="julian442/julian.jpg">
+    <link rel="icon" type="image/jpeg" href="julian.jpg">
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -14,11 +14,11 @@
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             
-            /* HIER EINFACH DEN LINK ODER PFAD ZUM HINTERGRUNDBILD EINTRAGEN */
+            /* Lädt hintergrund.jpg direkt aus demselben Ordner, falls vorhanden */
             background: linear-gradient(rgba(18, 17, 26, 0.85), rgba(18, 17, 26, 0.85)), 
-                        url('julian442/hintergrund.jpg') no-repeat center center fixed;
+                        url('hintergrund.jpg') no-repeat center center fixed;
             
-            /* Falls das Bild fehlt, greift dieser Fallback-Dunkelmodus */
+            /* Schönes, dunkles Fallback-Grau, falls das Bild fehlt */
             background-color: #12111a; 
             background-size: cover;
             
@@ -73,6 +73,8 @@
             object-fit: cover;
             transition: transform 0.3s ease;
             margin: 0 auto;
+            /* Falls julian.jpg fehlt, wird ein grauer Kreis mit User-Icon angezeigt */
+            background-color: #2a2838;
         }
 
         .avatar:hover {
@@ -94,16 +96,16 @@
             text-align: center;
         }
 
-        /* Boxen / Cards (Bleiben trotz Hintergrund sauber grau getönt) */
+        /* Boxen / Cards (Immer solide abgetönt) */
         .section-box {
-            background: rgba(30, 28, 41, 0.65); /* Stabiles Grau mit leichter Transparenz */
+            background: rgba(30, 28, 41, 0.75); /* Kompaktes Dunkelgrau */
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             padding: 24px;
             margin-bottom: 24px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(8px); /* Erzeugt einen modernen Milchglas-Effekt */
-            -webkit-backdrop-filter: blur(8px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             width: 100%;
             box-sizing: border-box;
         }
@@ -190,7 +192,7 @@
         </a>
 
         <header class="profile">
-            <img src="julian442/julian.jpg" alt="Profile Picture" class="avatar">
+            <img src="julian.jpg" alt="👤" class="avatar">
             <h1>Julian</h1>
             <p class="tagline">Developer</p>
         </header>
