@@ -225,7 +225,7 @@
             letter-spacing: 0.2px;
         }
 
-        /* Kleine unauffällige Statusanzeige für Musikfehler im Footer der Card */
+        /* Statusanzeige für Musik */
         #audio-status-log {
             font-size: 0.75rem;
             color: #d1447a;
@@ -252,9 +252,8 @@
     <span class="sakura" style="left:90%; animation-duration:13s; animation-delay:2.5s;">🌸</span>
     <span class="sakura" style="left:96%; font-size:1.1rem; animation-duration:9s; animation-delay:4s;">🌸</span>
 
-    <!-- preload="auto" zwingt den Browser dazu, die Datei direkt aggressiv zu laden -->
     <audio id="bg-audio" loop preload="auto">
-        <source src="/music/song_Julian442.mp3" type="audio/mpeg">
+        <source src="music/song_Julian442.mp3" type="audio/mpeg">
     </audio>
 
     <div class="music-controls">
@@ -308,39 +307,31 @@
         }
         updateSliderTrack();
 
-        // Überwacht Fehler beim direkten Laden der Musikdatei
+        // Überwacht Ladefehler der Datei
         audio.addEventListener('error', (e) => {
             statusLog.textContent = "Fehler: Musikdatei nicht gefunden oder defekt!";
-            console.error("Audio Error Event:", e);
+            console.error("Audio-Fehler aufgetreten:", e);
         });
 
         audio.addEventListener('canplaythrough', () => {
-            statusLog.textContent = "Musik bereit zum Abspielen ✨";
+            if (audio.paused) {
+                statusLog.textContent = "Musik bereit. Klicke oben links zum Starten 🎵";
+            }
         });
 
-        let isPlayPromisePending = false;
-
-        function playAudioSecurely() {
-            if (isPlayPromisePending) return;
-            isPlayPromisePending = true;
-            
-            statusLog.textContent = "Starte Musik...";
-            audio.play()
-                .then(() => {
-                    isPlayPromisePending = false;
-                    playIcon.className = "fas fa-pause";
-                    statusLog.textContent = "Musik läuft 🎵";
-                })
-                .catch(err => {
-                    isPlayPromisePending = false;
-                    statusLog.textContent = "Browser blockiert Autoplay. Bitte klicke auf Play!";
-                    console.warn("Play blockiert:", err);
-                });
-        }
-
+        // Direkter Klick auf den runden Play/Pause-Button oben links
         playBtn.onclick = () => {
             if (audio.paused) {
-                playAudioSecurely();
+                statusLog.textContent = "Wiedergabe angefordert...";
+                audio.play()
+                    .then(() => {
+                        playIcon.className = "fas fa-pause";
+                        statusLog.textContent = "Musik läuft 🎵";
+                    })
+                    .catch(err => {
+                        statusLog.textContent = "Wiedergabe vom Browser verweigert.";
+                        console.error("Fehler beim Abspielen:", err);
+                    });
             } else {
                 audio.pause();
                 playIcon.className = "fas fa-play";
@@ -360,22 +351,26 @@
             updateSliderTrack();
         };
 
-        // --- Robuste Aktivierung bei Interaktion ---
+        // Autoplay-Versuch (wird meistens geblockt, fängt aber die erste Nutzerinteraktion ab)
         function initAutoplay() {
-            // Erster direkter Versuch
-            playAudioSecurely();
-
-            // Fallback auf jegliche Nutzerinteraktionen im Dokument
-            const interactionEvents = ['click', 'touchstart', 'keydown', 'pointerdown'];
-            
-            const triggerOnUser = () => {
-                if (audio.paused) {
-                    playAudioSecurely();
-                }
-                interactionEvents.forEach(event => document.removeEventListener(event, triggerOnUser));
-            };
-
-            interactionEvents.forEach(event => document.addEventListener(event, triggerOnUser, { once: true, passive: true }));
+            audio.play()
+                .then(() => {
+                    playIcon.className = "fas fa-pause";
+                    statusLog.textContent = "Musik läuft 🎵";
+                })
+                .catch(() => {
+                    const interactionEvents = ['click', 'touchstart', 'keydown'];
+                    const triggerOnUser = () => {
+                        if (audio.paused) {
+                            audio.play().then(() => {
+                                playIcon.className = "fas fa-pause";
+                                statusLog.textContent = "Musik läuft 🎵";
+                            }).catch(() => {});
+                        }
+                        interactionEvents.forEach(event => document.removeEventListener(event, triggerOnUser));
+                    };
+                    interactionEvents.forEach(event => document.addEventListener(event, triggerOnUser, { once: true, passive: true }));
+                });
         }
 
         if (document.readyState === 'loading') {
