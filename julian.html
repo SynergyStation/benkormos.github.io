@@ -145,14 +145,24 @@
             color: #5a3d47;
         }
 
-        .socials { display: flex; justify-content: center; gap: 22px; font-size: 1.5rem; margin-top: 25px; }
+        .socials { display: flex; justify-content: center; gap: 22px; font-size: 1.5rem; margin-top: 25px; align-items: center; }
         .socials a {
             color: #b23a63;
             opacity: 0.9;
             transition: 0.3s;
             display: inline-block;
+            text-decoration: none;
         }
         .socials a:hover { opacity: 1; color: #ff5c8a; transform: translateY(-3px) scale(1.1); }
+        
+        /* Spezifische Größe für das Sakura-Emoji im Socials-Bereich */
+        .socials a .cherry-icon {
+            font-style: normal;
+            font-size: 1.45rem;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
 
         .corner-link {
             position: fixed;
@@ -280,6 +290,7 @@
             <a href="https://twitch.tv/julian442_" title="Twitch"><i class="fab fa-twitch"></i></a>
             <a href="https://youtube.com/@Julian_2044" title="YouTube"><i class="fab fa-youtube"></i></a>
             <a href="https://dc.gg/ben" title="Discord"><i class="fab fa-discord"></i></a>
+            <a href="https://stock.wisp.uno/" title="Wisp Stock" target="_blank" rel="noopener noreferrer"><span class="cherry-icon">🌸</span></a>
         </div>
 
         <div class="like-wrap">
