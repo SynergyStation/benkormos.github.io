@@ -3,678 +3,733 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benkormos</title>
+    <title>BenKormos | Cyber Terminal</title>
     
+    <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="pictures/benkormos.profilbild.jpg">
     
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 
     <style>
         :root {
-            --bg-main: #020204;
-            --glass: rgba(10, 10, 18, 0.4);
-            --glass-hover: rgba(99, 102, 241, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.05);
-            --accent: #6366f1;
-            --accent-glow: rgba(99, 102, 241, 0.2);
-            --text-main: #f8fafc;
-            --text-muted: #64748b;
-            --font-mono: 'Courier New', Courier, monospace;
+            --bg-gradient: radial-gradient(circle at 50% 50%, #141226 0%, #070610 100%);
+            --panel-bg: rgba(18, 16, 36, 0.65);
+            --panel-border: rgba(129, 140, 248, 0.15);
+            --accent-glow: rgba(139, 92, 246, 0.3);
+            --accent-primary: #a78bfa;
+            --accent-secondary: #818cf8;
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --font-code: 'Consolas', 'Courier New', monospace;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-main);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg-gradient);
             color: var(--text-main);
             min-height: 100vh;
-            padding: 20px;
             display: flex;
-            flex-direction: column;
-            gap: 20px;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.005) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.005) 1px, transparent 1px),
-                radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 50%);
-            background-size: 40px 40px, 40px 40px, auto;
-        }
-
-        /* SYSTEM HEADER BAR */
-        .system-header {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 16px;
-            padding: 15px 25px;
-            display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            padding: 40px 20px;
+            overflow-x: hidden;
         }
 
-        .sys-identity {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        /* --- BACKGROUND DECORATION --- */
+        .bg-glow-orb {
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, rgba(0,0,0,0) 70%);
+            top: -100px;
+            left: -100px;
+            z-index: -1;
         }
 
-        .sys-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 1px solid var(--accent);
-            object-fit: cover;
-        }
-
-        /* Typewriter Inside Header */
-        .sys-title-wrapper {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .username {
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            color: #fff;
-            border-right: 2px solid var(--accent);
-            white-space: nowrap;
-            overflow: hidden;
-            width: 0;
-            animation: typing 3.5s steps(9, end) infinite alternate, blink 0.75s step-end infinite;
-        }
-
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        @keyframes blink { 50% { border-color: transparent } }
-
-        .sys-status-badges {
-            display: flex;
-            gap: 15px;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-        }
-
-        .badge {
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--glass-border);
-            padding: 6px 12px;
-            border-radius: 8px;
-            color: var(--text-muted);
-        }
-        .badge.active {
-            color: #10b981;
-            border-color: rgba(16, 185, 129, 0.2);
-            background: rgba(16, 185, 129, 0.02);
-        }
-
-        .return-btn {
-            font-family: var(--font-mono);
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .return-btn:hover { color: var(--accent); }
-
-
-        /* 3-COLUMN DASHBOARD GRID */
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: 320px 1fr 340px;
-            gap: 20px;
-            flex: 1;
-        }
-
-        /* BASE CARD DESIGN */
-        .panel-card {
-            background: var(--glass);
+        /* --- MAIN DASHBOARD CONTAINER --- */
+        .terminal-container {
+            max-width: 1100px;
+            width: 100%;
+            background: var(--panel-bg);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 25px;
+            border: 1px solid var(--panel-border);
+            border-radius: 24px;
+            padding: 45px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 40px 0 var(--accent-glow);
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 50px;
+        }
+
+        /* --- LEFT COLUMN: PROFILE & LINKS --- */
+        .profile-axis {
             display: flex;
             flex-direction: column;
+            gap: 30px;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            padding-right: 20px;
+        }
+
+        .avatar-box {
+            text-align: center;
             position: relative;
-            overflow: hidden;
         }
 
-        .panel-card:hover {
-            border-color: rgba(99, 102, 241, 0.2);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        .avatar-box img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-primary);
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
-        .panel-title {
-            font-size: 0.8rem;
-            font-family: var(--font-mono);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--accent);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        /* COLUMN 1: HARDWARE & TECH STACK SUB-GRID */
-        .column-left {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        /* OS Layout List */
-        .os-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .os-card {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 14px;
-            background: rgba(255,255,255,0.01);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            cursor: pointer;
-        }
-
-        .os-card i { font-size: 1.4rem; color: var(--text-muted); }
-        .os-card-meta { display: flex; flex-direction: column; }
-        .os-title-text { font-size: 0.9rem; font-weight: 600; color: #fff; }
-        .os-ver-text { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); }
-
-        .os-card:hover {
-            background: rgba(255, 255, 255, 0.02);
-            transform: translateX(4px);
-        }
-        .os-card.ubuntu:hover { border-color: #e95420; }
-        .os-card.ubuntu:hover i { color: #e95420; }
-        .os-card.windows:hover { border-color: #0078d4; }
-        .os-card.windows:hover i { color: #0078d4; }
-
-        /* Compact Tech Pill Blocks */
-        .tech-box-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .tech-pill {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px;
-            background: rgba(255,255,255,0.01);
-            border: 1px solid var(--glass-border);
-            border-radius: 12px;
-            font-size: 0.8rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
-
-        .tech-pill i { font-size: 1.2rem; }
-        .tech-pill:hover { transform: translateY(-2px); background: rgba(255,255,255,0.03); }
-        .tech-pill.html:hover { border-color: #e34c26; color: #e34c26; }
-        .tech-pill.css:hover { border-color: #264de4; color: #264de4; }
-        .tech-pill.js:hover { border-color: #f7df1e; color: #f7df1e; }
-        .tech-pill.python:hover { border-color: #3776ab; color: #3776ab; }
-        .tech-pill.cpp:hover { border-color: #00599c; color: #00599c; }
-        .tech-pill.java:hover { border-color: #f89820; color: #f89820; }
-
-
-        /* COLUMN 2: CENTER HUB (BIO & NETWORKS) */
-        .column-center {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .bio-text {
-            font-size: 1rem;
-            line-height: 1.7;
-            color: #cbd5e1;
-        }
-
-        .network-row-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: auto;
-        }
-
-        .network-node {
-            background: rgba(255,255,255,0.01);
-            border: 1px solid var(--glass-border);
-            padding: 20px;
-            border-radius: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            gap: 15px;
-        }
-
-        .net-meta h4 { font-size: 1rem; color: #fff; margin-bottom: 2px; }
-        .net-meta span { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); }
-
-
-        /* COLUMN 3: REPOSITORIES & LINKS */
-        .column-right {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .repo-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .repo-mini-card {
-            background: rgba(255,255,255,0.01);
-            border: 1px solid var(--glass-border);
-            padding: 16px;
-            border-radius: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .repo-mini-card h5 { font-size: 0.95rem; color: #fff; }
-        .repo-mini-card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
-        
-        .inline-link {
-            font-size: 0.75rem;
-            color: var(--accent);
-            text-decoration: none;
-            font-family: var(--font-mono);
+        .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
+            background: rgba(52, 211, 153, 0.1);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: #34d399;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-family: var(--font-code);
+            margin-top: 14px;
+        }
+
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background: #34d399;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .profile-title h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-title p {
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            color: var(--accent-secondary);
             margin-top: 4px;
         }
-        .inline-link:hover { color: #fff; }
 
-        /* Links Vertical Alignment */
-        .link-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 8px;
+        .link-mesh {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .social-btn {
+        .link-node {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 12px 16px;
-            background: rgba(255,255,255,0.01);
-            border: 1px solid var(--glass-border);
-            border-radius: 10px;
-            color: #cbd5e1;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            color: var(--text-muted);
             text-decoration: none;
-            font-size: 0.85rem;
-        }
-        .social-btn:hover {
-            border-color: var(--accent);
-            background: var(--glass-hover);
-            color: #fff;
-            transform: translateX(-4px);
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
         }
 
-        /* BUTTON ARCHITECTURE */
-        .modern-action-btn {
+        .link-node:hover {
+            background: rgba(139, 92, 246, 0.1);
+            border-color: var(--accent-primary);
+            color: #fff;
+            transform: translateX(4px);
+        }
+
+        .link-node i {
+            font-size: 1.1rem;
+        }
+
+        /* --- RIGHT COLUMN: OPERATIONAL DATA --- */
+        .content-axis {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .deck-section {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section-tag {
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--accent-primary);
+            letter-spacing: 1px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 6px;
-            background: var(--glass-hover);
-            border: 1px solid var(--glass-border);
-            color: var(--text-main);
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            gap: 8px;
+        }
+
+        .bio-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        /* GRID LAYOUTS */
+        .sub-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .interactive-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .interactive-card:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(129, 140, 248, 0.4);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .card-core {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .interactive-card i {
+            font-size: 1.5rem;
+            color: var(--accent-secondary);
+        }
+
+        .card-meta h4 {
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .card-meta p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .badge-pill {
+            font-family: var(--font-code);
+            font-size: 0.65rem;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+        }
+
+        .badge-pill.prime {
+            background: rgba(167, 139, 250, 0.15);
+            color: var(--accent-primary);
+            border: 1px solid rgba(167, 139, 250, 0.3);
+        }
+
+        /* TECH BOX TOKEN GRID */
+        .tech-matrix {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .tech-token {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .tech-token:hover {
+            background: rgba(139, 92, 246, 0.05);
+            border-color: rgba(139, 92, 246, 0.3);
+            color: #fff;
+        }
+
+        /* REPO PACKS */
+        .repo-rack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .repo-banner {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .repo-info h4 {
+            font-size: 1.05rem;
+            color: #fff;
+        }
+
+        .repo-info p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* BUTTON ENGAGEMENT */
+        .cyber-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+            color: #070610;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 700;
             text-decoration: none;
             cursor: pointer;
-        }
-        .modern-action-btn:hover {
-            border-color: var(--accent);
-            background: rgba(99, 102, 241, 0.15);
+            box-shadow: 0 4px 15px var(--accent-glow);
+            transition: transform 0.2s ease, opacity 0.2s ease;
         }
 
+        .cyber-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.95;
+        }
 
-        /* MODAL INFOPANEL SYSTEM */
-        .modal-overlay {
+        .cyber-btn.outline {
+            background: transparent;
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+        }
+
+        .cyber-btn.outline:hover {
+            border-color: var(--accent-primary);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .action-link {
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            color: var(--accent-primary);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .action-link:hover { text-decoration: underline; }
+
+        /* --- OVERLAY MODAL SYSTEM --- */
+        .modal-blur-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 2, 4, 0.8);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(7, 6, 16, 0.8);
+            backdrop-filter: blur(10px);
             z-index: 1000;
             display: flex;
             justify-content: center;
             align-items: center;
             opacity: 0;
             pointer-events: none;
+            transition: opacity 0.3s ease;
         }
 
-        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-blur-screen.active { opacity: 1; pointer-events: auto; }
 
-        .modal-box {
-            max-width: 480px;
+        .modal-vault {
+            max-width: 500px;
             width: 100%;
-            border-color: var(--accent);
-            box-shadow: 0 0 40px var(--accent-glow);
+            background: #16142c;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 24px;
+            padding: 35px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 30px rgba(139, 92, 246, 0.2);
             transform: scale(0.95);
+            transition: transform 0.3s ease;
         }
-        .modal-overlay.active .modal-box { transform: scale(1); }
+        .modal-blur-screen.active .modal-vault { transform: scale(1); }
 
-        .modal-close {
+        .close-vault-btn {
             position: absolute;
-            top: 20px; right: 20px;
-            background: transparent;
+            top: 25px; right: 25px;
+            background: rgba(255, 255, 255, 0.05);
             border: none;
             color: var(--text-muted);
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
+            width: 30px; height: 30px;
+            border-radius: 50%;
             cursor: pointer;
-        }
-        .modal-close:hover { color: var(--accent); }
-
-        .modal-header {
             display: flex;
             align-items: center;
-            gap: 15px;
+            justify-content: center;
+        }
+        .close-vault-btn:hover { color: #fff; background: rgba(255,255,255,0.1); }
+
+        .modal-lead-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
             margin-bottom: 20px;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 15px;
         }
-        .modal-header i { font-size: 2rem; }
-        .modal-title-container h3 { font-size: 1.2rem; color: #fff; }
-        .modal-title-container span { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono); }
+        .modal-lead-row i { font-size: 2rem; }
+        .modal-lead-titles h3 { font-size: 1.2rem; color: #fff; }
+        .modal-lead-titles span { font-family: var(--font-code); font-size: 0.7rem; color: var(--accent-primary); }
 
-        .modal-body p { font-size: 0.9rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 20px; }
+        .modal-body-text { font-size: 0.95rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 25px; }
 
-        .modal-meta {
+        .modal-status-box {
+            font-family: var(--font-code);
             font-size: 0.75rem;
-            background: rgba(255,255,255,0.01);
-            padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 14px;
             border-radius: 10px;
-            border-left: 3px solid var(--accent);
-            color: var(--text-muted);
-            font-family: var(--font-mono);
+            border-left: 3px solid var(--accent-secondary);
         }
 
-        /* GLOBAL FOOTER */
-        .system-footer {
-            text-align: center;
-            font-family: var(--font-mono);
+        /* FOOTER */
+        .terminal-footer {
+            grid-column: span 2;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-code);
             font-size: 0.7rem;
-            color: #334155;
-            letter-spacing: 1px;
-            padding: 10px;
+            color: var(--text-muted);
         }
 
-        /* RESPONSIVE BREAKPOINTS */
-        @media (max-width: 1100px) {
-            .dashboard-grid { grid-template-columns: 1fr 1fr; }
-            .column-right { grid-column: span 2; }
+        .footer-left-btn {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
-        @media (max-width: 768px) {
-            .dashboard-grid { grid-template-columns: 1fr; }
-            .column-right { grid-column: span 1; }
-            .network-row-layout { grid-template-columns: 1fr; }
+        .footer-left-btn:hover { color: #fff; }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+
+        /* --- RESPONSIVE ADAPTATION --- */
+        @media (max-width: 900px) {
+            .terminal-container { grid-template-columns: 1fr; gap: 40px; padding: 30px; }
+            .profile-axis { border-right: none; padding-right: 0; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 30px; }
+            .sub-grid { grid-template-columns: 1fr; }
+            .tech-matrix { grid-template-columns: 1fr 1fr; }
+            .terminal-footer { grid-column: span 1; flex-direction: column; gap: 15px; text-align: center; }
+            .repo-banner { flex-direction: column; align-items: flex-start; gap: 16px; }
         }
     </style>
 </head>
 <body>
 
+    <div class="bg-glow-orb"></div>
     <audio id="bg-music" autoplay loop></audio>
 
-    <div class="modal-overlay" id="info-modal">
-        <div class="panel-card modal-box">
-            <button class="modal-close" id="close-modal">[ CLOSE_TERMINAL ]</button>
-            <div class="modal-header">
+    <!-- CORE INTERFACE DIALOG BOX -->
+    <div class="modal-blur-screen" id="info-modal">
+        <div class="modal-vault">
+            <button class="close-vault-btn" id="close-modal"><i class="fas fa-times"></i></button>
+            <div class="modal-lead-row">
                 <i id="m-icon"></i>
-                <div class="modal-title-container">
-                    <h3 id="m-title">Terminal</h3>
-                    <span id="m-type">// STRUCT DATAFEED</span>
+                <div class="modal-lead-titles">
+                    <h3 id="m-title">Registry Node</h3>
+                    <span id="m-type">// PARAM_LOG</span>
                 </div>
             </div>
-            <div class="modal-body">
-                <p id="m-desc">Data payload segment.</p>
-                <div class="modal-meta" id="m-use">
-                    EXECUTION STATUS
-                </div>
+            <p class="modal-body-text" id="m-desc">Matrix Node Payload description.</p>
+            <div class="modal-status-box" id="m-use">
+                EXECUTION PIPELINE READY
             </div>
         </div>
     </div>
 
-    <header class="system-header">
-        <div class="sys-identity">
-            <img src="pictures/benkormos.profilbild.jpg" alt="BenKormos" class="sys-avatar">
-            <div class="sys-title-wrapper">
-                <h2 class="username">BenKormos</h2>
-            </div>
-        </div>
-        <div class="sys-status-badges">
-            <div class="badge active">// SYS_STATUS: SECURE</div>
-            <div class="badge">// ROLE: CORE ARCHITECT</div>
-            <div class="badge">// LEVEL: 2026_STAGE</div>
-        </div>
-        <a href="/" class="return-btn"><i class="fas fa-code-branch"></i> RETURN()</a>
-    </header>
-
-    <div class="dashboard-grid">
+    <!-- MAIN DASHBOARD -->
+    <div class="terminal-container">
         
-        <div class="column-left">
-            
-            <section class="panel-card">
-                <div class="panel-title"><i class="fas fa-server"></i> Platform Subsystems</div>
-                <div class="os-list">
-                    <div class="os-card windows" data-node="win10">
-                        <i class="fab fa-windows"></i>
-                        <div class="os-card-meta">
-                            <span class="os-title-text">Windows 10</span>
-                            <span class="os-ver-text">Workstation [HOST]</span>
-                        </div>
-                    </div>
-                    <div class="os-card windows" data-node="win11">
-                        <i class="fab fa-windows"></i>
-                        <div class="os-card-meta">
-                            <span class="os-title-text">Windows 11</span>
-                            <span class="os-ver-text">Pro / Core</span>
-                        </div>
-                    </div>
-                    <div class="os-card ubuntu" data-node="ubuntu">
-                        <i class="fab fa-ubuntu"></i>
-                        <div class="os-card-meta">
-                            <span class="os-title-text">Ubuntu Server</span>
-                            <span class="os-ver-text">v24.04 LTS</span>
-                        </div>
+        <!-- SIDEBAR PLATFORM HUB -->
+        <aside class="profile-axis">
+            <div class="avatar-box">
+                <img src="pictures/benkormos.profilbild.jpg" alt="BenKormos">
+                <div>
+                    <div class="status-badge">
+                        <div class="status-dot"></div> SECURE_NODE // 2026
                     </div>
                 </div>
-            </section>
+            </div>
 
-            <section class="panel-card">
-                <div class="panel-title"><i class="fas fa-microchip"></i> Inventoried Stacks</div>
-                <div class="tech-box-grid">
-                    <div class="tech-pill html" data-node="html"><i class="devicon-html5-plain"></i>HTML5</div>
-                    <div class="tech-pill css" data-node="css"><i class="devicon-css3-plain"></i>CSS3</div>
-                    <div class="tech-pill js" data-node="js"><i class="devicon-javascript-plain"></i>JS</div>
-                    <div class="tech-pill python" data-node="python"><i class="devicon-python-plain"></i>Python</div>
-                    <div class="tech-pill cpp" data-node="cpp"><i class="devicon-cplusplus-plain"></i>C++</div>
-                    <div class="tech-pill java" data-node="java"><i class="devicon-java-plain"></i>Java</div>
-                </div>
-            </section>
+            <div class="profile-title">
+                <h1>BenKormos</h1>
+                <p>Systems Architect</p>
+            </div>
 
-        </div>
+            <nav class="link-mesh">
+                <a href="https://github.com/benbroc" target="_blank" class="link-node"><span>GitHub</span><i class="fab fa-github"></i></a>
+                <a href="https://youtube.com/@benkormos" target="_blank" class="link-node"><span>YouTube</span><i class="fab fa-youtube"></i></a>
+                <a href="https://twitch.tv/benkormos" target="_blank" class="link-node"><span>Twitch</span><i class="fab fa-twitch"></i></a>
+                <a href="https://dc.gg/ben" target="_blank" class="link-node"><span>Discord</span><i class="fab fa-discord"></i></a>
+                <a href="https://last.fm/user/ben_bro_c" target="_blank" class="link-node"><span>Last.fm</span><i class="fab fa-lastfm"></i></a>
+                <a href="https://www.roblox.com/users/6073597399/profile" target="_blank" class="link-node"><span>Roblox</span><i class="fab fa-roblox"></i></a>
+            </nav>
+        </aside>
 
-        <div class="column-center">
+        <!-- DATA VIEWPORT -->
+        <main class="content-axis">
             
-            <main class="panel-card" style="flex: 1;">
-                <div class="panel-title"><i class="fas fa-terminal"></i> Profile Overview</div>
+            <!-- SUMMARY -->
+            <section class="deck-section">
+                <div class="section-tag"><i class="fas fa-user-terminal"></i> 01 / Identity Core</div>
                 <p class="bio-text">
-                    Welcome to my space!<br><br>
-                    I love building codes, tinkering with code, and sharing my latest projects and favorite links right here with you. Everything is built to adapt dynamically.
+                    Welcome to my space! I love building codes, tinkering with code, and sharing my latest projects and favorite links right here with you. Everything is built to adapt dynamically.
                 </p>
+                <div class="sub-grid">
+                    <div class="interactive-card" onclick="window.open('https://github.com/SynergyStation', '_blank')">
+                        <div class="card-core">
+                            <i class="fas fa-satellite"></i>
+                            <div class="card-meta">
+                                <h4>SYNERGYstation</h4>
+                                <p>Owner & Main Developer</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-external-link-alt" style="font-size: 0.8rem; opacity: 0.5;"></i>
+                    </div>
+                    <div class="interactive-card" onclick="window.open('https://github.com/Benkormos', '_blank')">
+                        <div class="card-core">
+                            <i class="fas fa-code-branch"></i>
+                            <div class="card-meta">
+                                <h4>BenKormos Prod.</h4>
+                                <p>Owner & Developer</p>
+                            </div>
+                        </div>
+                        <i class="fas fa-external-link-alt" style="font-size: 0.8rem; opacity: 0.5;"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ENVIRONMENT DECK -->
+            <section class="deck-section">
+                <div class="section-tag"><i class="fas fa-server"></i> 02 / Environment Matrix</div>
                 
-                <div class="network-row-layout">
-                    <div class="network-node">
-                        <div class="net-meta">
-                            <h4>SYNERGYstation</h4>
-                            <span>Owner & Developer</span>
+                <!-- OS Cards -->
+                <div class="sub-grid">
+                    <div class="interactive-card" data-node="win10">
+                        <div class="card-core">
+                            <i class="fab fa-windows"></i>
+                            <div class="card-meta">
+                                <h4>Windows 10</h4>
+                                <p>Host Workstation</p>
+                            </div>
                         </div>
-                        <a href="https://github.com/SynergyStation" target="_blank" class="modern-action-btn">Sync Terminal</a>
+                        <span class="badge-pill prime">Host</span>
                     </div>
-                    <div class="network-node">
-                        <div class="net-meta">
-                            <h4>BenKormos Prod.</h4>
-                            <span>Owner & Developer</span>
+
+                    <div class="interactive-card" data-node="macos">
+                        <div class="card-core">
+                            <i class="fab fa-apple"></i>
+                            <div class="card-meta">
+                                <h4>macOS Ventura</h4>
+                                <p>v13.7.8 Architecture</p>
+                            </div>
                         </div>
-                        <a href="https://github.com/Benkormos" target="_blank" class="modern-action-btn">Sync Terminal</a>
+                        <span class="badge-pill prime">2nd Main</span>
+                    </div>
+
+                    <div class="interactive-card" data-node="win11">
+                        <div class="card-core">
+                            <i class="fab fa-windows"></i>
+                            <div class="card-meta">
+                                <h4>Windows 11</h4>
+                                <p>Pro Core System</p>
+                            </div>
+                        </div>
+                        <span class="badge-pill">Virtual</span>
+                    </div>
+
+                    <div class="interactive-card" data-node="ubuntu">
+                        <div class="card-core">
+                            <i class="fab fa-ubuntu"></i>
+                            <div class="card-meta">
+                                <h4>Ubuntu Server</h4>
+                                <p>v24.04 LTS Kernel</p>
+                            </div>
+                        </div>
+                        <span class="badge-pill">Backend</span>
                     </div>
                 </div>
-            </main>
 
-        </div>
-
-        <div class="column-right">
-            
-            <section class="panel-card">
-                <div class="panel-title"><i class="fas fa-folder-closed"></i> Active Archives</div>
-                <div class="repo-stack">
-                    <div class="repo-mini-card">
-                        <h5>Malware Database</h5>
-                        <p>My Malware Database for entertainment purposes only.</p>
-                        <a href="https://github.com/BenKormos/MalwareDatabase/tree/main/SteamTrashVirus" target="_blank" class="inline-link">Fetch Blueprint <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="repo-mini-card">
-                        <h5>Voltix Minecraft</h5>
-                        <p>Began February 11th, terminated in May/June. Repository assets remain permanently public.</p>
-                        <a href="https://github.com/SynergyStation/voltix-website-2.0" target="_blank" class="inline-link">Fetch Blueprint <i class="fas fa-arrow-right"></i></a>
-                    </div>
+                <!-- Language Tokens -->
+                <div class="tech-matrix">
+                    <div class="tech-token" data-node="html"><i class="devicon-html5-plain" style="color: #e34c26;"></i> HTML5</div>
+                    <div class="tech-token" data-node="css"><i class="devicon-css3-plain" style="color: #264de4;"></i> CSS3</div>
+                    <div class="tech-token" data-node="js"><i class="devicon-javascript-plain" style="color: #f7df1e;"></i> JavaScript</div>
+                    <div class="tech-token" data-node="python"><i class="devicon-python-plain" style="color: #3776ab;"></i> Python</div>
+                    <div class="tech-token" data-node="cpp"><i class="devicon-cplusplus-plain" style="color: #00599c;"></i> C++</div>
+                    <div class="tech-token" data-node="java"><i class="devicon-java-plain" style="color: #f89820;"></i> Java</div>
                 </div>
             </section>
 
-            <section class="panel-card" style="gap: 15px;">
-                <div class="panel-title"><i class="fas fa-link"></i> External Endpoints</div>
-                <div class="link-grid">
-                    <a href="https://github.com/benbroc" target="_blank" class="social-btn"><span>GitHub</span> <i class="fab fa-github"></i></a>
-                    <a href="https://youtube.com/@benkormos" target="_blank" class="social-btn"><span>YouTube</span> <i class="fab fa-youtube"></i></a>
-                    <a href="https://twitch.tv/benkormos" target="_blank" class="social-btn"><span>Twitch</span> <i class="fab fa-twitch"></i></a>
-                    <a href="https://dc.gg/ben" target="_blank" class="social-btn"><span>Discord</span> <i class="fab fa-discord"></i></a>
-                    <a href="https://last.fm/user/ben_bro_c" target="_blank" class="social-btn"><span>Last.fm</span> <i class="fab fa-lastfm"></i></a>
-                    <a href="https://www.roblox.com/users/6073597399/profile" target="_blank" class="social-btn"><span>Roblox</span> <i class="fab fa-roblox"></i></a>
+            <!-- CODE REPOSITORIES -->
+            <section class="deck-section">
+                <div class="section-tag"><i class="fas fa-folder-open"></i> 03 / Code Vaults</div>
+                <div class="repo-rack">
+                    <div class="repo-banner">
+                        <div class="repo-info">
+                            <h4>Malware Database</h4>
+                            <p>My Malware Database for entertainment purposes only.</p>
+                        </div>
+                        <a href="https://github.com/BenKormos/MalwareDatabase/tree/main/SteamTrashVirus" target="_blank" class="action-link">Open Source <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="repo-banner">
+                        <div class="repo-info">
+                            <h4>Voltix Minecraft</h4>
+                            <p>Began February 11th, terminated in May/June. Assets public.</p>
+                        </div>
+                        <a href="https://github.com/SynergyStation/voltix-website-2.0" target="_blank" class="action-link">Open Source <i class="fas fa-arrow-right"></i></a>
+                    </div>
                 </div>
-                <a href="https://github.com/BenKormos" target="_blank" class="modern-action-btn" style="background: var(--accent); border: none; color: #fff; margin-top: auto;">Extract Open Source Blueprint</a>
+                <div style="margin-top: 10px;">
+                    <a href="https://github.com/BenKormos" target="_blank" class="cyber-btn">Access Global Repository</a>
+                </div>
             </section>
 
-        </div>
+        </main>
+
+        <!-- DASHBOARD SYSTEM FOOTER -->
+        <footer class="terminal-footer">
+            <a href="/" class="footer-left-btn"><i class="fas fa-code-branch"></i> return_to_root</a>
+            <span>SYSTEM_STATUS: OPERATIONAL // RUNTIME_2026 // @BENKORMOS</span>
+        </footer>
 
     </div>
 
-    <footer class="system-footer">
-        // STATUS: COMPILED_SUCCESSFULLY // ENV_2026 // SYSTEM TERMINAL ACTIVE // @BENKORMOS
-    </footer>
-
+    <!-- LOGIC PROCESSING SYSTEM -->
     <script>
         const centralDatabase = {
-            // Tech Core
             html: {
-                title: "HTML5",
-                type: "MARKUP ENGINE // LAYOUT_CORE",
+                title: "HTML5 Engine",
+                type: "DOM_STRUCTURE_MARKUP",
                 icon: "devicon-html5-plain",
                 color: "#e34c26",
-                desc: "Hypertext Markup Language. The fundamental architecture of the web ecosystem. Used to structuralize text layouts, hyperlink hubs, and content domains within the centralized DOM grid.",
-                use: "PRIMARY OPERATION: Structural DOM Mapping & Core Web Layouts"
+                desc: "Hypertext Markup Language. The structural skeleton of web modules. Deployed to map out layouts, viewport anchors, and semantic elements inside the centralized document model.",
+                use: "TASK: Blueprint Compilation & Layout Formatting"
             },
             css: {
-                title: "CSS3",
-                type: "STYLESHEET GRAPHICS MATRIX",
+                title: "CSS3 Matrix",
+                type: "GRAPHICS_SHADING_INTERFACE",
                 icon: "devicon-css3-plain",
                 color: "#264de4",
-                desc: "Cascading Style Sheets. Controls responsive viewport processing, deep variable declarations, complex fluid layouts, and low-overhead animation loops.",
-                use: "PRIMARY OPERATION: UI Theming, Flex/Grid Systems & Fluid Shaders"
+                desc: "Cascading Style Sheets. Controls the entire asset layout properties, modern glassmorphic blurring tokens, variables pipelines, and active hover state feedback.",
+                use: "TASK: Glassmorphism Render, UI Formatting & Custom Responsive Shaders"
             },
             js: {
-                title: "JavaScript",
-                type: "RUNTIME SCRIPT ENVIRONMENT",
+                title: "JavaScript Runtime",
+                type: "ASYNCHRONOUS_CORE_SCRIPTS",
                 icon: "devicon-javascript-plain",
                 color: "#f7df1e",
-                desc: "High-level asynchronous runtime. Powers active state machine processes, responsive interface mutations, network data handshakes, and dynamically spawns this responsive diagnostic viewport.",
-                use: "PRIMARY OPERATION: Dynamic Interaction & Async Network Pipelines"
+                desc: "High-level ECMAScript controller engine. Drives interactive modal execution pipelines, background loop checks, and state monitoring without overhead delays.",
+                use: "TASK: Event Infiltration & DOM Node Control"
             },
             python: {
-                title: "Python",
-                type: "INTERPRETED MULTI-ROLE CORE",
+                title: "Python Engine",
+                type: "INTERPRETED_AUTOMATION_NODE",
                 icon: "devicon-python-plain",
                 color: "#3776ab",
-                desc: "A concise interpreted language engineered for optimal legibility. Widely configured for local micro-scripts, machine learning models, server integration, and automated parsing protocols.",
-                use: "PRIMARY OPERATION: Automated Pipelines, Web Scrapers & Analytical Engines"
+                desc: "Object-oriented language optimized for automation tasks, data streaming, file parsers, and custom local software automation layers.",
+                use: "TASK: System Micro-Automation & Analytical Scrapers"
             },
             cpp: {
-                title: "C++",
-                type: "LOW-LEVEL COMPILED CORE",
+                title: "C++ Compiler Core",
+                type: "LOW_LEVEL_NATIVE_EXECUTION",
                 icon: "devicon-cplusplus-plain",
                 color: "#00599c",
-                desc: "A supreme execution engine optimized for direct machine abstraction. Grants manual memory map controls and deterministic speeds. Ideal for deep platform software and rendering tasks.",
-                use: "PRIMARY OPERATION: Ultra-Performance Modules & Low-Level Architecture"
+                desc: "High-speed compiled native architecture. Grants absolute hardware abstraction layers, deterministic speed capabilities, and precise system runtime configuration controls.",
+                use: "TASK: Heavy System Computations & Hardware Integration Modules"
             },
             java: {
-                title: "Java",
-                type: "CLASS-BASED OBJECT-ORIENTED ENGINE",
+                title: "Java Runtime Stack",
+                type: "JVM_VIRTUALIZATION_ENVIRONMENT",
                 icon: "devicon-java-plain",
                 color: "#f89820",
-                desc: "Concurrent, class-based object-oriented programming language designed to have as few implementation dependencies as possible. Utilizes the Java Virtual Machine (JVM) platform for high cross-architecture consistency.",
-                use: "PRIMARY OPERATION: Corporate Backends, Multiplatform Apps & Scalable Systems"
+                desc: "Robust object-oriented development framework running on the Java Virtual Machine (JVM). Provides cross-platform compliance and extensive deployment scale for heavy logic operations.",
+                use: "TASK: Enterprise Application Logic & Multiplatform Backends"
             },
-            // Systems Core
             win10: {
                 title: "Windows 10 Workstation",
-                type: "PRIMARY HARDWARE HOST ENVIRONMENT",
+                type: "PRIMARY_HARDWARE_HOST_OS",
                 icon: "fab fa-windows",
                 color: "#00a3ee",
-                desc: "High-stability production workspace configured as the main station. Optimized for hardware interfaces, sandbox testing environments, security architecture auditing, and high-performance system configurations.",
-                use: "PRIMARY HOST: Main Workstation, Testing Subsystems & Architecture Hub"
+                desc: "Primary operating host workstation. Anchors heavy software environments, virtualization frameworks, sandbox security tools, and main active engineering workflows.",
+                use: "CORE HOST: Central Production Workspace & Engineering Terminal"
+            },
+            macos: {
+                title: "macOS Ventura 13.7.8",
+                type: "SECONDARY_MAIN_MACHINE_NODE",
+                icon: "fab fa-apple",
+                color: "#ffc837",
+                desc: "Second active main machine framework. Unix-certified workstation environment utilized for native diagnostic tasks, multi-compiler cross-testing, and direct platform deployment testing.",
+                use: "CORE SUBHOST: Secondary Main Terminal // Native Unix Stack"
             },
             win11: {
                 title: "Windows 11",
-                type: "HYBRID DESKTOP ENVIRONMENT",
+                type: "VIRTUAL_SANDBOX_SUBSYSTEM",
                 icon: "fab fa-windows",
                 color: "#0078d4",
-                desc: "Modern NT platform architecture with design focus on clean layouts, integrated sub-terminals (WSL2), multi-threaded rendering pipelines, and advanced virtualization capabilities.",
-                use: "ENVIRONMENT: Secondary Interface, Software Engineering & Heavy Compiling"
+                desc: "Modern NT core environment deployed for framework evaluation, interface validation, automated pipeline builds, and multi-threaded virtualization layers.",
+                use: "ENVIRONMENT: Secondary Sandbox & Multi-Thread Testing"
             },
             ubuntu: {
                 title: "Ubuntu Server 24.04 LTS",
-                type: "LINUX BACKEND KERNEL",
+                type: "HEADLESS_LINUX_BACKEND_SERVER",
                 icon: "fab fa-ubuntu",
                 color: "#e95420",
-                desc: "Noble Numbat Kernel Distribution. Deployed as a headless dedicated environment specialized for secure microservices, network synchronization terminals, continuous automation, and host server operations.",
-                use: "ENVIRONMENT: Production Host, Server Networks & Hosting Infrastructure"
+                desc: "Headless Linux container engine built on Noble Numbat code layers. Configured specifically for secure automated cronjobs, backend scripts, and microservice testing configurations.",
+                use: "ENVIRONMENT: Background Microservices & Host Database Testing"
             }
         };
 
-        // Selectors
+        // DOM Handles
         const modal = document.getElementById('info-modal');
         const closeModalBtn = document.getElementById('close-modal');
-        const triggerElements = document.querySelectorAll('[data-node]');
+        const targetNodes = document.querySelectorAll('[data-node]');
 
         const mIcon = document.getElementById('m-icon');
         const mTitle = document.getElementById('m-title');
@@ -682,45 +737,45 @@
         const mDesc = document.getElementById('m-desc');
         const mUse = document.getElementById('m-use');
 
-        // Central Modal Handler
-        triggerElements.forEach(el => {
-            el.addEventListener('click', () => {
-                const nodeKey = el.getAttribute('data-node');
-                const data = centralDatabase[nodeKey];
+        // Modal Open Logic
+        targetNodes.forEach(node => {
+            node.addEventListener('click', () => {
+                const key = node.getAttribute('data-node');
+                const dataset = centralDatabase[key];
 
-                if(data) {
-                    mIcon.className = data.icon;
-                    mIcon.style.color = data.color;
-                    modal.style.setProperty('--accent', data.color);
-                    mTitle.textContent = data.title;
-                    mType.textContent = `// MODULE: ${data.type}`;
-                    mDesc.textContent = data.desc;
-                    mUse.textContent = data.use;
+                if(dataset) {
+                    mIcon.className = dataset.icon;
+                    mIcon.style.color = dataset.color;
+                    modal.style.setProperty('--accent-primary', dataset.color);
+                    mTitle.textContent = dataset.title;
+                    mType.textContent = `// REGISTRY: ${dataset.type}`;
+                    mDesc.textContent = dataset.desc;
+                    mUse.textContent = dataset.use;
 
                     modal.classList.add('active');
                 }
             });
         });
 
-        // Close Events
+        // Close Logic
         closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
         modal.addEventListener('click', (e) => {
             if(e.target === modal) modal.classList.remove('active');
         });
 
-        // Audio System Continuous Init
+        // Background Track Processing
         const audio = document.getElementById('bg-music');
-        audio.volume = 0.3;
+        audio.volume = 0.25;
 
-        function triggerAutoplay() {
+        function initializeAudioStream() {
             audio.play().then(() => {
-                window.removeEventListener('click', triggerAutoplay);
-                window.removeEventListener('touchstart', triggerAutoplay);
+                window.removeEventListener('click', initializeAudioStream);
+                window.removeEventListener('touchstart', initializeAudioStream);
             }).catch(() => {});
         }
-        window.addEventListener('DOMContentLoaded', triggerAutoplay);
-        window.addEventListener('click', triggerAutoplay);
-        window.addEventListener('touchstart', triggerAutoplay);
+        window.addEventListener('DOMContentLoaded', initializeAudioStream);
+        window.addEventListener('click', initializeAudioStream);
+        window.addEventListener('touchstart', initializeAudioStream);
     </script>
 </body>
 </html>
