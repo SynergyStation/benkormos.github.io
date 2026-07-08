@@ -3,25 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BenKormos | Portfolio</title>
+    <title>Benkormos</title>
     
-    <!-- Favicon -->
     <link rel="icon" type="image/jpeg" href="pictures/benkormos.profilbild.jpg">
     
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 
     <style>
         :root {
-            --bg-main: #050508;
-            --glass: rgba(255, 255, 255, 0.02);
-            --glass-hover: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --bg-main: #020204;
+            --glass: rgba(10, 10, 18, 0.4);
+            --glass-hover: rgba(99, 102, 241, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.05);
             --accent: #6366f1;
-            --accent-dim: rgba(99, 102, 241, 0.1);
-            --text-main: #f1f5f9;
-            --text-muted: #94a3b8;
+            --accent-glow: rgba(99, 102, 241, 0.2);
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
             --font-mono: 'Courier New', Courier, monospace;
         }
 
@@ -29,7 +27,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
@@ -37,357 +35,363 @@
             background-color: var(--bg-main);
             color: var(--text-main);
             min-height: 100vh;
+            padding: 20px;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 40px 20px;
+            flex-direction: column;
+            gap: 20px;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 0% 100%, rgba(0, 240, 255, 0.05) 0%, transparent 40%);
+                linear-gradient(rgba(255, 255, 255, 0.005) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.005) 1px, transparent 1px),
+                radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.12) 0%, transparent 50%);
+            background-size: 40px 40px, 40px 40px, auto;
         }
 
-        /* MODERN LAYOUT STRUCTURE */
-        .interface-container {
-            width: 100%;
-            max-width: 1100px;
+        /* SYSTEM HEADER BAR */
+        .system-header {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 15px 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .sys-identity {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sys-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--accent);
+            object-fit: cover;
+        }
+
+        /* Typewriter Inside Header */
+        .sys-title-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .username {
+            font-size: 1.1rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #fff;
+            border-right: 2px solid var(--accent);
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            animation: typing 3.5s steps(9, end) infinite alternate, blink 0.75s step-end infinite;
+        }
+
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink { 50% { border-color: transparent } }
+
+        .sys-status-badges {
+            display: flex;
+            gap: 15px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--glass-border);
+            padding: 6px 12px;
+            border-radius: 8px;
+            color: var(--text-muted);
+        }
+        .badge.active {
+            color: #10b981;
+            border-color: rgba(16, 185, 129, 0.2);
+            background: rgba(16, 185, 129, 0.02);
+        }
+
+        .return-btn {
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .return-btn:hover { color: var(--accent); }
+
+
+        /* 3-COLUMN DASHBOARD GRID */
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: 320px 1fr;
-            gap: 30px;
+            grid-template-columns: 320px 1fr 340px;
+            gap: 20px;
+            flex: 1;
         }
 
-        /* GLASS CARD STYLING */
-        .glass-card {
+        /* BASE CARD DESIGN */
+        .panel-card {
             background: var(--glass);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 30px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            position: relative;
-        }
-
-        .section-title {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 12px;
-        }
-
-        .section-title i {
-            color: var(--accent);
-        }
-
-        /* LEFT SIDEBAR: PROFILE */
-        .profile-sidebar {
+            border-radius: 20px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .return-btn {
-            align-self: flex-start;
-            font-family: var(--font-mono);
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 25px;
-        }
-        .return-btn:hover { color: var(--accent); }
-
-        .avatar-container {
             position: relative;
-            width: 120px;
-            height: 120px;
-            margin-bottom: 20px;
-            padding: 6px;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--glass-border);
-            border-radius: 50%;
-        }
-
-        .avatar {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-        }
-
-        /* Stable Typewriter Integration */
-        .typewriter-box {
-            display: block;
-            margin-bottom: 6px;
-            width: min-content;
-        }
-
-        .username {
-            font-size: 1.6rem;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: #fff;
             overflow: hidden;
-            border-right: 2px solid var(--accent);
-            white-space: nowrap;
-            margin: 0 auto;
-            width: 0;
-            animation: 
-                typing 3.5s steps(9, end) infinite alternate,
-                blink-caret 0.75s step-end infinite;
         }
 
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
+        .panel-card:hover {
+            border-color: rgba(99, 102, 241, 0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        @keyframes blink-caret {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--accent); }
-        }
-
-        .tagline {
+        .panel-title {
+            font-size: 0.8rem;
             font-family: var(--font-mono);
-            font-size: 0.75rem;
-            color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-bottom: 30px;
+            color: var(--accent);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* LINKS */
-        .links-vertical {
-            width: 100%;
+        /* COLUMN 1: HARDWARE & TECH STACK SUB-GRID */
+        .column-left {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* OS Layout List */
+        .os-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
         }
 
-        .social-button {
+        .os-card {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 14px 20px;
-            background: rgba(255, 255, 255, 0.01);
+            gap: 15px;
+            padding: 14px;
+            background: rgba(255,255,255,0.01);
             border: 1px solid var(--glass-border);
-            border-radius: 14px;
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 0.9rem;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .os-card i { font-size: 1.4rem; color: var(--text-muted); }
+        .os-card-meta { display: flex; flex-direction: column; }
+        .os-title-text { font-size: 0.9rem; font-weight: 600; color: #fff; }
+        .os-ver-text { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+        .os-card:hover {
+            background: rgba(255, 255, 255, 0.02);
+            transform: translateX(4px);
+        }
+        .os-card.ubuntu:hover { border-color: #e95420; }
+        .os-card.ubuntu:hover i { color: #e95420; }
+        .os-card.windows:hover { border-color: #0078d4; }
+        .os-card.windows:hover i { color: #0078d4; }
+
+        /* Compact Tech Pill Blocks */
+        .tech-box-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .tech-pill {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: rgba(255,255,255,0.01);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            font-size: 0.8rem;
             font-weight: 500;
-        }
-
-        .social-button i {
-            font-size: 1.1rem;
             color: var(--text-muted);
+            cursor: pointer;
         }
 
-        .social-button:hover {
-            border-color: var(--accent);
-            background: var(--accent-dim);
-            color: #fff;
-            transform: translateX(5px);
-        }
-        .social-button:hover i { color: var(--accent); }
+        .tech-pill i { font-size: 1.2rem; }
+        .tech-pill:hover { transform: translateY(-2px); background: rgba(255,255,255,0.03); }
+        .tech-pill.html:hover { border-color: #e34c26; color: #e34c26; }
+        .tech-pill.css:hover { border-color: #264de4; color: #264de4; }
+        .tech-pill.js:hover { border-color: #f7df1e; color: #f7df1e; }
+        .tech-pill.python:hover { border-color: #3776ab; color: #3776ab; }
+        .tech-pill.cpp:hover { border-color: #00599c; color: #00599c; }
+        .tech-pill.java:hover { border-color: #f89820; color: #f89820; }
 
-        /* MAIN CONTENT AREA */
-        .main-content {
+
+        /* COLUMN 2: CENTER HUB (BIO & NETWORKS) */
+        .column-center {
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 20px;
         }
 
-        .bio-description {
+        .bio-text {
             font-size: 1rem;
             line-height: 1.7;
             color: #cbd5e1;
         }
 
-        /* TECH GRID LAYOUT */
-        .tech-showcase {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .tech-pill {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 20px 10px;
-            background: rgba(255,255,255,0.01);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-muted);
-            cursor: pointer;
-        }
-
-        .tech-pill i {
-            font-size: 2rem;
-            color: var(--text-muted);
-        }
-
-        .tech-pill:hover {
-            background: var(--glass-hover);
-            transform: translateY(-4px);
-        }
-        
-        .tech-pill.html:hover { border-color: #e34c26; color: #e34c26; box-shadow: 0 10px 20px rgba(227, 76, 38, 0.15); }
-        .tech-pill.html:hover i { color: #e34c26; }
-        .tech-pill.css:hover { border-color: #264de4; color: #264de4; box-shadow: 0 10px 20px rgba(38, 77, 228, 0.15); }
-        .tech-pill.css:hover i { color: #264de4; }
-        .tech-pill.js:hover { border-color: #f7df1e; color: #f7df1e; box-shadow: 0 10px 20px rgba(247, 223, 30, 0.15); }
-        .tech-pill.js:hover i { color: #f7df1e; }
-        .tech-pill.python:hover { border-color: #3776ab; color: #3776ab; box-shadow: 0 10px 20px rgba(55, 118, 171, 0.15); }
-        .tech-pill.python:hover i { color: #3776ab; }
-        .tech-pill.cpp:hover { border-color: #00599c; color: #00599c; box-shadow: 0 10px 20px rgba(0, 89, 156, 0.15); }
-        .tech-pill.cpp:hover i { color: #00599c; }
-
-        /* REPOSITORIES & SUB-NETWORKS */
-        .double-row {
+        .network-row-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 15px;
+            margin-top: auto;
         }
 
-        .sub-card {
-            border: 1px solid var(--glass-border);
+        .network-node {
             background: rgba(255,255,255,0.01);
-            border-radius: 18px;
-            padding: 25px;
+            border: 1px solid var(--glass-border);
+            padding: 20px;
+            border-radius: 16px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             gap: 15px;
         }
 
-        .sub-card h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #fff;
+        .net-meta h4 { font-size: 1rem; color: #fff; margin-bottom: 2px; }
+        .net-meta span { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); }
+
+
+        /* COLUMN 3: REPOSITORIES & LINKS */
+        .column-right {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .sub-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.6;
+        .repo-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .action-link {
-            font-size: 0.85rem;
-            font-weight: 600;
+        .repo-mini-card {
+            background: rgba(255,255,255,0.01);
+            border: 1px solid var(--glass-border);
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .repo-mini-card h5 { font-size: 0.95rem; color: #fff; }
+        .repo-mini-card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+        
+        .inline-link {
+            font-size: 0.75rem;
             color: var(--accent);
             text-decoration: none;
+            font-family: var(--font-mono);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 4px;
+        }
+        .inline-link:hover { color: #fff; }
+
+        /* Links Vertical Alignment */
+        .link-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        .social-btn {
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: rgba(255,255,255,0.01);
+            border: 1px solid var(--glass-border);
+            border-radius: 10px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.85rem;
         }
-        .action-link:hover { color: #fff; }
+        .social-btn:hover {
+            border-color: var(--accent);
+            background: var(--glass-hover);
+            color: #fff;
+            transform: translateX(-4px);
+        }
 
-        /* BUTTONS */
-        .modern-btn {
+        /* BUTTON ARCHITECTURE */
+        .modern-action-btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            width: 100%;
+            gap: 6px;
             background: var(--glass-hover);
             border: 1px solid var(--glass-border);
             color: var(--text-main);
-            padding: 12px;
-            border-radius: 12px;
-            font-size: 0.85rem;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
             font-weight: 600;
             text-decoration: none;
             cursor: pointer;
         }
-
-        .modern-btn:hover {
+        .modern-action-btn:hover {
             border-color: var(--accent);
-            color: #fff;
-            background: var(--accent-dim);
+            background: rgba(99, 102, 241, 0.15);
         }
 
-        .network-item {
-            margin-bottom: 20px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--glass-border);
-        }
-        .network-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
 
-        .network-title {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 2px;
-        }
-
-        .network-role {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-        }
-
-        /* GLASS MODAL POPUP */
+        /* MODAL INFOPANEL SYSTEM */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(2, 2, 4, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            z-index: 999;
+            background: rgba(2, 2, 4, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
             display: flex;
             justify-content: center;
             align-items: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.3s ease;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
         .modal-box {
-            max-width: 500px;
+            max-width: 480px;
             width: 100%;
-            border-radius: 28px;
             border-color: var(--accent);
+            box-shadow: 0 0 40px var(--accent-glow);
             transform: scale(0.95);
-            transition: transform 0.3s ease;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
         }
-
-        .modal-overlay.active .modal-box {
-            transform: scale(1);
-        }
+        .modal-overlay.active .modal-box { transform: scale(1); }
 
         .modal-close {
             position: absolute;
-            top: 25px; right: 25px;
+            top: 20px; right: 20px;
             background: transparent;
             border: none;
             color: var(--text-muted);
-            font-size: 0.85rem;
-            font-weight: 600;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
             cursor: pointer;
         }
         .modal-close:hover { color: var(--accent); }
@@ -395,45 +399,46 @@
         .modal-header {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             margin-bottom: 20px;
             border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 20px;
+            padding-bottom: 15px;
         }
+        .modal-header i { font-size: 2rem; }
+        .modal-title-container h3 { font-size: 1.2rem; color: #fff; }
+        .modal-title-container span { font-size: 0.7rem; color: var(--text-muted); font-family: var(--font-mono); }
 
-        .modal-header i { font-size: 2.5rem; }
-
-        .modal-title-container h3 { font-size: 1.4rem; color: #fff; }
-        .modal-title-container span { font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono); }
-
-        .modal-body p { font-size: 0.95rem; line-height: 1.7; color: #cbd5e1; margin-bottom: 20px; }
+        .modal-body p { font-size: 0.9rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 20px; }
 
         .modal-meta {
-            font-size: 0.8rem;
-            font-weight: 500;
+            font-size: 0.75rem;
             background: rgba(255,255,255,0.01);
-            padding: 14px 18px;
-            border-radius: 12px;
+            padding: 12px 15px;
+            border-radius: 10px;
             border-left: 3px solid var(--accent);
             color: var(--text-muted);
+            font-family: var(--font-mono);
         }
 
-        /* SYSTEM FOOTER */
+        /* GLOBAL FOOTER */
         .system-footer {
-            grid-column: 1 / -1;
             text-align: center;
             font-family: var(--font-mono);
             font-size: 0.7rem;
-            color: #475569;
-            margin-top: 20px;
+            color: #334155;
             letter-spacing: 1px;
+            padding: 10px;
         }
 
-        /* RESPONSIVE DESIGN */
-        @media (max-width: 968px) {
-            .interface-container { grid-template-columns: 1fr; }
-            .double-row { grid-template-columns: 1fr; }
-            body { padding: 20px; }
+        /* RESPONSIVE BREAKPOINTS */
+        @media (max-width: 1100px) {
+            .dashboard-grid { grid-template-columns: 1fr 1fr; }
+            .column-right { grid-column: span 2; }
+        }
+        @media (max-width: 768px) {
+            .dashboard-grid { grid-template-columns: 1fr; }
+            .column-right { grid-column: span 1; }
+            .network-row-layout { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -441,137 +446,156 @@
 
     <audio id="bg-music" autoplay loop></audio>
 
-    <!-- DATA MODAL LAYER -->
-    <div class="modal-overlay" id="tech-modal">
-        <div class="glass-card modal-box">
-            <button class="modal-close" id="close-modal">[ CLOSE ]</button>
+    <div class="modal-overlay" id="info-modal">
+        <div class="panel-card modal-box">
+            <button class="modal-close" id="close-modal">[ CLOSE_TERMINAL ]</button>
             <div class="modal-header">
-                <i id="m-icon" class=""></i>
+                <i id="m-icon"></i>
                 <div class="modal-title-container">
-                    <h3 id="m-title">Language</h3>
-                    <span id="m-type">// REGISTRY DATA</span>
+                    <h3 id="m-title">Terminal</h3>
+                    <span id="m-type">// STRUCT DATAFEED</span>
                 </div>
             </div>
             <div class="modal-body">
-                <p id="m-desc">Description payload.</p>
+                <p id="m-desc">Data payload segment.</p>
                 <div class="modal-meta" id="m-use">
-                    PRIMARY OVERVIEW
+                    EXECUTION STATUS
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="interface-container">
-        
-        <!-- LEFT CONTROL COLUMN (PROFILE) -->
-        <aside class="glass-card profile-sidebar">
-            <a href="/" class="return-btn"><i class="fas fa-arrow-left"></i> RETURN()</a>
-            
-            <div class="avatar-container">
-                <img src="pictures/benkormos.profilbild.jpg" alt="BenKormos" class="avatar">
-            </div>
-
-            <div class="typewriter-box">
+    <header class="system-header">
+        <div class="sys-identity">
+            <img src="pictures/benkormos.profilbild.jpg" alt="BenKormos" class="sys-avatar">
+            <div class="sys-title-wrapper">
                 <h2 class="username">BenKormos</h2>
             </div>
-            <div class="tagline">// CORE ARCHITECT</div>
+        </div>
+        <div class="sys-status-badges">
+            <div class="badge active">// SYS_STATUS: SECURE</div>
+            <div class="badge">// ROLE: CORE ARCHITECT</div>
+            <div class="badge">// LEVEL: 2026_STAGE</div>
+        </div>
+        <a href="/" class="return-btn"><i class="fas fa-code-branch"></i> RETURN()</a>
+    </header>
 
-            <div class="links-vertical">
-                <a href="https://github.com/benbroc" target="_blank" class="social-button"><span>GitHub</span> <i class="fab fa-github"></i></a>
-                <a href="https://youtube.com/@benkormos" target="_blank" class="social-button"><span>YouTube</span> <i class="fab fa-youtube"></i></a>
-                <a href="https://twitch.tv/benkormos" target="_blank" class="social-button"><span>Twitch</span> <i class="fab fa-twitch"></i></a>
-                <a href="https://dc.gg/ben" target="_blank" class="social-button"><span>Discord</span> <i class="fab fa-discord"></i></a>
-                <a href="https://last.fm/user/ben_bro_c" target="_blank" class="social-button"><span>Last.fm</span> <i class="fab fa-lastfm"></i></a>
-            </div>
-        </aside>
-
-        <!-- RIGHT MAIN AREA -->
-        <div class="main-content">
+    <div class="dashboard-grid">
+        
+        <div class="column-left">
             
-            <!-- CORE PROFILE DESCRIPTION & TECH MATRIX -->
-            <main class="glass-card">
-                <div class="section-title">
-                    <span><i class="fas fa-user"></i> PROFILE OVERVIEW</span>
+            <section class="panel-card">
+                <div class="panel-title"><i class="fas fa-server"></i> Platform Subsystems</div>
+                <div class="os-list">
+                    <div class="os-card windows" data-node="win10">
+                        <i class="fab fa-windows"></i>
+                        <div class="os-card-meta">
+                            <span class="os-title-text">Windows 10</span>
+                            <span class="os-ver-text">Workstation [HOST]</span>
+                        </div>
+                    </div>
+                    <div class="os-card windows" data-node="win11">
+                        <i class="fab fa-windows"></i>
+                        <div class="os-card-meta">
+                            <span class="os-title-text">Windows 11</span>
+                            <span class="os-ver-text">Pro / Core</span>
+                        </div>
+                    </div>
+                    <div class="os-card ubuntu" data-node="ubuntu">
+                        <i class="fab fa-ubuntu"></i>
+                        <div class="os-card-meta">
+                            <span class="os-title-text">Ubuntu Server</span>
+                            <span class="os-ver-text">v24.04 LTS</span>
+                        </div>
+                    </div>
                 </div>
-                <p class="bio-description">Welcome to my space!<br><br>I love building codes, tinkering with code, and sharing my latest projects and favorite links right here with you.</p>
-                
-                <div class="section-title" style="margin-bottom: 15px; margin-top: 35px;">
-                    <span><i class="fas fa-code"></i> INVENTORIED TECH STACK</span>
+            </section>
+
+            <section class="panel-card">
+                <div class="panel-title"><i class="fas fa-microchip"></i> Inventoried Stacks</div>
+                <div class="tech-box-grid">
+                    <div class="tech-pill html" data-node="html"><i class="devicon-html5-plain"></i>HTML5</div>
+                    <div class="tech-pill css" data-node="css"><i class="devicon-css3-plain"></i>CSS3</div>
+                    <div class="tech-pill js" data-node="js"><i class="devicon-javascript-plain"></i>JS</div>
+                    <div class="tech-pill python" data-node="python"><i class="devicon-python-plain"></i>Python</div>
+                    <div class="tech-pill cpp" data-node="cpp"><i class="devicon-cplusplus-plain"></i>C++</div>
+                    <div class="tech-pill java" data-node="java"><i class="devicon-java-plain"></i>Java</div>
                 </div>
+            </section>
+
+        </div>
+
+        <div class="column-center">
+            
+            <main class="panel-card" style="flex: 1;">
+                <div class="panel-title"><i class="fas fa-terminal"></i> Profile Overview</div>
+                <p class="bio-text">
+                    Welcome to my space!<br><br>
+                    I love building codes, tinkering with code, and sharing my latest projects and favorite links right here with you. Everything is built to adapt dynamically.
+                </p>
                 
-                <div class="tech-showcase">
-                    <div class="tech-pill html" data-lang="html"><i class="devicon-html5-plain"></i>HTML5</div>
-                    <div class="tech-pill css" data-lang="css"><i class="devicon-css3-plain"></i>CSS3</div>
-                    <div class="tech-pill js" data-lang="js"><i class="devicon-javascript-plain"></i>JavaScript</div>
-                    <div class="tech-pill python" data-lang="python"><i class="devicon-python-plain"></i>Python</div>
-                    <div class="tech-pill cpp" data-lang="cpp"><i class="devicon-cplusplus-plain"></i>C++</div>
+                <div class="network-row-layout">
+                    <div class="network-node">
+                        <div class="net-meta">
+                            <h4>SYNERGYstation</h4>
+                            <span>Owner & Developer</span>
+                        </div>
+                        <a href="https://github.com/SynergyStation" target="_blank" class="modern-action-btn">Sync Terminal</a>
+                    </div>
+                    <div class="network-node">
+                        <div class="net-meta">
+                            <h4>BenKormos Prod.</h4>
+                            <span>Owner & Developer</span>
+                        </div>
+                        <a href="https://github.com/Benkormos" target="_blank" class="modern-action-btn">Sync Terminal</a>
+                    </div>
                 </div>
             </main>
 
-            <!-- ARCHIVES (REPOSITORIES) -->
-            <section class="double-row">
-                
-                <div class="glass-card sub-card">
-                    <div>
-                        <div class="section-title" style="margin-bottom: 12px; padding-bottom: 8px;"><span><i class="fas fa-folder-open"></i> REPOSITORY</span></div>
-                        <h4>Malware Database</h4>
-                        <p style="margin-top: 8px;">My Malware Database for entertainment purposes only.</p>
-                    </div>
-                    <a href="https://github.com/BenKormos/MalwareDatabase/tree/main/SteamTrashVirus" target="_blank" class="action-link">Open Blueprint <i class="fas fa-chevron-right"></i></a>
-                </div>
-
-                <div class="glass-card sub-card">
-                    <div>
-                        <div class="section-title" style="margin-bottom: 12px; padding-bottom: 8px;"><span><i class="fas fa-folder-open"></i> REPOSITORY</span></div>
-                        <h4>Voltix Minecraft</h4>
-                        <p style="margin-top: 8px;">My Server began on the 11th of February. The server started but ended in May/June. Page remains public.</p>
-                    </div>
-                    <a href="https://github.com/SynergyStation/voltix-website-2.0" target="_blank" class="action-link">Open Blueprint <i class="fas fa-chevron-right"></i></a>
-                </div>
-
-            </section>
-
-            <!-- NETWORK NODES & LICENSING -->
-            <section class="double-row">
-                
-                <div class="glass-card">
-                    <div class="section-title"><span><i class="fas fa-network-wired"></i> FEDERATED NETWORKS</span></div>
-                    
-                    <div class="network-item">
-                        <div class="network-title">SYNERGYstation</div>
-                        <div class="network-role">Owner & Developer</div>
-                        <a href="https://github.com/SynergyStation" target="_blank" class="modern-btn">Sync Terminal</a>
-                    </div>
-
-                    <div class="network-item">
-                        <div class="network-title">BenKormos Production</div>
-                        <div class="network-role">Owner & Developer</div>
-                        <a href="https://github.com/Benkormos" target="_blank" class="modern-btn">Sync Terminal</a>
-                    </div>
-                </div>
-
-                <div class="glass-card" style="display: flex; flex-direction: column; justify-content: space-between;">
-                    <div>
-                        <div class="section-title"><span><i class="fas fa-scroll"></i> DISTRIBUTION PROTOCOL</span></div>
-                        <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px;">This control panel template is entirely Open Source and public.</p>
-                    </div>
-                    <a href="https://github.com/BenKormos" target="_blank" class="modern-btn" style="background: var(--accent); border-color: transparent; color: #fff;">Extract Blueprint</a>
-                </div>
-
-            </section>
         </div>
 
-        <!-- FOOTER ROW -->
-        <footer class="system-footer">
-            // STATUS: SECURE // COMPILED SUCCESSFULLY // YEAR_2026 // @BENKORMOS
-        </footer>
+        <div class="column-right">
+            
+            <section class="panel-card">
+                <div class="panel-title"><i class="fas fa-folder-closed"></i> Active Archives</div>
+                <div class="repo-stack">
+                    <div class="repo-mini-card">
+                        <h5>Malware Database</h5>
+                        <p>My Malware Database for entertainment purposes only.</p>
+                        <a href="https://github.com/BenKormos/MalwareDatabase/tree/main/SteamTrashVirus" target="_blank" class="inline-link">Fetch Blueprint <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="repo-mini-card">
+                        <h5>Voltix Minecraft</h5>
+                        <p>Began February 11th, terminated in May/June. Repository assets remain permanently public.</p>
+                        <a href="https://github.com/SynergyStation/voltix-website-2.0" target="_blank" class="inline-link">Fetch Blueprint <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="panel-card" style="gap: 15px;">
+                <div class="panel-title"><i class="fas fa-link"></i> External Endpoints</div>
+                <div class="link-grid">
+                    <a href="https://github.com/benbroc" target="_blank" class="social-btn"><span>GitHub</span> <i class="fab fa-github"></i></a>
+                    <a href="https://youtube.com/@benkormos" target="_blank" class="social-btn"><span>YouTube</span> <i class="fab fa-youtube"></i></a>
+                    <a href="https://twitch.tv/benkormos" target="_blank" class="social-btn"><span>Twitch</span> <i class="fab fa-twitch"></i></a>
+                    <a href="https://dc.gg/ben" target="_blank" class="social-btn"><span>Discord</span> <i class="fab fa-discord"></i></a>
+                    <a href="https://last.fm/user/ben_bro_c" target="_blank" class="social-btn"><span>Last.fm</span> <i class="fab fa-lastfm"></i></a>
+                    <a href="https://www.roblox.com/users/6073597399/profile" target="_blank" class="social-btn"><span>Roblox</span> <i class="fab fa-roblox"></i></a>
+                </div>
+                <a href="https://github.com/BenKormos" target="_blank" class="modern-action-btn" style="background: var(--accent); border: none; color: #fff; margin-top: auto;">Extract Open Source Blueprint</a>
+            </section>
+
+        </div>
 
     </div>
 
-    <!-- CORE INTERACTION SYSTEM -->
+    <footer class="system-footer">
+        // STATUS: COMPILED_SUCCESSFULLY // ENV_2026 // SYSTEM TERMINAL ACTIVE // @BENKORMOS
+    </footer>
+
     <script>
-        // Tech Stack Information Storage
-        const techDatabase = {
+        const centralDatabase = {
+            // Tech Core
             html: {
                 title: "HTML5",
                 type: "MARKUP ENGINE // LAYOUT_CORE",
@@ -611,13 +635,46 @@
                 color: "#00599c",
                 desc: "A supreme execution engine optimized for direct machine abstraction. Grants manual memory map controls and deterministic speeds. Ideal for deep platform software and rendering tasks.",
                 use: "PRIMARY OPERATION: Ultra-Performance Modules & Low-Level Architecture"
+            },
+            java: {
+                title: "Java",
+                type: "CLASS-BASED OBJECT-ORIENTED ENGINE",
+                icon: "devicon-java-plain",
+                color: "#f89820",
+                desc: "Concurrent, class-based object-oriented programming language designed to have as few implementation dependencies as possible. Utilizes the Java Virtual Machine (JVM) platform for high cross-architecture consistency.",
+                use: "PRIMARY OPERATION: Corporate Backends, Multiplatform Apps & Scalable Systems"
+            },
+            // Systems Core
+            win10: {
+                title: "Windows 10 Workstation",
+                type: "PRIMARY HARDWARE HOST ENVIRONMENT",
+                icon: "fab fa-windows",
+                color: "#00a3ee",
+                desc: "High-stability production workspace configured as the main station. Optimized for hardware interfaces, sandbox testing environments, security architecture auditing, and high-performance system configurations.",
+                use: "PRIMARY HOST: Main Workstation, Testing Subsystems & Architecture Hub"
+            },
+            win11: {
+                title: "Windows 11",
+                type: "HYBRID DESKTOP ENVIRONMENT",
+                icon: "fab fa-windows",
+                color: "#0078d4",
+                desc: "Modern NT platform architecture with design focus on clean layouts, integrated sub-terminals (WSL2), multi-threaded rendering pipelines, and advanced virtualization capabilities.",
+                use: "ENVIRONMENT: Secondary Interface, Software Engineering & Heavy Compiling"
+            },
+            ubuntu: {
+                title: "Ubuntu Server 24.04 LTS",
+                type: "LINUX BACKEND KERNEL",
+                icon: "fab fa-ubuntu",
+                color: "#e95420",
+                desc: "Noble Numbat Kernel Distribution. Deployed as a headless dedicated environment specialized for secure microservices, network synchronization terminals, continuous automation, and host server operations.",
+                use: "ENVIRONMENT: Production Host, Server Networks & Hosting Infrastructure"
             }
         };
 
-        // Window Selectors
-        const modal = document.getElementById('tech-modal');
+        // Selectors
+        const modal = document.getElementById('info-modal');
         const closeModalBtn = document.getElementById('close-modal');
-        const techItems = document.querySelectorAll('.tech-pill');
+        const triggerElements = document.querySelectorAll('[data-node]');
 
         const mIcon = document.getElementById('m-icon');
         const mTitle = document.getElementById('m-title');
@@ -625,18 +682,18 @@
         const mDesc = document.getElementById('m-desc');
         const mUse = document.getElementById('m-use');
 
-        // Modal Handling
-        techItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const langKey = item.getAttribute('data-lang');
-                const data = techDatabase[langKey];
+        // Central Modal Handler
+        triggerElements.forEach(el => {
+            el.addEventListener('click', () => {
+                const nodeKey = el.getAttribute('data-node');
+                const data = centralDatabase[nodeKey];
 
                 if(data) {
                     mIcon.className = data.icon;
                     mIcon.style.color = data.color;
                     modal.style.setProperty('--accent', data.color);
                     mTitle.textContent = data.title;
-                    mType.textContent = `// CLASS: ${data.type}`;
+                    mType.textContent = `// MODULE: ${data.type}`;
                     mDesc.textContent = data.desc;
                     mUse.textContent = data.use;
 
@@ -645,12 +702,13 @@
             });
         });
 
+        // Close Events
         closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
         modal.addEventListener('click', (e) => {
             if(e.target === modal) modal.classList.remove('active');
         });
 
-        // Background Audio Handling
+        // Audio System Continuous Init
         const audio = document.getElementById('bg-music');
         audio.volume = 0.3;
 
