@@ -43,7 +43,7 @@
         
         <!-- SIDEBAR PLATFORM HUB -->
         <aside class="profile-axis">
-            <div class="avatar-box">
+            <div class="avatar-box" id="secret-avatar-trigger" style="cursor: pointer;">
                 <img src="pictures/benkormos.profilbild.jpg" alt="BenKormos">
                 <div>
                     <div class="status-badge">
@@ -53,7 +53,7 @@
             </div>
 
             <div class="profile-title">
-                <h1>BenKormos</h1>
+                <h1>BenKormos <i class="fas fa-check-circle verified-badge" title="Verified Systems Architect"></i></h1>
                 <p>Systems Architect</p>
             </div>
 
@@ -331,6 +331,80 @@
         window.addEventListener('DOMContentLoaded', initializeAudioStream);
         window.addEventListener('click', initializeAudioStream);
         window.addEventListener('touchstart', initializeAudioStream);
+
+        // --- SECRET CONFETTI MODULE ---
+        const avatarTrigger = document.getElementById('secret-avatar-trigger');
+        const confettiColors = ['#00ffb3', '#0ea5e9', '#38bdf8', '#ffffff', '#0d9488'];
+
+        avatarTrigger.addEventListener('click', (e) => {
+            // Skaliert das Profilbild kurz beim Klicken für Feedback
+            const img = avatarTrigger.querySelector('img');
+            img.style.transform = 'scale(0.9) rotate(-3deg)';
+            setTimeout(() => img.style.transform = '', 150);
+
+            // Holt die genaue Position des Bildes als Startpunkt
+            const rect = img.getBoundingClientRect();
+            const startX = rect.left + rect.width / 2;
+            const startY = rect.top + rect.height / 2;
+
+            // Erzeugt 40 Konfetti-Partikel
+            for (let i = 0; i < 40; i++) {
+                createConfettiParticle(startX, startY);
+            }
+        });
+
+        function createConfettiParticle(x, y) {
+            const particle = document.createElement('div');
+            particle.className = 'cyber-confetti';
+            
+            // Zufällige Eigenschaften für Tech-Look
+            const size = Math.random() * 8 + 4;
+            const color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+            
+            particle.style.width = `${size}px`;
+            particle.style.height = `${Math.random() > 0.5 ? size : size / 2}px`; // Teils Quadrate, teils Streifen
+            particle.style.backgroundColor = color;
+            particle.style.position = 'fixed';
+            particle.style.left = `${x}px`;
+            particle.style.top = `${y}px`;
+            particle.style.borderRadius = Math.random() > 0.7 ? '50%' : '2px';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '9999';
+            particle.style.boxShadow = `0 0 8px ${color}`;
+
+            // Berechnung der Flugbahn (Explosionseffekt)
+            const angle = Math.random() * Math.PI * 2;
+            const velocity = Math.random() * 8 + 4;
+            let velX = Math.cos(angle) * velocity;
+            let velY = Math.sin(angle) * velocity - 2; // Leicht nach oben gerichtet
+            
+            document.body.appendChild(particle);
+
+            let currentX = x;
+            let currentY = y;
+            let opacity = 1;
+
+            function updateAnimation() {
+                velY += 0.2; // Schwerkraft
+                velX *= 0.98; // Luftwiderstand
+                currentX += velX;
+                currentY += velY;
+                opacity -= 0.015; // Ausblenden
+
+                particle.style.left = `${currentX}px`;
+                particle.style.top = `${currentY}px`;
+                particle.style.opacity = opacity;
+                particle.style.transform = `rotate(${currentY * 2}deg)`;
+
+                if (opacity > 0) {
+                    requestAnimationFrame(updateAnimation);
+                } else {
+                    particle.remove();
+                }
+            }
+
+            requestAnimationFrame(updateAnimation);
+        }
     </script>
 </body>
 </html>
