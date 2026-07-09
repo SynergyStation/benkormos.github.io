@@ -115,7 +115,7 @@
     background:var(--ring);
   }
 
-  input[type="text"], textarea{
+  input[type="text"], input[type="password"], textarea{
     width:100%;
     border:1px solid var(--line);
     background:var(--panel-2);
@@ -127,9 +127,16 @@
     outline:none;
     transition:border-color .15s ease;
   }
-  input[type="text"]::placeholder, textarea::placeholder{ color:#5c6f68; }
-  input[type="text"]:focus, textarea:focus{ border-color:var(--sage); }
+  input[type="text"]::placeholder, input[type="password"]::placeholder, textarea::placeholder{ color:#5c6f68; }
+  input[type="text"]:focus, input[type="password"]:focus, textarea:focus{ border-color:var(--sage); }
   textarea{ resize:none; min-height:80px; line-height:1.5; }
+
+  /* Name-Feld ist gesperrt: Name kommt nur über die Profil-Auswahl */
+  input[type="text"]:disabled{
+    opacity:.7;
+    cursor:not-allowed;
+    background:var(--panel);
+  }
 
   button{ font-family:inherit; cursor:pointer; border:none; }
 
@@ -200,11 +207,35 @@
     color:#5c6f68;
     line-height:1.5;
   }
+
+  /* Passwort-Gate */
+  #gate .error-msg{
+    margin-top:12px;
+    font-size:12.5px;
+    color:#e08a8a;
+    min-height:16px;
+  }
+  #gate .send-btn{ margin-top:16px; }
+
+  .hidden{ display:none !important; }
 </style>
 </head>
 <body>
 
-<div class="panel">
+<!-- Passwort-Gate: erscheint zuerst, Admin-Panel bleibt verborgen bis richtiges Passwort -->
+<div class="panel" id="gate">
+  <div class="eyebrow"><span class="dot"></span> Global Massage · Broadcast</div>
+  <h1>Zugang gesperrt</h1>
+  <p class="sub">Bitte Passwort eingeben, um den Admin-Bereich zu öffnen.</p>
+
+  <label>Passwort</label>
+  <input type="password" id="pwInput" placeholder="Passwort eingeben …">
+
+  <button class="send-btn" id="unlockBtn">Entsperren</button>
+  <div class="error-msg" id="pwError"></div>
+</div>
+
+<div class="panel hidden" id="app">
   <div class="eyebrow"><span class="dot"></span> Global Massage · Broadcast</div>
   <h1>Nachricht senden</h1>
   <p class="sub">Diese Nachricht erscheint für 5–10 Sekunden als Leiste oben auf allen verbundenen Seiten – nicht hier im Admin-Bereich.</p>
@@ -213,7 +244,7 @@
   <div class="profile-grid" id="profileGrid"></div>
 
   <label>Name</label>
-  <input type="text" id="nameInput" value="Ben">
+  <input type="text" id="nameInput" value="Ben" disabled>
 
   <label>Nachricht</label>
   <textarea id="msgInput" placeholder="z.B. GolbalMessage"></textarea>
@@ -225,10 +256,34 @@
 
   <div class="status" id="status"><span class="ok-dot"></span><span id="statusText"></span></div>
 
-  <div class="hint">Läuft über den öffentlichen Broadcast-Kanal „global-massage-broadcast-4471" (ntfy.sh) – kein eigener Server nötig. Die Anzeige-Leiste (separates Snippet) hört auf diesen Kanal und zeigt neue Nachrichten in Echtzeit an. Für den echten Einsatz: Kanalnamen in beiden Dateien auf etwas Eindeutiges ändern.</div>
+  <div class="hint">Läuft über den öffentlichen Broadcast-Kanal „global-massage-broadcast-4471" (ntfy.sh) – kein eigener Server nötig. Die Anzeige-Leiste (separates Snippet) hört auf diesen Kanal und zeigt neue Nachrichten in Echtzeit an. Für den echten Einsatz: Kanalnamen in beiden Dateien auf etwas Eindeutiges ändern.<br><br>Hinweis: Diese Passwortsperre läuft rein im Browser (clientseitig) und schützt nicht vor jemandem, der sich den Quellcode ansieht. Für echten Schutz bräuchte es eine serverseitige Prüfung.</div>
 </div>
 
 <script>
+  // --- Passwort-Gate ---
+  const GATE_PASSWORD = "Admin123";
+  const gateEl = document.getElementById('gate');
+  const appEl = document.getElementById('app');
+  const pwInput = document.getElementById('pwInput');
+  const pwError = document.getElementById('pwError');
+  const unlockBtn = document.getElementById('unlockBtn');
+
+  function tryUnlock(){
+    if(pwInput.value === GATE_PASSWORD){
+      gateEl.classList.add('hidden');
+      appEl.classList.remove('hidden');
+    }else{
+      pwError.textContent = "Falsches Passwort. Bitte erneut versuchen.";
+      pwInput.style.borderColor = "#c05a5a";
+      setTimeout(() => { pwInput.style.borderColor = ""; }, 1200);
+    }
+  }
+  unlockBtn.addEventListener('click', tryUnlock);
+  pwInput.addEventListener('keydown', (e) => {
+    if(e.key === "Enter") tryUnlock();
+  });
+
+  // --- Admin-Panel-Logik ---
   const profiles = [
     { name: "Ben", avatar: "Benbild.png" },
     { name: "Julian", avatar: "Julianbild.png" },
@@ -268,7 +323,8 @@
   }
 
   sendBtn.addEventListener('click', async () => {
-    const name = nameInput.value.trim() || selectedProfile.name;
+    // Name kommt jetzt ausschließlich vom gewählten Profil, nicht mehr frei editierbar
+    const name = selectedProfile.name;
     const avatar = selectedProfile.avatar;
     const message = msgInput.value.trim();
     if(!message){
