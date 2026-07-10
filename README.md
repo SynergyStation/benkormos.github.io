@@ -40,7 +40,7 @@ Welcome to the central Link-in-Bio and Project Showcase Hub of **SynergyStation*
 │   ├── 📂 ben/
 │   │   ├── ballernundsaufen.mp3
 │   │   ├── fish.mp3
-│   │   └──  └── pubc.mp3
+│   │   └── pubc.mp3
 │   ├──pitanga.mp3
 │   └──Tacos.mp3
 │
