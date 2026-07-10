@@ -47,15 +47,15 @@
         </div>
 
         <!-- MAIN DASHBOARD WINDOW -->
-        <div class="terminal-container draggable-window" style="top: 5%; left: 10%;">
+        <div class="terminal-container draggable-window" id="main-window" style="top: 5%; left: 10%;">
             
             <!-- WINDOW TITLE BAR -->
             <div class="window-titlebar">
                 <span class="titlebar-text">BenKormos Navigator - Command Center</span>
                 <div class="titlebar-controls">
-                    <button class="titlebar-btn"><i class="fas fa-minus"></i></button>
-                    <button class="titlebar-btn"><i class="far fa-square"></i></button>
-                    <button class="titlebar-btn"><i class="fas fa-times"></i></button>
+                    <button class="titlebar-btn" id="btn-minimize-main"><i class="fas fa-minus"></i></button>
+                    <button class="titlebar-btn" id="btn-maximize-main"><i class="far fa-square"></i></button>
+                    <button class="titlebar-btn" id="btn-close-main"><i class="fas fa-times"></i></button>
                 </div>
             </div>
 
@@ -217,12 +217,12 @@
         </div>
 
         <!-- WINAMP STYLE FLOATING MUSIC PLAYER -->
-        <div class="winamp-player draggable-window" style="bottom: 60px; right: 20px;">
+        <div class="winamp-player draggable-window" id="winamp-window" style="bottom: 60px; right: 20px;">
             <div class="window-titlebar winamp-title">
                 <span class="titlebar-text"><i class="fas fa-music"></i> WINAMP - PIPELINE AUDIO</span>
                 <div class="titlebar-controls">
-                    <button class="titlebar-btn"><i class="fas fa-minus"></i></button>
-                    <button class="titlebar-btn"><i class="fas fa-times"></i></button>
+                    <button class="titlebar-btn" id="btn-minimize-amp"><i class="fas fa-minus"></i></button>
+                    <button class="titlebar-btn" id="btn-close-amp"><i class="fas fa-times"></i></button>
                 </div>
             </div>
             
@@ -265,8 +265,8 @@
         </div>
 
         <div class="taskbar-windows-list">
-            <div class="taskbar-tab active">BenKormos Nav...</div>
-            <div class="taskbar-tab">Winamp</div>
+            <div class="taskbar-tab active" id="tab-main-window">BenKormos Nav...</div>
+            <div class="taskbar-tab active" id="tab-winamp-window">Winamp</div>
         </div>
 
         <div class="taskbar-right-tray">
@@ -427,8 +427,64 @@
         setInterval(updateTrayClock, 1000);
         updateTrayClock();
 
+        // --- WINDOW INTERACTION LOGIC (MINIMIZE, MAXIMIZE, CLOSE) ---
+        const mainWindow = document.getElementById('main-window');
+        const winampWindow = document.getElementById('winamp-window');
+        const tabMain = document.getElementById('tab-main-window');
+        const tabWinamp = document.getElementById('tab-winamp-window');
+
+        // Main Window UI Controls
+        document.getElementById('btn-minimize-main').addEventListener('click', (e) => {
+            e.stopPropagation();
+            mainWindow.style.display = 'none';
+            tabMain.classList.remove('active');
+        });
+        document.getElementById('btn-maximize-main').addEventListener('click', (e) => {
+            e.stopPropagation();
+            mainWindow.classList.toggle('fullscreen-window');
+        });
+        document.getElementById('btn-close-main').addEventListener('click', (e) => {
+            e.stopPropagation();
+            mainWindow.style.display = 'none';
+            tabMain.style.display = 'none';
+        });
+
+        // Winamp UI Controls
+        document.getElementById('btn-minimize-amp').addEventListener('click', (e) => {
+            e.stopPropagation();
+            winampWindow.style.display = 'none';
+            tabWinamp.classList.remove('active');
+        });
+        document.getElementById('btn-close-amp').addEventListener('click', (e) => {
+            e.stopPropagation();
+            winampWindow.style.display = 'none';
+            tabWinamp.style.display = 'none';
+        });
+
+        // Taskbar Tabs Functionality
+        tabMain.addEventListener('click', () => {
+            if (mainWindow.style.display === 'none' || !tabMain.classList.contains('active')) {
+                mainWindow.style.display = 'flex';
+                tabMain.classList.add('active');
+                bringToFront(mainWindow);
+            } else {
+                mainWindow.style.display = 'none';
+                tabMain.classList.remove('active');
+            }
+        });
+
+        tabWinamp.addEventListener('click', () => {
+            if (winampWindow.style.display === 'none' || !tabWinamp.classList.contains('active')) {
+                winampWindow.style.display = 'block';
+                tabWinamp.classList.add('active');
+                bringToFront(winampWindow);
+            } else {
+                winampWindow.style.display = 'none';
+                tabWinamp.classList.remove('active');
+            }
+        });
+
         // --- WINAMP AUDIO PLAYLIST ENGINE ---
-        // HIER DEINE 3 DATEIPFADE EINTRAGEN
         const playlist = [
             "songs/song1.mp3",
             "songs/song2.mp3",
@@ -460,7 +516,6 @@
             }).catch(() => {});
         }
 
-        // Erste Interaktion
         function handleFirstInteraction() {
             if (audio.paused && audio.src) {
                 playTrack();
@@ -469,7 +524,6 @@
         }
         window.addEventListener('click', handleFirstInteraction);
 
-        // Control Listeners
         btnPlay.addEventListener('click', (e) => { e.stopPropagation(); playTrack(); });
         btnPause.addEventListener('click', (e) => { e.stopPropagation(); audio.pause(); });
         btnStop.addEventListener('click', (e) => {
@@ -498,7 +552,6 @@
             playTrack();
         });
 
-        // Winamp Zeitaktualisierung
         audio.addEventListener('timeupdate', () => {
             let mins = Math.floor(audio.currentTime / 60);
             let secs = Math.floor(audio.currentTime % 60);
