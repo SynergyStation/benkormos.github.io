@@ -16,7 +16,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* Relativer Pfad zum Ordner "background" */
             background: url('background/bg_Julian442.png') no-repeat center center fixed;
             background-size: cover;
             color: #3a2b30;
@@ -24,7 +23,13 @@
             overflow: hidden;
         }
 
-        /* dezente Sakura-Blüten im Hintergrund, schwebend */
+        /* Schöne Scrollbars für das Admin Panel */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(0, 0, 0, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(0, 0, 0, 0.5); }
+
+        /* Sakura-Blüten im Hintergrund */
         .sakura {
             position: fixed;
             top: -10%;
@@ -35,9 +40,25 @@
             animation: fall linear infinite;
             z-index: 1;
         }
+        
+        /* Taco-Animation für Admin Abuse */
+        .taco {
+            position: fixed;
+            top: -10%;
+            font-size: 2rem;
+            pointer-events: none;
+            animation: fall-taco linear forwards;
+            z-index: 999999;
+        }
+
         @keyframes fall {
             0%   { transform: translateY(0) rotate(0deg); }
             100% { transform: translateY(110vh) rotate(360deg); }
+        }
+        @keyframes fall-taco {
+            0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+            90%  { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
         }
 
         .music-controls { position: absolute; top: 30px; left: 30px; display: flex; align-items: center; gap: 15px; z-index: 10; }
@@ -53,284 +74,180 @@
         }
         .control-btn:hover { background: rgba(255, 143, 171, 0.5); color: #ffffff; }
 
+        .hammer-btn {
+            background: #2196f3;
+            border: 2px solid #64b5f6;
+            width: 45px; height: 45px;
+            border-radius: 12px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 0 18px rgba(33, 150, 243, 0.7);
+            transition: 0.3s;
+        }
+        .hammer-btn:hover {
+            background: #42a5f5;
+            box-shadow: 0 0 26px rgba(33, 150, 243, 0.9);
+            transform: translateY(-2px);
+        }
+        .hammer-btn i { font-size: 1.2rem; }
+
         #volume-slider {
             -webkit-appearance: none;
             appearance: none;
-            width: 90px;
-            height: 4px;
-            border-radius: 4px;
+            width: 90px; height: 4px; border-radius: 4px;
             background: linear-gradient(to right, #d1447a 0%, #d1447a 30%, rgba(255,255,255,0.5) 30%, rgba(255,255,255,0.5) 100%);
-            cursor: pointer;
-            outline: none;
+            cursor: pointer; outline: none;
         }
         #volume-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #ffffff;
-            border: 2px solid #d1447a;
+            -webkit-appearance: none; appearance: none;
+            width: 14px; height: 14px; border-radius: 50%;
+            background: #ffffff; border: 2px solid #d1447a;
             box-shadow: 0 2px 6px rgba(209, 68, 122, 0.4);
             transition: transform 0.2s;
         }
         #volume-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
-        #volume-slider::-moz-range-track {
-            height: 4px;
-            border-radius: 4px;
-            background: rgba(255,255,255,0.5);
-        }
-        #volume-slider::-moz-range-progress {
-            height: 4px;
-            border-radius: 4px;
-            background: #d1447a;
-        }
-        #volume-slider::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #ffffff;
-            border: 2px solid #d1447a;
-            box-shadow: 0 2px 6px rgba(209, 68, 122, 0.4);
-            cursor: pointer;
-        }
 
         .card {
-            position: relative;
-            z-index: 5;
-            /* Transparenter Farbverlauf von Weiß zu Pink, Japan-Stil */
-            background: linear-gradient(160deg,
-                rgba(255, 255, 255, 0.55) 0%,
-                rgba(255, 214, 224, 0.45) 45%,
-                rgba(255, 158, 185, 0.4) 100%);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 30px;
-            width: 90%;
-            max-width: 450px;
-            text-align: center;
-            padding: 45px 40px;
-            box-shadow: 0 10px 35px rgba(255, 140, 170, 0.25);
+            position: relative; z-index: 5;
+            background: linear-gradient(160deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 214, 224, 0.45) 45%, rgba(255, 158, 185, 0.4) 100%);
+            backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 30px; width: 90%; max-width: 450px; text-align: center;
+            padding: 45px 40px; box-shadow: 0 10px 35px rgba(255, 140, 170, 0.25);
         }
 
         .card::before {
-            content: "桜";
-            position: absolute;
-            top: 10px;
-            right: 18px;
-            font-family: 'Kaisei Decol', serif;
-            font-size: 1.4rem;
-            color: rgba(255, 255, 255, 0.7);
+            content: "桜"; position: absolute; top: 10px; right: 18px;
+            font-family: 'Kaisei Decol', serif; font-size: 1.4rem; color: rgba(255, 255, 255, 0.7);
         }
 
         .avatar {
-            width: 85px; height: 85px;
-            border-radius: 50%;
-            margin-bottom: 15px;
-            border: 3px solid rgba(255, 255, 255, 0.8);
-            box-shadow: 0 4px 15px rgba(255, 105, 145, 0.35);
+            width: 85px; height: 85px; border-radius: 50%; margin-bottom: 15px;
+            border: 3px solid rgba(255, 255, 255, 0.8); box-shadow: 0 4px 15px rgba(255, 105, 145, 0.35);
         }
 
-        h1 {
-            font-family: 'Kaisei Decol', serif;
-            font-size: 2rem;
-            color: #d1447a;
-            text-shadow: 0 1px 6px rgba(255,255,255,0.6);
-        }
-
-        .tagline {
-            margin-top: 6px;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            color: #5a3d47;
-        }
+        h1 { font-family: 'Kaisei Decol', serif; font-size: 2rem; color: #d1447a; text-shadow: 0 1px 6px rgba(255,255,255,0.6); }
+        .tagline { margin-top: 6px; font-size: 0.85rem; letter-spacing: 1px; color: #5a3d47; }
 
         .socials { display: flex; justify-content: center; gap: 22px; font-size: 1.5rem; margin-top: 25px; align-items: center; }
-        .socials a {
-            color: #b23a63;
-            opacity: 0.9;
-            transition: 0.3s;
-            display: inline-block;
-            text-decoration: none;
-        }
+        .socials a { color: #b23a63; opacity: 0.9; transition: 0.3s; text-decoration: none; }
         .socials a:hover { opacity: 1; color: #ff5c8a; transform: translateY(-3px) scale(1.1); }
-
-        /* Spezifische Größe für das Sakura-Emoji im Socials-Bereich */
-        .socials a .cherry-icon {
-            font-style: normal;
-            font-size: 1.45rem;
-            display: inline-block;
-            line-height: 1;
-            vertical-align: middle;
-        }
+        .socials a .cherry-icon { font-style: normal; font-size: 1.45rem; line-height: 1; vertical-align: middle; }
 
         .corner-link {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 183, 197, 0.5);
-            border-radius: 16px;
-            padding: 10px 16px;
-            text-decoration: none;
-            color: #b23a63;
-            font-size: 0.85rem;
-            font-weight: 500;
-            box-shadow: 0 6px 20px rgba(255, 140, 170, 0.25);
-            transition: 0.3s;
+            position: fixed; bottom: 25px; right: 25px; z-index: 10;
+            display: flex; align-items: center; gap: 10px;
+            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 183, 197, 0.5); border-radius: 16px;
+            padding: 10px 16px; text-decoration: none; color: #b23a63;
+            font-size: 0.85rem; font-weight: 500; box-shadow: 0 6px 20px rgba(255, 140, 170, 0.25); transition: 0.3s;
         }
-        .corner-link:hover {
-            background: rgba(255, 143, 171, 0.5);
-            color: #ffffff;
-            transform: translateY(-3px);
-        }
-        .corner-link i { font-size: 1rem; }
+        .corner-link:hover { background: rgba(255, 143, 171, 0.5); color: #ffffff; transform: translateY(-3px); }
 
-        .like-wrap {
-            margin-top: 22px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 12px;
-        }
-
+        .like-wrap { margin-top: 22px; display: flex; justify-content: center; align-items: center; gap: 12px; }
         .like-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 183, 197, 0.6);
-            border-radius: 30px;
-            padding: 10px 20px;
-            color: #d1447a;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            font-size: 0.9rem;
-            font-weight: 600;
-            letter-spacing: 0.2px;
-            cursor: pointer;
-            transition: 0.25s;
+            display: flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(10px); border: 1px solid rgba(255, 183, 197, 0.6);
+            border-radius: 30px; padding: 10px 20px; color: #d1447a; font-weight: 600; cursor: pointer; transition: 0.25s;
         }
-        .like-btn i { font-size: 1.05rem; transition: transform 0.25s; }
         .like-btn:hover { background: rgba(255, 143, 171, 0.5); color: #ffffff; }
         .like-btn.liked { background: #ff5c8a; color: #ffffff; }
-        .like-btn.liked i { transform: scale(1.15); }
         .like-btn.pop i { animation: pop 0.35s ease; }
-        @keyframes pop {
-            0%   { transform: scale(1); }
-            40%  { transform: scale(1.4); }
-            100% { transform: scale(1.15); }
-        }
+        @keyframes pop { 0% { transform: scale(1); } 40% { transform: scale(1.4); } 100% { transform: scale(1.15); } }
+        .like-count { font-size: 0.85rem; color: #5a3d47; font-weight: 500; }
 
-        .like-count {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            font-size: 0.85rem;
-            color: #5a3d47;
-            font-weight: 500;
-            letter-spacing: 0.2px;
-        }
+        #audio-status-log { font-size: 0.75rem; color: #d1447a; margin-top: 10px; opacity: 0.7; }
+        #reset-log { font-size: 0.75rem; color: #b23a63; margin-top: 6px; opacity: 0.85; }
 
-        /* Statusanzeige für Musik */
-        #audio-status-log {
-            font-size: 0.75rem;
-            color: #d1447a;
-            margin-top: 10px;
-            opacity: 0.7;
-        }
-
-        /* Reset-Hinweis (nur sichtbar bei ?reset=true) */
-        #reset-log {
-            font-size: 0.75rem;
-            color: #b23a63;
-            margin-top: 6px;
-            opacity: 0.85;
-        }
-
-        /* ============================================================
-           GLOBAL ANNOUNCEMENT BAR (aus der zweiten Datei übernommen,
-           farblich an das Sakura/Pink-Theme dieser Seite angepasst)
-           ============================================================ */
-        :root{
-            --gm-bar-bg: rgba(58, 24, 38, 0.88);
-            --gm-ink:#fff5f7;
-            --gm-muted:#f2c9d6;
-            --gm-line: rgba(255,255,255,0.14);
-        }
-
+        /* Global Announcement Bar */
+        :root{ --gm-bar-bg: rgba(58, 24, 38, 0.88); --gm-ink:#fff5f7; --gm-muted:#f2c9d6; --gm-line: rgba(255,255,255,0.14); }
         #gm-bar{
-            position:fixed;
-            top:24px;
-            left:50%;
-            z-index:99999;
-            display:flex;
-            align-items:center;
-            gap:14px;
-            padding:12px 22px 12px 12px;
-            border-radius:18px;
-            background:var(--gm-bar-bg);
-            backdrop-filter: blur(12px);
-            border:1px solid var(--gm-line);
-            box-shadow: 0 20px 45px -18px rgba(178, 58, 99, 0.55), 0 2px 10px rgba(178, 58, 99, 0.25);
-            max-width:min(90vw, 480px);
-            transform: translate(-50%, -140%);
-            transition: transform .5s cubic-bezier(.22,1.1,.32,1);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            position:fixed; top:24px; left:50%; z-index:99999; display:flex; align-items:center; gap:14px;
+            padding:12px 22px 12px 12px; border-radius:18px; background:var(--gm-bar-bg); backdrop-filter: blur(12px);
+            border:1px solid var(--gm-line); box-shadow: 0 20px 45px -18px rgba(178, 58, 99, 0.55), 0 2px 10px rgba(178, 58, 99, 0.25);
+            max-width:min(90vw, 480px); transform: translate(-50%, -140%); transition: transform .5s cubic-bezier(.22,1.1,.32,1);
         }
         #gm-bar.show{ transform: translate(-50%, 0); }
-
         #gm-bar .gm-avatar{
-            width:40px; height:40px;
-            border-radius:50%;
-            overflow:hidden;
-            flex:none;
-            background:linear-gradient(150deg,#ff9eb9,#d1447a);
-            display:flex; align-items:center; justify-content:center;
+            width:40px; height:40px; border-radius:50%; overflow:hidden; flex:none;
+            background:linear-gradient(150deg,#ff9eb9,#d1447a); display:flex; align-items:center; justify-content:center;
             box-shadow: inset 0 -3px 8px rgba(0,0,0,0.2);
         }
         #gm-bar .gm-avatar img{ width:100%; height:100%; object-fit:cover; }
-        #gm-bar .gm-avatar .gm-initials{
-            color:#fff; font-family:"Kaisei Decol","Georgia",serif; font-size:13px; font-weight:600;
-        }
-
-        #gm-bar .gm-textline{
-            display:flex;
-            align-items:baseline;
-            flex-wrap:wrap;
-            gap:6px;
-            min-width:0;
-        }
-
-        #gm-bar .gm-name{
-            color:var(--gm-ink);
-            font-weight:700;
-            font-size:14px;
-            flex:none;
-            display:flex;
-            align-items:center;
-            gap:5px;
-        }
-
+        #gm-bar .gm-textline{ display:flex; align-items:baseline; flex-wrap:wrap; gap:6px; min-width:0; }
+        #gm-bar .gm-name{ color:var(--gm-ink); font-weight:700; font-size:14px; flex:none; display:flex; align-items:center; gap:5px; }
         #gm-bar .gm-badge{ width:18px; height:18px; flex:none; }
-
         #gm-bar .gm-colon{ color:var(--gm-muted); font-weight:700; flex:none; }
+        #gm-bar .gm-msg{ color:var(--gm-ink); font-size:14px; opacity:.92; white-space:normal; word-break:break-word; }
 
-        #gm-bar .gm-msg{
-            color:var(--gm-ink);
-            font-size:14px;
-            opacity:.92;
-            white-space:normal;
-            word-break:break-word;
+        /* Admin Overlay */
+        .ap-overlay{
+            position: fixed; inset: 0; background: rgba(10, 12, 20, 0.55); backdrop-filter: blur(4px);
+            display: none; align-items: center; justify-content: center; z-index: 100000;
         }
+        .ap-overlay.show{ display: flex; }
+        .ap-pass-box{ background: #1b2436; border: 3px solid #2196f3; border-radius: 20px; padding: 30px 32px; width: 300px; text-align: center; }
+        .ap-pass-box h2{ color:#fff; font-size:1.3rem; margin-bottom:14px; }
+        .ap-pass-box input{ width: 100%; padding: 12px 14px; border-radius: 10px; border: 2px solid #2196f3; background: #0f1626; color: #fff; font-size: 1rem; outline: none; text-align: center; }
+        .ap-pass-box button{ margin-top: 14px; width: 100%; padding: 12px; border: none; border-radius: 10px; background: #2196f3; color: #fff; font-weight: 700; font-size: 1rem; cursor: pointer; transition: 0.2s; }
+        .ap-pass-box button:hover{ background:#42a5f5; }
+        .ap-pass-error{ color: #ff6b6b; font-size: 0.8rem; margin-top: 10px; min-height: 14px; }
+        .ap-shake{ animation: ap-shake 0.35s; }
+        @keyframes ap-shake{ 0%,100%{ transform: translateX(0); } 25%{ transform: translateX(-8px); } 75%{ transform: translateX(8px); } }
+
+        .ap-panel{
+            position: relative; width: 92%; max-width: 640px; max-height: 85vh; overflow-y: auto; overflow-x: hidden;
+            background: linear-gradient(160deg, #6fb8e8, #4a90d9); border: 4px solid #1a1a1a; border-radius: 26px;
+            padding: 26px 24px 30px; box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+        }
+        .ap-titlebar{ background: linear-gradient(90deg, #29b6f6, #039be5); border: 3px solid #1a1a1a; border-radius: 18px; padding: 14px 20px; text-align: center; margin-bottom: 20px; }
+        .ap-titlebar h1{ font-family: 'Kaisei Decol', serif; color: #fff; font-size: 1.7rem; -webkit-text-stroke: 1px #1a1a1a; }
+        .ap-close{ position: absolute; top: -14px; right: -14px; width: 46px; height: 46px; border-radius: 50%; background: #e53935; border: 3px solid #1a1a1a; color: #fff; font-size: 1.2rem; display:flex; align-items:center; justify-content:center; cursor: pointer; box-shadow: 0 6px 14px rgba(0,0,0,0.4); z-index: 5; }
+        .ap-close:hover{ background:#ff5c52; }
+        .ap-back{ position: absolute; bottom: -14px; right: -14px; width: 46px; height: 46px; border-radius: 14px; background: #e53935; border: 3px solid #1a1a1a; color: #fff; font-size: 1.1rem; display:flex; align-items:center; justify-content:center; cursor: pointer; box-shadow: 0 6px 14px rgba(0,0,0,0.4); }
+        .ap-back:hover{ background:#ff5c52; }
+
+        .ap-screen{ display: none; }
+        .ap-screen.active{ display: block; }
+        
+        .ap-grid{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+        .ap-grid-btn{ position: relative; background: linear-gradient(180deg, #ffffff, #eef2f6); border: 3px solid #1a1a1a; border-radius: 16px; padding: 14px 40px 14px 14px; font-weight: 800; font-size: 0.95rem; color: #1a1a1a; text-align: left; cursor: pointer; min-height: 60px; display:flex; align-items:center; }
+        .ap-grid-btn .ap-icon{ position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 50%; background: #43d651; border: 2px solid #1a1a1a; display:flex; align-items:center; justify-content:center; font-size: 1.1rem; }
+        .ap-grid-btn:hover{ background: #fff7d6; }
+        
+        .ap-field{ background: #29b6f6; border: 3px solid #1a1a1a; border-radius: 14px; padding: 12px 16px; margin-bottom: 12px; }
+        .ap-field textarea{ width: 100%; background: transparent; border: none; outline: none; color: #fff; font-weight: 700; font-size: 1rem; text-align: center; font-family: inherit; resize: none; }
+        .ap-field textarea::placeholder{ color: rgba(255,255,255,0.75); }
+        .ap-field input { width: 100%; background: transparent; border: none; outline: none; color: #fff; font-weight: 700; font-size: 1rem; text-align: center; }
+
+        .ap-toggle{ display:flex; gap:0; margin-bottom: 14px; border: 3px solid #1a1a1a; border-radius: 14px; overflow:hidden; }
+        .ap-toggle button{ flex: 1; padding: 12px; border: none; background: #b0bec5; color: #fff; font-weight: 800; cursor: pointer; font-size: 0.95rem; transition: 0.2s;}
+        
+        /* Farben für Toggle Buttons */
+        .toggle-scope button.active[data-scope="global"] { background: #ab47bc; }
+        .toggle-scope button.active[data-scope="server"] { background: #ff9800; }
+        .toggle-prio button.active[data-priority="normal"] { background: #e53935; }
+        .toggle-prio button.active[data-priority="wichtig"] { background: #ffb300; color: #1a1a1a; }
+
+        .ap-publish{ width: 100%; padding: 14px; border: 3px solid #1a1a1a; border-radius: 14px; background: #43d651; color: #1a1a1a; font-weight: 800; font-size: 1.05rem; cursor: pointer; margin-top: 4px; }
+        .ap-publish:hover{ background: #5ce56a; }
+        .ap-stop{ padding: 14px; border: 3px solid #1a1a1a; border-radius: 14px; background: #e53935; color: #fff; font-weight: 800; font-size: 1rem; cursor: pointer; }
+        .ap-stop:hover{ background:#ff5c52; }
+
+        .ap-section{ background: #b3e5fc; border: 3px solid #1a1a1a; border-radius: 16px; padding: 14px; margin-bottom: 14px; }
+        .ap-section h3{ text-align:center; color:#1a1a1a; margin-bottom: 10px; font-size:1.1rem; }
+        .ap-half{ display:flex; gap: 14px; align-items:stretch; }
+        .ap-half > div{ flex: 1; min-width: 0; }
+        .ap-half-label{ text-align:center; font-weight:800; color:#1a1a1a; margin-bottom:8px; font-size:0.9rem; }
+
+        .ap-status{ text-align:center; font-size: 0.9rem; color: #fff; margin-top: 10px; min-height: 16px; font-weight: 700; text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
     </style>
 </head>
 <body>
 
-    <!-- Global Announcement Bar: wird per ntfy.sh SSE befuellt, sobald im Admin-Bereich eine Nachricht gesendet wird -->
+    <!-- Global Announcement Bar -->
     <div id="gm-bar">
         <div class="gm-avatar" id="gm-avatar"><span class="gm-initials" id="gm-initials"></span></div>
         <div class="gm-textline">
@@ -352,7 +269,7 @@
         </div>
     </div>
 
-    <!-- schwebende Sakura-Blüten -->
+    <!-- Hintergrund Sakura-Blüten -->
     <span class="sakura" style="left:3%; font-size:1.2rem; animation-duration:10s; animation-delay:0s;">🌸</span>
     <span class="sakura" style="left:8%; animation-duration:9s; animation-delay:1.2s;">🌸</span>
     <span class="sakura" style="left:15%; font-size:1.1rem; animation-duration:13s; animation-delay:2.8s;">🌸</span>
@@ -371,11 +288,17 @@
     <audio id="bg-audio" loop preload="auto">
         <source src="/music/Pitanga.mp3" type="audio/mpeg">
     </audio>
+    
+    <!-- Audio für Taco Abuse -->
+    <audio id="taco-audio" preload="auto">
+        <source src="music/Tacos.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="music-controls">
         <button class="control-btn" id="play-pause-btn"><i class="fas fa-play" id="play-icon"></i></button>
         <button class="control-btn" id="volume-btn"><i class="fas fa-volume-up" id="vol-icon"></i></button>
         <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.3" title="Lautstärke">
+        <button class="hammer-btn" id="hammer-btn" title="Tools"><i class="fas fa-hammer"></i></button>
     </div>
 
     <div class="card">
@@ -408,6 +331,107 @@
         Synergy Station
     </a>
 
+    <!-- ADMIN OVERLAY -->
+    <div class="ap-overlay" id="ap-overlay">
+        <!-- Passwort-Abfrage -->
+        <div class="ap-pass-box" id="ap-pass-box">
+            <h2>🔒 Admin-Zugang</h2>
+            <input type="password" id="ap-pass-input" placeholder="Passwort" maxlength="40" autocomplete="off">
+            <button id="ap-pass-submit">Entsperren</button>
+            <div class="ap-pass-error" id="ap-pass-error"></div>
+        </div>
+
+        <!-- Admin Panel Main -->
+        <div class="ap-panel" id="ap-panel" style="display:none;">
+            <div class="ap-close" id="ap-close" title="Schließen"><i class="fas fa-xmark"></i></div>
+            <div class="ap-titlebar"><h1>Admin Panel</h1></div>
+
+            <!-- Screen: Hauptmenü -->
+            <div class="ap-screen active" id="ap-screen-main">
+                <div class="ap-grid">
+                    <div class="ap-grid-btn" data-target="ap-screen-broadcast">
+                        Nachricht senden
+                        <span class="ap-icon"><i class="fas fa-bullhorn"></i></span>
+                    </div>
+                    <div class="ap-grid-btn" data-target="ap-screen-likes">
+                        Likes verwalten
+                        <span class="ap-icon"><i class="fas fa-heart"></i></span>
+                    </div>
+                    <div class="ap-grid-btn" data-target="ap-screen-abuse">
+                        Admin Abuse 🌮
+                        <span class="ap-icon" style="background:#ff9800; border-color:#1a1a1a; color:#fff;"><i class="fas fa-bomb"></i></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Screen: Broadcast senden -->
+            <div class="ap-screen" id="ap-screen-broadcast">
+                <div class="ap-back" data-target="ap-screen-main" title="Zurück"><i class="fas fa-arrow-left"></i></div>
+
+                <!-- Global/Server Toggle -->
+                <div class="ap-toggle toggle-scope" id="ap-bc-scope-toggle">
+                    <button type="button" class="active" data-scope="global">🌍 Global</button>
+                    <button type="button" data-scope="server">💻 Server</button>
+                </div>
+
+                <!-- Wichtig/Normal Toggle -->
+                <div class="ap-toggle toggle-prio" id="ap-priority-toggle">
+                    <button type="button" class="active" data-priority="normal">Normal</button>
+                    <button type="button" data-priority="wichtig">⚠️ Wichtig</button>
+                </div>
+
+                <div class="ap-field">
+                    <textarea id="ap-bc-message" placeholder="Deine Nachricht... (Profil Julian wird automatisch genutzt)" rows="3" maxlength="200"></textarea>
+                </div>
+
+                <button class="ap-publish" id="ap-bc-publish">Senden 🚀</button>
+                <div class="ap-status" id="ap-bc-status"></div>
+            </div>
+
+            <!-- Screen: Likes verwalten -->
+            <div class="ap-screen" id="ap-screen-likes">
+                <div class="ap-back" data-target="ap-screen-main" title="Zurück"><i class="fas fa-arrow-left"></i></div>
+
+                <div class="ap-section">
+                    <h3>Likes</h3>
+                    <!-- Schwarze Box wurde entfernt durch löschen der ap-divider Klasse -->
+                    <div class="ap-half">
+                        <div>
+                            <div class="ap-half-label">Aktuell</div>
+                            <div class="ap-field"><input type="text" id="ap-likes-current" value="–" readonly></div>
+                        </div>
+                        <div>
+                            <div class="ap-half-label">Neuer Wert</div>
+                            <div class="ap-field"><input type="number" id="ap-likes-new" placeholder="0" min="0"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="ap-publish" id="ap-likes-apply">Wert übernehmen ✅</button>
+                <button class="ap-stop" id="ap-likes-reset" style="width:100%; margin-top:10px;">Auf 0 zurücksetzen</button>
+                <div class="ap-status" id="ap-likes-status"></div>
+            </div>
+
+            <!-- Screen: Admin Abuse -->
+            <div class="ap-screen" id="ap-screen-abuse">
+                <div class="ap-back" data-target="ap-screen-main" title="Zurück"><i class="fas fa-arrow-left"></i></div>
+                
+                <h2 style="text-align:center; color:#fff; margin-bottom:15px; font-family:'Kaisei Decol', serif;">Taco Rain 🌮</h2>
+
+                <!-- Global/Server Toggle für Tacos -->
+                <div class="ap-toggle toggle-scope" id="ap-abuse-scope-toggle">
+                    <button type="button" class="active" data-scope="global">🌍 Global</button>
+                    <button type="button" data-scope="server">💻 Server</button>
+                </div>
+
+                <button class="ap-publish" id="ap-abuse-tacos" style="background:#ff9800; border-color:#1a1a1a; color:#fff; padding: 20px; font-size:1.2rem;">
+                    Tacos Starten 🌮🎵
+                </button>
+                <div class="ap-status" id="ap-abuse-status"></div>
+            </div>
+        </div>
+    </div>
+
     <script>
         const audio = document.getElementById('bg-audio');
         const playBtn = document.getElementById('play-pause-btn');
@@ -416,8 +440,10 @@
         const volIcon = document.getElementById('vol-icon');
         const volSlider = document.getElementById('volume-slider');
         const statusLog = document.getElementById('audio-status-log');
+        const tacoAudio = document.getElementById('taco-audio');
 
         audio.volume = 0.3;
+        tacoAudio.volume = 0.5;
 
         function updateSliderTrack() {
             const pct = Math.round(volSlider.value * 100);
@@ -425,31 +451,18 @@
         }
         updateSliderTrack();
 
-        // Überwacht Ladefehler der Datei
-        audio.addEventListener('error', (e) => {
-            statusLog.textContent = "Fehler: Musikdatei nicht gefunden oder defekt!";
-            console.error("Audio-Fehler aufgetreten:", e);
-        });
-
+        audio.addEventListener('error', () => { statusLog.textContent = "Fehler: Musikdatei nicht gefunden!"; });
         audio.addEventListener('canplaythrough', () => {
-            if (audio.paused) {
-                statusLog.textContent = "Musik bereit. Klicke oben links zum Starten 🎵";
-            }
+            if (audio.paused) statusLog.textContent = "Musik bereit. Klicke oben links zum Starten 🎵";
         });
 
-        // Direkter Klick auf den runden Play/Pause-Button oben links
         playBtn.onclick = () => {
             if (audio.paused) {
                 statusLog.textContent = "Wiedergabe angefordert...";
-                audio.play()
-                    .then(() => {
-                        playIcon.className = "fas fa-pause";
-                        statusLog.textContent = "Musik läuft 🎵";
-                    })
-                    .catch(err => {
-                        statusLog.textContent = "Wiedergabe vom Browser verweigert.";
-                        console.error("Fehler beim Abspielen:", err);
-                    });
+                audio.play().then(() => {
+                    playIcon.className = "fas fa-pause";
+                    statusLog.textContent = "Musik läuft 🎵";
+                }).catch(() => { statusLog.textContent = "Wiedergabe vom Browser verweigert."; });
             } else {
                 audio.pause();
                 playIcon.className = "fas fa-play";
@@ -469,33 +482,24 @@
             updateSliderTrack();
         };
 
-        // Autoplay-Versuch (wird meistens geblockt, fängt aber die erste Nutzerinteraktion ab)
         function initAutoplay() {
-            audio.play()
-                .then(() => {
-                    playIcon.className = "fas fa-pause";
-                    statusLog.textContent = "Musik läuft 🎵";
-                })
-                .catch(() => {
-                    const interactionEvents = ['click', 'touchstart', 'keydown'];
-                    const triggerOnUser = () => {
-                        if (audio.paused) {
-                            audio.play().then(() => {
-                                playIcon.className = "fas fa-pause";
-                                statusLog.textContent = "Musik läuft 🎵";
-                            }).catch(() => {});
-                        }
-                        interactionEvents.forEach(event => document.removeEventListener(event, triggerOnUser));
-                    };
-                    interactionEvents.forEach(event => document.addEventListener(event, triggerOnUser, { once: true, passive: true }));
-                });
+            audio.play().then(() => {
+                playIcon.className = "fas fa-pause";
+                statusLog.textContent = "Musik läuft 🎵";
+            }).catch(() => {
+                const triggerOnUser = () => {
+                    if (audio.paused) {
+                        audio.play().then(() => {
+                            playIcon.className = "fas fa-pause";
+                            statusLog.textContent = "Musik läuft 🎵";
+                        }).catch(() => {});
+                    }
+                    ['click', 'touchstart', 'keydown'].forEach(e => document.removeEventListener(e, triggerOnUser));
+                };
+                ['click', 'touchstart', 'keydown'].forEach(e => document.addEventListener(e, triggerOnUser, { once: true, passive: true }));
+            });
         }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initAutoplay);
-        } else {
-            initAutoplay();
-        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAutoplay); else initAutoplay();
 
         // --- Like-Funktion ---
         const LIKE_KEY = "julian442-profile-likes-v1";
@@ -507,159 +511,237 @@
         const likeCount = document.getElementById('like-count');
         const resetLog = document.getElementById('reset-log');
 
-        function renderCount(n) {
-            likeCount.textContent = `${n} ${n === 1 ? 'Like' : 'Likes'}`;
-        }
+        function renderCount(n) { likeCount.textContent = `${n} ${n === 1 ? 'Like' : 'Likes'}`; }
+        function setLikedState() { likeBtn.classList.add('liked'); likeLabel.textContent = 'Geliked'; likeBtn.disabled = true; }
+        function clearLikedState() { likeBtn.classList.remove('liked', 'pop'); likeLabel.textContent = 'Like'; likeBtn.disabled = false; }
 
-        function setLikedState() {
-            likeBtn.classList.add('liked');
-            likeLabel.textContent = 'Geliked';
-            likeBtn.disabled = true;
-        }
-
-        function clearLikedState() {
-            likeBtn.classList.remove('liked', 'pop');
-            likeLabel.textContent = 'Like';
-            likeBtn.disabled = false;
-        }
-
-        // --- Reset per URL-Parameter: ?reset=true ---
         const params = new URLSearchParams(window.location.search);
-        const shouldReset = params.get('reset') === 'true';
-        const likesParam = params.get('likes');
-        const shouldSetLikes = likesParam !== null && !isNaN(parseInt(likesParam));
-
-        function performReset() {
+        if (params.get('reset') === 'true') {
             resetLog.textContent = "Setze Likes zurück...";
             localStorage.removeItem('julian442_liked');
             clearLikedState();
-
-            fetch(likeSetUrl(0))
-                .then(res => res.json())
-                .then(() => {
-                    renderCount(0);
-                    resetLog.textContent = "Likes wurden auf 0 zurückgesetzt ✅";
-                    params.delete('reset');
-                    const newUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : '');
-                    window.history.replaceState({}, '', newUrl);
-                })
-                .catch(() => {
-                    renderCount(0);
-                    resetLog.textContent = "Lokal zurückgesetzt, globaler Zähler evtl. nicht erreichbar.";
-                });
-        }
-
-        function performSetLikes() {
-            const newValue = parseInt(likesParam);
-            resetLog.textContent = `Setze Likes auf ${newValue}...`;
-
-            fetch(likeSetUrl(newValue))
-                .then(res => res.json())
-                .then(() => {
-                    renderCount(newValue);
-                    resetLog.textContent = `Likes wurden auf ${newValue} gesetzt ✅`;
-                    params.delete('likes');
-                    const newUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : '');
-                    window.history.replaceState({}, '', newUrl);
-                })
-                .catch(() => {
-                    resetLog.textContent = "Globaler Zähler evtl. nicht erreichbar.";
-                });
-        }
-
-        if (shouldReset) {
-            performReset();
-        } else if (shouldSetLikes) {
-            performSetLikes();
+            fetch(likeSetUrl(0)).then(res => res.json()).then(() => {
+                renderCount(0); resetLog.textContent = "Likes auf 0 zurückgesetzt ✅";
+                params.delete('reset'); window.history.replaceState({}, '', window.location.pathname + (params.toString() ? `?${params.toString()}` : ''));
+            });
         } else {
             const hasLiked = localStorage.getItem('julian442_liked') === 'true';
-
-            fetch(LIKE_GET_URL)
-                .then(res => res.json())
-                .then(data => renderCount(data.value ?? 0))
-                .catch(() => renderCount(localStorage.getItem('julian442_liked') === 'true' ? 1 : 0));
-
+            fetch(LIKE_GET_URL).then(res => res.json()).then(data => renderCount(data.value ?? 0)).catch(() => renderCount(localStorage.getItem('julian442_liked') === 'true' ? 1 : 0));
             if (hasLiked) setLikedState();
         }
 
         likeBtn.onclick = () => {
             if (localStorage.getItem('julian442_liked') === 'true') return;
-
-            fetch(LIKE_HIT_URL)
-                .then(res => res.json())
-                .then(data => {
-                    renderCount(data.value);
-                    localStorage.setItem('julian442_liked', 'true');
-                    setLikedState();
-                    likeBtn.classList.add('pop');
-                })
-                .catch(() => {
-                    localStorage.setItem('julian442_liked', 'true');
-                    setLikedState();
-                    likeBtn.classList.add('pop');
-                    renderCount(1);
-                });
+            fetch(LIKE_HIT_URL).then(res => res.json()).then(data => {
+                renderCount(data.value); localStorage.setItem('julian442_liked', 'true');
+                setLikedState(); likeBtn.classList.add('pop');
+            }).catch(() => {
+                localStorage.setItem('julian442_liked', 'true'); setLikedState(); likeBtn.classList.add('pop'); renderCount(1);
+            });
         };
 
-        // --- Global Announcement Bar (aus der zweiten Datei übernommen) ---
+        // --- Netzwerkeinstellungen (NTFY) ---
+        const CHANNEL_GLOBAL = "global-massage-broadcast-4471"; 
+        const CHANNEL_SERVER = "julian442-server-data-994";
+
+        function startTacoEffect() {
+            tacoAudio.currentTime = 0;
+            tacoAudio.play().catch(e => console.log("Taco Audio blockiert", e));
+            
+            // Tacos spawnen
+            for(let i=0; i < 40; i++) {
+                setTimeout(() => {
+                    const t = document.createElement('div');
+                    t.className = 'taco';
+                    t.textContent = '🌮';
+                    t.style.left = (Math.random() * 95) + '%';
+                    t.style.animationDuration = (Math.random() * 4 + 3) + 's'; 
+                    document.body.appendChild(t);
+                    
+                    // Taco wieder löschen wenn er unten ist
+                    setTimeout(() => t.remove(), 8000);
+                }, Math.random() * 3000);
+            }
+        }
+
         (function(){
             const bar = document.getElementById('gm-bar');
             const avatarWrap = document.getElementById('gm-avatar');
             const nameText = document.getElementById('gm-name-text');
             const msgEl = document.getElementById('gm-msg');
-
             let lastSeenId = null;
             let hideTimer = null;
 
-            function initials(name){
-                return name.split(/\s+/).filter(Boolean).slice(0,2).map(w => w[0]).join("").toUpperCase();
-            }
-
             function showBar(data){
-                avatarWrap.innerHTML = data.avatar
-                    ? `<img src="${data.avatar}" alt="${data.name}">`
-                    : `<span class="gm-initials">${initials(data.name)}</span>`;
+                avatarWrap.innerHTML = `<img src="${data.avatar}" alt="${data.name}">`;
                 nameText.textContent = data.name;
                 msgEl.textContent = data.message;
-
                 bar.classList.add('show');
-
                 if(hideTimer) clearTimeout(hideTimer);
-                // 5–10 Sekunden Anzeigedauer
                 const holdMs = Math.min(10000, Math.max(5000, 5000 + data.message.length * 40));
-                hideTimer = setTimeout(() => {
-                    bar.classList.remove('show');
-                }, holdMs);
+                hideTimer = setTimeout(() => { bar.classList.remove('show'); }, holdMs);
             }
 
-            // Öffentlicher, kostenloser Broadcast-Kanal über ntfy.sh (kein Server, kein Account nötig).
-            // WICHTIG: Muss exakt mit dem Kanalnamen in der Admin-Datei übereinstimmen.
-            const GM_CHANNEL = "global-massage-broadcast-4471";
-
-            function connect(){
-                const es = new EventSource(`https://ntfy.sh/${GM_CHANNEL}/sse`);
-
+            function connectToTopic(topic) {
+                const es = new EventSource(`https://ntfy.sh/${topic}/sse`);
                 es.onmessage = function(e){
                     try{
                         const envelope = JSON.parse(e.data);
                         if(envelope.event === "message" && envelope.message){
                             const data = JSON.parse(envelope.message);
                             if(data.id !== lastSeenId){
-                                showBar(data);
                                 lastSeenId = data.id;
+                                if(data.type === 'announce') {
+                                    showBar(data);
+                                } else if(data.type === 'taco_rain') {
+                                    startTacoEffect();
+                                }
                             }
                         }
-                    }catch(err){
-                        // keine gültige Nachricht in diesem Event, ignorieren
-                    }
-                };
-
-                es.onerror = function(){
-                    console.warn("ntfy-Verbindung unterbrochen, versuche erneut zu verbinden …");
+                    }catch(err){}
                 };
             }
+            // Verbinde mit Global und Server gleichzeitig, damit man alles sieht
+            connectToTopic(CHANNEL_GLOBAL);
+            connectToTopic(CHANNEL_SERVER);
+        })();
 
-            connect();
+        // --- Admin Panel Logik ---
+        (function(){
+            const ADMIN_PASSWORD = "sakura2026";
+            const hammerBtn = document.getElementById('hammer-btn');
+            const overlay = document.getElementById('ap-overlay');
+            const passBox = document.getElementById('ap-pass-box');
+            const passInput = document.getElementById('ap-pass-input');
+            const passSubmit = document.getElementById('ap-pass-submit');
+            const passError = document.getElementById('ap-pass-error');
+            const panel = document.getElementById('ap-panel');
+            let unlocked = false;
+
+            hammerBtn.onclick = () => {
+                overlay.classList.add('show');
+                if(unlocked){ passBox.style.display = 'none'; panel.style.display = 'block'; switchScreen('ap-screen-main'); } 
+                else { passBox.style.display = 'block'; panel.style.display = 'none'; passInput.value = ''; passError.textContent = ''; setTimeout(() => passInput.focus(), 50); }
+            };
+            document.getElementById('ap-close').onclick = () => overlay.classList.remove('show');
+            overlay.addEventListener('click', (e) => { if(e.target === overlay) overlay.classList.remove('show'); });
+
+            function tryUnlock(){
+                if(passInput.value === ADMIN_PASSWORD){
+                    unlocked = true; passBox.style.display = 'none'; panel.style.display = 'block'; switchScreen('ap-screen-main');
+                } else {
+                    passError.textContent = 'Falsches Passwort!'; passBox.classList.add('ap-shake'); setTimeout(() => passBox.classList.remove('ap-shake'), 350);
+                }
+            }
+            passSubmit.onclick = tryUnlock; passInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') tryUnlock(); });
+
+            function switchScreen(targetId){
+                document.querySelectorAll('.ap-screen').forEach(s => s.classList.remove('active'));
+                document.getElementById(targetId).classList.add('active');
+            }
+            document.querySelectorAll('.ap-grid-btn[data-target], .ap-back[data-target]').forEach(btn => {
+                btn.addEventListener('click', () => switchScreen(btn.dataset.target));
+            });
+
+            // Toggle Handler Helper
+            function setupToggle(containerId, callback) {
+                const container = document.getElementById(containerId);
+                let currentVal = container.querySelector('.active').dataset.scope || container.querySelector('.active').dataset.priority;
+                container.querySelectorAll('button').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        currentVal = btn.dataset.scope || btn.dataset.priority;
+                        if(callback) callback(currentVal);
+                    });
+                });
+                return () => currentVal;
+            }
+
+            const getBcScope = setupToggle('ap-bc-scope-toggle');
+            const getBcPrio = setupToggle('ap-priority-toggle');
+            const getAbuseScope = setupToggle('ap-abuse-scope-toggle');
+
+            // --- Broadcast senden ---
+            const bcMessageInput = document.getElementById('ap-bc-message');
+            const bcStatus = document.getElementById('ap-bc-status');
+
+            document.getElementById('ap-bc-publish').onclick = () => {
+                const message = bcMessageInput.value.trim();
+                if(!message){
+                    bcStatus.textContent = 'Bitte eine Nachricht eingeben.'; bcStatus.style.color = '#ffdca8'; return;
+                }
+                const prio = getBcPrio();
+                const scope = getBcScope();
+                const targetTopic = scope === 'global' ? CHANNEL_GLOBAL : CHANNEL_SERVER;
+
+                // Festgelegtes Profil "Julian"
+                const payload = {
+                    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+                    type: 'announce',
+                    name: prio === 'wichtig' ? '⚠️ Julian' : 'Julian',
+                    avatar: 'pictures/julian.profilbild.png',
+                    message: message
+                };
+
+                bcStatus.textContent = `Sende in ${scope}...`; bcStatus.style.color = '#fff';
+
+                fetch(`https://ntfy.sh/${targetTopic}`, { method: 'POST', body: JSON.stringify(payload) })
+                .then(res => {
+                    if(!res.ok) throw new Error('ntfy Fehler');
+                    bcStatus.textContent = `Gesendet via ${scope} ✅`; bcStatus.style.color = '#c8ffcf';
+                    bcMessageInput.value = '';
+                })
+                .catch(() => { bcStatus.textContent = 'Fehler beim Senden.'; bcStatus.style.color = '#ff8f8f'; });
+            };
+
+            // --- Tacos starten ---
+            const abuseStatus = document.getElementById('ap-abuse-status');
+            document.getElementById('ap-abuse-tacos').onclick = () => {
+                const scope = getAbuseScope();
+                const targetTopic = scope === 'global' ? CHANNEL_GLOBAL : CHANNEL_SERVER;
+                
+                const payload = {
+                    id: Date.now().toString(36),
+                    type: 'taco_rain'
+                };
+
+                abuseStatus.textContent = `Starte Tacos in ${scope}...`; abuseStatus.style.color = '#fff';
+
+                fetch(`https://ntfy.sh/${targetTopic}`, { method: 'POST', body: JSON.stringify(payload) })
+                .then(res => {
+                    if(!res.ok) throw new Error('ntfy Fehler');
+                    abuseStatus.textContent = `Tacos gesendet via ${scope} 🌮✅`; abuseStatus.style.color = '#c8ffcf';
+                })
+                .catch(() => { abuseStatus.textContent = 'Fehler bei Tacos.'; abuseStatus.style.color = '#ff8f8f'; });
+            };
+
+            // --- Likes verwalten ---
+            const likesCurrentInput = document.getElementById('ap-likes-current');
+            const likesNewInput = document.getElementById('ap-likes-new');
+            const likesStatus = document.getElementById('ap-likes-status');
+
+            document.querySelector('[data-target="ap-screen-likes"]').addEventListener('click', () => {
+                fetch(LIKE_GET_URL).then(res => res.json()).then(data => { likesCurrentInput.value = data.value ?? 0; }).catch(() => { likesCurrentInput.value = '–'; });
+            });
+
+            document.getElementById('ap-likes-apply').onclick = () => {
+                const val = parseInt(likesNewInput.value);
+                if(isNaN(val) || val < 0){ likesStatus.textContent = 'Gültige Zahl eingeben!'; likesStatus.style.color = '#ffdca8'; return; }
+                likesStatus.textContent = 'Setze Likes...'; likesStatus.style.color = '#fff';
+                fetch(likeSetUrl(val)).then(res => res.json()).then(() => {
+                    likesStatus.textContent = `Likes auf ${val} gesetzt ✅`; likesStatus.style.color = '#c8ffcf';
+                    likesCurrentInput.value = val; renderCount(val);
+                }).catch(() => { likesStatus.textContent = 'Fehler beim Setzen.'; likesStatus.style.color = '#ff8f8f'; });
+            };
+
+            document.getElementById('ap-likes-reset').onclick = () => {
+                likesStatus.textContent = 'Setze zurück...';
+                fetch(likeSetUrl(0)).then(res => res.json()).then(() => {
+                    likesStatus.textContent = 'Likes auf 0 zurückgesetzt ✅'; likesStatus.style.color = '#c8ffcf';
+                    likesCurrentInput.value = 0; renderCount(0);
+                }).catch(() => { likesStatus.textContent = 'Fehler beim Zurücksetzen.'; likesStatus.style.color = '#ff8f8f'; });
+            };
         })();
     </script>
 </body>
