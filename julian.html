@@ -16,11 +16,23 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url('background/bg_Julian442.mp4') no-repeat center center fixed;
-            background-size: cover;
             color: #3a2b30;
             position: relative;
             overflow: hidden;
+            margin: 0;
+        }
+
+        /* Video Hintergrund */
+        #bg-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            object-fit: cover;
         }
 
         /* Schöne Scrollbars für das Admin Panel */
@@ -204,32 +216,24 @@
         }
         .ap-titlebar{ background: linear-gradient(90deg, #29b6f6, #039be5); border: 3px solid #1a1a1a; border-radius: 18px; padding: 14px 20px; text-align: center; margin-bottom: 20px; }
         .ap-titlebar h1{ font-family: 'Kaisei Decol', serif; color: #fff; font-size: 1.7rem; -webkit-text-stroke: 1px #1a1a1a; }
-        .ap-close{ position: absolute; top: -14px; right: -14px; width: 46px; height: 46px; border-radius: 50%; background: #e53935; border: 3px solid #1a1a1a; color: #fff; font-size: 1.2rem; display:flex; align-items:center; justify-content:center; cursor: pointer; box-shadow: 0 6px 14px rgba(0,0,0,0.4); z-index: 5; }
+        .ap-close{ position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border-radius: 50%; background: #e53935; border: 3px solid #1a1a1a; color: #fff; font-size: 1.2rem; display:flex; align-items:center; justify-content:center; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.4); z-index: 5; }
         .ap-close:hover{ background:#ff5c52; }
-        .ap-back{ position: absolute; bottom: -14px; right: -14px; width: 46px; height: 46px; border-radius: 14px; background: #e53935; border: 3px solid #1a1a1a; color: #fff; font-size: 1.1rem; display:flex; align-items:center; justify-content:center; cursor: pointer; box-shadow: 0 6px 14px rgba(0,0,0,0.4); }
+        .ap-back{ position: absolute; bottom: 10px; left: 10px; width: 46px; height: 46px; border-radius: 14px; background: #e53935; border: 3px solid #1a1a1a; color: #fff; font-size: 1.1rem; display:flex; align-items:center; justify-content:center; cursor: pointer; box-shadow: 0 6px 14px rgba(0,0,0,0.4); }
         .ap-back:hover{ background:#ff5c52; }
 
         .ap-screen{ display: none; }
         .ap-screen.active{ display: block; }
         
         .ap-grid{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-        .ap-grid-btn{ position: relative; background: linear-gradient(180deg, #ffffff, #eef2f6); border: 3px solid #1a1a1a; border-radius: 16px; padding: 14px 40px 14px 14px; font-weight: 800; font-size: 0.95rem; color: #1a1a1a; text-align: left; cursor: pointer; min-height: 60px; display:flex; align-items:center; }
+        .ap-grid-btn{ position: relative; background: linear-gradient(180deg, #ffffff, #eef2f6); border: 3px solid #1a1a1a; border-radius: 16px; padding: 14px 40px 14px 14px; font-weight: 800; font-size: 0.95rem; color: #1a1a1a; text-align: left; cursor: pointer; min-height: 60px; display:flex; align-items:center; transition: transform 0.2s, box-shadow 0.2s; }
         .ap-grid-btn .ap-icon{ position: absolute; right: 8px; top: 50%; transform: translateY(-50%); width: 34px; height: 34px; border-radius: 50%; background: #43d651; border: 2px solid #1a1a1a; display:flex; align-items:center; justify-content:center; font-size: 1.1rem; }
-        .ap-grid-btn:hover{ background: #fff7d6; }
+        .ap-grid-btn:hover{ background: #fff7d6; transform: translateY(-3px); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
         
         .ap-field{ background: #29b6f6; border: 3px solid #1a1a1a; border-radius: 14px; padding: 12px 16px; margin-bottom: 12px; }
         .ap-field textarea{ width: 100%; background: transparent; border: none; outline: none; color: #fff; font-weight: 700; font-size: 1rem; text-align: center; font-family: inherit; resize: none; }
         .ap-field textarea::placeholder{ color: rgba(255,255,255,0.75); }
-        .ap-field input { width: 100%; background: transparent; border: none; outline: none; color: #fff; font-weight: 700; font-size: 1rem; text-align: center; }
-
-        .ap-toggle{ display:flex; gap:0; margin-bottom: 14px; border: 3px solid #1a1a1a; border-radius: 14px; overflow:hidden; }
-        .ap-toggle button{ flex: 1; padding: 12px; border: none; background: #b0bec5; color: #fff; font-weight: 800; cursor: pointer; font-size: 0.95rem; transition: 0.2s;}
-        
-        /* Farben für Toggle Buttons */
-        .toggle-scope button.active[data-scope="global"] { background: #ab47bc; }
-        .toggle-scope button.active[data-scope="server"] { background: #ff9800; }
-        .toggle-prio button.active[data-priority="normal"] { background: #e53935; }
-        .toggle-prio button.active[data-priority="wichtig"] { background: #ffb300; color: #1a1a1a; }
+        .ap-field input, .ap-field select { width: 100%; background: transparent; border: none; outline: none; color: #fff; font-weight: 700; font-size: 1rem; text-align: center; cursor: pointer; }
+        .ap-field option { background: #1a1a1a; color: #fff; }
 
         .ap-publish{ width: 100%; padding: 14px; border: 3px solid #1a1a1a; border-radius: 14px; background: #43d651; color: #1a1a1a; font-weight: 800; font-size: 1.05rem; cursor: pointer; margin-top: 4px; }
         .ap-publish:hover{ background: #5ce56a; }
@@ -247,7 +251,10 @@
 </head>
 <body>
 
-    <!-- Global Announcement Bar -->
+    <video autoplay muted loop playsinline id="bg-video">
+        <source src="background/bg_Julian442.mp4" type="video/mp4">
+    </video>
+
     <div id="gm-bar">
         <div class="gm-avatar" id="gm-avatar"><span class="gm-initials" id="gm-initials"></span></div>
         <div class="gm-textline">
@@ -269,7 +276,21 @@
         </div>
     </div>
 
-    <!-- Hintergrund Sakura-Blüten -->
+    <!-- ... SAKURA ... -->
+    <span class="sakura" style="left:3%; font-size:1.2rem; animation-duration:10s; animation-delay:0s;">🌸</span>
+    <span class="sakura" style="left:8%; animation-duration:9s; animation-delay:1.2s;">🌸</span>
+    <span class="sakura" style="left:15%; font-size:1.1rem; animation-duration:13s; animation-delay:2.8s;">🌸</span>
+    <span class="sakura" style="left:22%; animation-duration:12s; animation-delay:2s;">🌸</span>
+    <span class="sakura" style="left:30%; font-size:1.8rem; animation-duration:11s; animation-delay:0.7s;">🌸</span>
+    <span class="sakura" style="left:40%; animation-duration:10s; animation-delay:1s;">🌸</span>
+    <span class="sakura" style="left:48%; font-size:1.3rem; animation-duration:15s; animation-delay:3.5s;">🌸</span>
+    <span class="sakura" style="left:55%; font-size:1.9rem; animation-duration:9.5s; animation-delay:1.8s;">🌸</span>
+    <span class="sakura" style="left:60%; animation-duration:14s; animation-delay:3s;">🌸</span>
+    <span class="sakura" style="left:68%; font-size:1.2rem; animation-duration:12.5s; animation-delay:0.3s;">🌸</span>
+    <span class="sakura" style="left:78%; animation-duration:11s; animation-delay:0.5s;">🌸</span>
+    <span class="sakura" style="left:85%; font-size:1.7rem; animation-duration:10.5s; animation-delay:2.2s;">🌸</span>
+    <span class="sakura" style="left:90%; animation-duration:13s; animation-delay:2.5s;">🌸</span>
+    <span class="sakura" style="left:96%; font-size:1.1rem; animation-duration:9s; animation-delay:4s;">🌸</span>
     <span class="sakura" style="left:3%; font-size:1.2rem; animation-duration:10s; animation-delay:0s;">🌸</span>
     <span class="sakura" style="left:8%; animation-duration:9s; animation-delay:1.2s;">🌸</span>
     <span class="sakura" style="left:15%; font-size:1.1rem; animation-duration:13s; animation-delay:2.8s;">🌸</span>
@@ -289,7 +310,6 @@
         <source src="/music/Pitanga.mp3" type="audio/mpeg">
     </audio>
     
-    <!-- Audio für Taco Abuse -->
     <audio id="taco-audio" preload="auto">
         <source src="music/Tacos.mp3" type="audio/mpeg">
     </audio>
@@ -333,7 +353,6 @@
 
     <!-- ADMIN OVERLAY -->
     <div class="ap-overlay" id="ap-overlay">
-        <!-- Passwort-Abfrage -->
         <div class="ap-pass-box" id="ap-pass-box">
             <h2>🔒 Admin-Zugang</h2>
             <input type="password" id="ap-pass-input" placeholder="Passwort" maxlength="40" autocomplete="off">
@@ -341,12 +360,10 @@
             <div class="ap-pass-error" id="ap-pass-error"></div>
         </div>
 
-        <!-- Admin Panel Main -->
         <div class="ap-panel" id="ap-panel" style="display:none;">
             <div class="ap-close" id="ap-close" title="Schließen"><i class="fas fa-xmark"></i></div>
             <div class="ap-titlebar"><h1>Admin Panel</h1></div>
 
-            <!-- Screen: Hauptmenü -->
             <div class="ap-screen active" id="ap-screen-main">
                 <div class="ap-grid">
                     <div class="ap-grid-btn" data-target="ap-screen-broadcast">
@@ -364,37 +381,22 @@
                 </div>
             </div>
 
-            <!-- Screen: Broadcast senden -->
             <div class="ap-screen" id="ap-screen-broadcast">
                 <div class="ap-back" data-target="ap-screen-main" title="Zurück"><i class="fas fa-arrow-left"></i></div>
-
-                <!-- Global/Server Toggle -->
-                <div class="ap-toggle toggle-scope" id="ap-bc-scope-toggle">
-                    <button type="button" class="active" data-scope="global">🌍 Global</button>
-                    <button type="button" data-scope="server">💻 Server</button>
-                </div>
-
-                <!-- Wichtig/Normal Toggle -->
-                <div class="ap-toggle toggle-prio" id="ap-priority-toggle">
-                    <button type="button" class="active" data-priority="normal">Normal</button>
-                    <button type="button" data-priority="wichtig">⚠️ Wichtig</button>
-                </div>
-
                 <div class="ap-field">
-                    <textarea id="ap-bc-message" placeholder="Deine Nachricht... (Profil Julian wird automatisch genutzt)" rows="3" maxlength="200"></textarea>
+                    <select id="ap-bc-scope"><option value="global">Global</option><option value="server">Server</option></select>
                 </div>
-
+                <div class="ap-field">
+                    <textarea id="ap-bc-message" placeholder="Deine Nachricht..." rows="3" maxlength="200"></textarea>
+                </div>
                 <button class="ap-publish" id="ap-bc-publish">Senden 🚀</button>
                 <div class="ap-status" id="ap-bc-status"></div>
             </div>
 
-            <!-- Screen: Likes verwalten -->
             <div class="ap-screen" id="ap-screen-likes">
                 <div class="ap-back" data-target="ap-screen-main" title="Zurück"><i class="fas fa-arrow-left"></i></div>
-
                 <div class="ap-section">
                     <h3>Likes</h3>
-                    <!-- Schwarze Box wurde entfernt durch löschen der ap-divider Klasse -->
                     <div class="ap-half">
                         <div>
                             <div class="ap-half-label">Aktuell</div>
@@ -406,27 +408,26 @@
                         </div>
                     </div>
                 </div>
-
                 <button class="ap-publish" id="ap-likes-apply">Wert übernehmen ✅</button>
                 <button class="ap-stop" id="ap-likes-reset" style="width:100%; margin-top:10px;">Auf 0 zurücksetzen</button>
                 <div class="ap-status" id="ap-likes-status"></div>
             </div>
 
-            <!-- Screen: Admin Abuse -->
             <div class="ap-screen" id="ap-screen-abuse">
                 <div class="ap-back" data-target="ap-screen-main" title="Zurück"><i class="fas fa-arrow-left"></i></div>
-                
                 <h2 style="text-align:center; color:#fff; margin-bottom:15px; font-family:'Kaisei Decol', serif;">Taco Rain 🌮</h2>
-
-                <!-- Global/Server Toggle für Tacos -->
-                <div class="ap-toggle toggle-scope" id="ap-abuse-scope-toggle">
-                    <button type="button" class="active" data-scope="global">🌍 Global</button>
-                    <button type="button" data-scope="server">💻 Server</button>
+                
+                <div class="ap-field">
+                    <select id="ap-abuse-scope"><option value="global">Global</option><option value="server">Server</option></select>
+                </div>
+                <div class="ap-field">
+                    <input type="number" id="ap-abuse-duration" placeholder="Dauer in Sekunden (z.B. 10)">
                 </div>
 
                 <button class="ap-publish" id="ap-abuse-tacos" style="background:#ff9800; border-color:#1a1a1a; color:#fff; padding: 20px; font-size:1.2rem;">
                     Tacos Starten 🌮🎵
                 </button>
+                <button class="ap-stop" id="ap-abuse-stop" style="width:100%; margin-top:10px;">Stop 🛑</button>
                 <div class="ap-status" id="ap-abuse-status"></div>
             </div>
         </div>
@@ -501,7 +502,6 @@
         }
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initAutoplay); else initAutoplay();
 
-        // --- Like-Funktion ---
         const LIKE_KEY = "julian442-profile-likes-v1";
         const LIKE_HIT_URL = `https://countapi.mileshilliard.com/api/v1/hit/${LIKE_KEY}`;
         const LIKE_GET_URL = `https://countapi.mileshilliard.com/api/v1/get/${LIKE_KEY}`;
@@ -540,73 +540,67 @@
             });
         };
 
-        // --- Netzwerkeinstellungen (NTFY) ---
-        const CHANNEL_GLOBAL = "global-massage-broadcast-4471"; 
-        const CHANNEL_SERVER = "julian442-server-data-994";
+        const CHANNEL_GLOBAL = "global-massage-broadcast-4471";
+        const CHANNEL_SERVER = "global-massage-broadcast-4472";
+        let tacoInterval = null;
 
-        function startTacoEffect() {
+        function startTacoEffect(durationSeconds) {
             tacoAudio.currentTime = 0;
             tacoAudio.play().catch(e => console.log("Taco Audio blockiert", e));
-            
-            // Tacos spawnen
-            for(let i=0; i < 40; i++) {
-                setTimeout(() => {
+            const endTime = Date.now() + (durationSeconds * 1000);
+            tacoInterval = setInterval(() => {
+                if(Date.now() > endTime) { stopTacoEffect(); return; }
+                for(let i=0; i<3; i++) {
                     const t = document.createElement('div');
                     t.className = 'taco';
                     t.textContent = '🌮';
                     t.style.left = (Math.random() * 95) + '%';
-                    t.style.animationDuration = (Math.random() * 4 + 3) + 's'; 
+                    t.style.animationDuration = (Math.random() * 2 + 2) + 's'; 
                     document.body.appendChild(t);
-                    
-                    // Taco wieder löschen wenn er unten ist
-                    setTimeout(() => t.remove(), 8000);
-                }, Math.random() * 3000);
-            }
+                    setTimeout(() => t.remove(), 5000);
+                }
+            }, 300);
         }
 
-        (function(){
-            const bar = document.getElementById('gm-bar');
-            const avatarWrap = document.getElementById('gm-avatar');
-            const nameText = document.getElementById('gm-name-text');
-            const msgEl = document.getElementById('gm-msg');
-            let lastSeenId = null;
-            let hideTimer = null;
+        function stopTacoEffect() {
+            if(tacoInterval) clearInterval(tacoInterval);
+            tacoAudio.pause();
+        }
 
-            function showBar(data){
-                avatarWrap.innerHTML = `<img src="${data.avatar}" alt="${data.name}">`;
-                nameText.textContent = data.name;
-                msgEl.textContent = data.message;
-                bar.classList.add('show');
-                if(hideTimer) clearTimeout(hideTimer);
-                const holdMs = Math.min(10000, Math.max(5000, 5000 + data.message.length * 40));
-                hideTimer = setTimeout(() => { bar.classList.remove('show'); }, holdMs);
-            }
+        function setupListener(channel) {
+            const es = new EventSource(`https://ntfy.sh/${channel}/sse`);
+            es.onmessage = function(e){
+                try{
+                    const envelope = JSON.parse(e.data);
+                    if(envelope.event === "message" && envelope.message){
+                        const data = JSON.parse(envelope.message);
+                        if(data.type === 'announce') { showBar(data); } 
+                        else if(data.type === 'taco_rain') { startTacoEffect(data.duration || 10); } 
+                        else if(data.type === 'taco_stop') { stopTacoEffect(); }
+                    }
+                }catch(err){}
+            };
+        }
 
-            function connectToTopic(topic) {
-                const es = new EventSource(`https://ntfy.sh/${topic}/sse`);
-                es.onmessage = function(e){
-                    try{
-                        const envelope = JSON.parse(e.data);
-                        if(envelope.event === "message" && envelope.message){
-                            const data = JSON.parse(envelope.message);
-                            if(data.id !== lastSeenId){
-                                lastSeenId = data.id;
-                                if(data.type === 'announce') {
-                                    showBar(data);
-                                } else if(data.type === 'taco_rain') {
-                                    startTacoEffect();
-                                }
-                            }
-                        }
-                    }catch(err){}
-                };
-            }
-            // Verbinde mit Global und Server gleichzeitig, damit man alles sieht
-            connectToTopic(CHANNEL_GLOBAL);
-            connectToTopic(CHANNEL_SERVER);
-        })();
+        const bar = document.getElementById('gm-bar');
+        const avatarWrap = document.getElementById('gm-avatar');
+        const nameText = document.getElementById('gm-name-text');
+        const msgEl = document.getElementById('gm-msg');
+        let hideTimer = null;
 
-        // --- Admin Panel Logik ---
+        function showBar(data){
+            avatarWrap.innerHTML = `<img src="${data.avatar}" alt="${data.name}">`;
+            nameText.textContent = data.name;
+            msgEl.textContent = data.message;
+            bar.classList.add('show');
+            if(hideTimer) clearTimeout(hideTimer);
+            const holdMs = Math.min(10000, Math.max(5000, 5000 + data.message.length * 40));
+            hideTimer = setTimeout(() => { bar.classList.remove('show'); }, holdMs);
+        }
+
+        setupListener(CHANNEL_GLOBAL);
+        setupListener(CHANNEL_SERVER);
+
         (function(){
             const ADMIN_PASSWORD = "sakura2026";
             const hammerBtn = document.getElementById('hammer-btn');
@@ -643,104 +637,54 @@
                 btn.addEventListener('click', () => switchScreen(btn.dataset.target));
             });
 
-            // Toggle Handler Helper
-            function setupToggle(containerId, callback) {
-                const container = document.getElementById(containerId);
-                let currentVal = container.querySelector('.active').dataset.scope || container.querySelector('.active').dataset.priority;
-                container.querySelectorAll('button').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        container.querySelectorAll('button').forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        currentVal = btn.dataset.scope || btn.dataset.priority;
-                        if(callback) callback(currentVal);
-                    });
-                });
-                return () => currentVal;
-            }
-
-            const getBcScope = setupToggle('ap-bc-scope-toggle');
-            const getBcPrio = setupToggle('ap-priority-toggle');
-            const getAbuseScope = setupToggle('ap-abuse-scope-toggle');
-
-            // --- Broadcast senden ---
             const bcMessageInput = document.getElementById('ap-bc-message');
+            const bcScopeInput = document.getElementById('ap-bc-scope');
             const bcStatus = document.getElementById('ap-bc-status');
 
             document.getElementById('ap-bc-publish').onclick = () => {
                 const message = bcMessageInput.value.trim();
-                if(!message){
-                    bcStatus.textContent = 'Bitte eine Nachricht eingeben.'; bcStatus.style.color = '#ffdca8'; return;
-                }
-                const prio = getBcPrio();
-                const scope = getBcScope();
-                const targetTopic = scope === 'global' ? CHANNEL_GLOBAL : CHANNEL_SERVER;
-
-                // Festgelegtes Profil "Julian"
-                const payload = {
-                    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
-                    type: 'announce',
-                    name: prio === 'wichtig' ? '⚠️ Julian' : 'Julian',
-                    avatar: 'pictures/julian.profilbild.png',
-                    message: message
-                };
-
-                bcStatus.textContent = `Sende in ${scope}...`; bcStatus.style.color = '#fff';
-
-                fetch(`https://ntfy.sh/${targetTopic}`, { method: 'POST', body: JSON.stringify(payload) })
-                .then(res => {
-                    if(!res.ok) throw new Error('ntfy Fehler');
-                    bcStatus.textContent = `Gesendet via ${scope} ✅`; bcStatus.style.color = '#c8ffcf';
-                    bcMessageInput.value = '';
-                })
-                .catch(() => { bcStatus.textContent = 'Fehler beim Senden.'; bcStatus.style.color = '#ff8f8f'; });
+                const targetChannel = bcScopeInput.value === 'server' ? CHANNEL_SERVER : CHANNEL_GLOBAL;
+                if(!message){ bcStatus.textContent = 'Nachricht eingeben!'; return; }
+                const payload = { id: Date.now().toString(36), type: 'announce', name: 'Julian', avatar: 'pictures/julian.profilbild.png', message: message };
+                fetch(`https://ntfy.sh/${targetChannel}`, { method: 'POST', body: JSON.stringify(payload) })
+                .then(() => { bcStatus.textContent = 'Gesendet ✅'; bcMessageInput.value = ''; })
+                .catch(() => { bcStatus.textContent = 'Fehler!'; });
             };
 
-            // --- Tacos starten ---
             const abuseStatus = document.getElementById('ap-abuse-status');
+            const abuseDuration = document.getElementById('ap-abuse-duration');
+            const abuseScope = document.getElementById('ap-abuse-scope');
+
             document.getElementById('ap-abuse-tacos').onclick = () => {
-                const scope = getAbuseScope();
-                const targetTopic = scope === 'global' ? CHANNEL_GLOBAL : CHANNEL_SERVER;
-                
-                const payload = {
-                    id: Date.now().toString(36),
-                    type: 'taco_rain'
-                };
-
-                abuseStatus.textContent = `Starte Tacos in ${scope}...`; abuseStatus.style.color = '#fff';
-
-                fetch(`https://ntfy.sh/${targetTopic}`, { method: 'POST', body: JSON.stringify(payload) })
-                .then(res => {
-                    if(!res.ok) throw new Error('ntfy Fehler');
-                    abuseStatus.textContent = `Tacos gesendet via ${scope} 🌮✅`; abuseStatus.style.color = '#c8ffcf';
-                })
-                .catch(() => { abuseStatus.textContent = 'Fehler bei Tacos.'; abuseStatus.style.color = '#ff8f8f'; });
+                const duration = parseInt(abuseDuration.value) || 10;
+                const targetChannel = abuseScope.value === 'server' ? CHANNEL_SERVER : CHANNEL_GLOBAL;
+                const payload = { id: Date.now().toString(36), type: 'taco_rain', duration: duration };
+                fetch(`https://ntfy.sh/${targetChannel}`, { method: 'POST', body: JSON.stringify(payload) })
+                .then(() => { abuseStatus.textContent = 'Tacos laufen!'; });
             };
 
-            // --- Likes verwalten ---
+            document.getElementById('ap-abuse-stop').onclick = () => {
+                const payload = { id: Date.now().toString(36), type: 'taco_stop' };
+                fetch(`https://ntfy.sh/${CHANNEL_GLOBAL}`, { method: 'POST', body: JSON.stringify(payload) });
+                fetch(`https://ntfy.sh/${CHANNEL_SERVER}`, { method: 'POST', body: JSON.stringify(payload) })
+                .then(() => { abuseStatus.textContent = 'Tacos gestoppt 🛑'; });
+            };
+
             const likesCurrentInput = document.getElementById('ap-likes-current');
             const likesNewInput = document.getElementById('ap-likes-new');
             const likesStatus = document.getElementById('ap-likes-status');
 
             document.querySelector('[data-target="ap-screen-likes"]').addEventListener('click', () => {
-                fetch(LIKE_GET_URL).then(res => res.json()).then(data => { likesCurrentInput.value = data.value ?? 0; }).catch(() => { likesCurrentInput.value = '–'; });
+                fetch(LIKE_GET_URL).then(res => res.json()).then(data => { likesCurrentInput.value = data.value ?? 0; });
             });
 
             document.getElementById('ap-likes-apply').onclick = () => {
                 const val = parseInt(likesNewInput.value);
-                if(isNaN(val) || val < 0){ likesStatus.textContent = 'Gültige Zahl eingeben!'; likesStatus.style.color = '#ffdca8'; return; }
-                likesStatus.textContent = 'Setze Likes...'; likesStatus.style.color = '#fff';
-                fetch(likeSetUrl(val)).then(res => res.json()).then(() => {
-                    likesStatus.textContent = `Likes auf ${val} gesetzt ✅`; likesStatus.style.color = '#c8ffcf';
-                    likesCurrentInput.value = val; renderCount(val);
-                }).catch(() => { likesStatus.textContent = 'Fehler beim Setzen.'; likesStatus.style.color = '#ff8f8f'; });
+                fetch(likeSetUrl(val)).then(() => { likesStatus.textContent = 'Gesetzt ✅'; renderCount(val); });
             };
 
             document.getElementById('ap-likes-reset').onclick = () => {
-                likesStatus.textContent = 'Setze zurück...';
-                fetch(likeSetUrl(0)).then(res => res.json()).then(() => {
-                    likesStatus.textContent = 'Likes auf 0 zurückgesetzt ✅'; likesStatus.style.color = '#c8ffcf';
-                    likesCurrentInput.value = 0; renderCount(0);
-                }).catch(() => { likesStatus.textContent = 'Fehler beim Zurücksetzen.'; likesStatus.style.color = '#ff8f8f'; });
+                fetch(likeSetUrl(0)).then(() => { likesStatus.textContent = 'Zurückgesetzt ✅'; renderCount(0); });
             };
         })();
     </script>
