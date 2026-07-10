@@ -602,7 +602,7 @@
         setupListener(CHANNEL_SERVER);
 
         (function(){
-            const ADMIN_PASSWORD = "sakura2026";
+            const API_URL = "https://tiny-limit-3f67.voltix-de.workers.dev";
             const hammerBtn = document.getElementById('hammer-btn');
             const overlay = document.getElementById('ap-overlay');
             const passBox = document.getElementById('ap-pass-box');
@@ -620,12 +620,20 @@
             document.getElementById('ap-close').onclick = () => overlay.classList.remove('show');
             overlay.addEventListener('click', (e) => { if(e.target === overlay) overlay.classList.remove('show'); });
 
-            function tryUnlock(){
-                if(passInput.value === ADMIN_PASSWORD){
-                    unlocked = true; passBox.style.display = 'none'; panel.style.display = 'block'; switchScreen('ap-screen-main');
-                } else {
-                    passError.textContent = 'Falsches Passwort!'; passBox.classList.add('ap-shake'); setTimeout(() => passBox.classList.remove('ap-shake'), 350);
-                }
+            async function tryUnlock(){
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ password: passInput.value })
+                    });
+                    const result = await response.json();
+                    if(result.success){
+                        unlocked = true; passBox.style.display = 'none'; panel.style.display = 'block'; switchScreen('ap-screen-main');
+                    } else {
+                        passError.textContent = 'Falsches Passwort!'; passBox.classList.add('ap-shake'); setTimeout(() => passBox.classList.remove('ap-shake'), 350);
+                    }
+                } catch(e) { passError.textContent = 'Verbindungsfehler!'; }
             }
             passSubmit.onclick = tryUnlock; passInput.addEventListener('keydown', (e) => { if(e.key === 'Enter') tryUnlock(); });
 
