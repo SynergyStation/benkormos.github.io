@@ -51,7 +51,7 @@ Welcome to the central Link-in-Bio and Project Showcase Hub of **SynergyStation*
 │ 
 ├── 📄 index.html           # Main Landing Page / Hub with dynamic API logic
 ├── 📄 developer.html       # Overview page listing all developers in the project
-├── 📄 admin.html          # Administrative dashboard or portal layout
+├── 📄 admin.html           # Administrative dashboard or portal layout
 ├── 📄 template.html        # Base blueprint for creating new member profile pages
 │
 ├── 👥 Member Profiles
