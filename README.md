@@ -28,11 +28,27 @@ Welcome to the central Link-in-Bio and Project Showcase Hub of **SynergyStation*
 ```text
 ├── 📂 background/          # Custom background assets (Images / Videos)
 ├── 📂 css/                 # Extended stylesheets and modular design system
+│   ├── 📂 benkormos/ 
+│   │   └── style.css
+│   └── 📂 homepage/
+│       └── style.css
 ├── 📂 music/               # Audio assets and background tracks
+│   ├── 📂 mexo/
+│   │   ├── Tuff.mp3
+│   │   ├── Tuff2.mp3
+│   │   └── Tuff3.mp3
+│   ├── 📂 ben/
+│   │   ├── ballernundsaufen.mp3
+│   │   ├── fish.mp3
+│   │   └──  └── pubc.mp3
+│   ├──pitanga.mp3
+│   └──Tacos.mp3
+│
 ├── 📂 pictures/            # Profile pictures and avatars for members
 │   ├── benkormos.profilbild.jpg
 │   ├── julian.profilbild.png
 │   └── mexo.profilbild.png
+│ 
 ├── 📄 index.html           # Main Landing Page / Hub with dynamic API logic
 ├── 📄 developer.html       # Overview page listing all developers in the project
 ├── 📄 admin.html          # Administrative dashboard or portal layout
@@ -40,11 +56,8 @@ Welcome to the central Link-in-Bio and Project Showcase Hub of **SynergyStation*
 │
 ├── 👥 Member Profiles
 │   ├── 📄 ben.html
-│   ├── 📄 benkormos.html
 │   ├── 📄 julian.html
-│   ├── 📄 julian442.html
 │   └── 📄 mexo.html
 │
 ├── 📄 logo.png             # Official SynergyStation branding logo
-├── 📄 style.css            # Core global stylesheet
 └── 📄 README.md            # Project documentation (this file)
