@@ -18,182 +18,264 @@
 <body>
 
     <div class="bg-glow-orb"></div>
-    <audio id="bg-music" autoplay loop></audio>
+    
+    <!-- Audio Node -->
+    <audio id="bg-music"></audio>
 
-    <!-- CORE INTERFACE DIALOG BOX -->
-    <div class="modal-blur-screen" id="info-modal">
-        <div class="modal-vault">
-            <button class="close-vault-btn" id="close-modal"><i class="fas fa-times"></i></button>
-            <div class="modal-lead-row">
-                <i id="m-icon"></i>
-                <div class="modal-lead-titles">
-                    <h3 id="m-title">Registry Node</h3>
-                    <span id="m-type">// PARAM_LOG</span>
-                </div>
+    <!-- DESKTOP WORKSPACE (Contains draggable windows) -->
+    <div class="desktop-area">
+
+        <!-- CORE INTERFACE DIALOG BOX (MODAL) -->
+        <div class="modal-vault draggable-window" id="info-modal" style="display: none; top: 15%; left: 35%;">
+            <div class="window-titlebar">
+                <span class="titlebar-text">Properties</span>
+                <button class="close-vault-btn" id="close-modal"><i class="fas fa-times"></i></button>
             </div>
-            <p class="modal-body-text" id="m-desc">Matrix Node Payload description.</p>
-            <div class="modal-status-box" id="m-use">
-                EXECUTION PIPELINE READY
+            <div class="window-content">
+                <div class="modal-lead-row">
+                    <i id="m-icon"></i>
+                    <div class="modal-lead-titles">
+                        <h3 id="m-title">Registry Node</h3>
+                        <span id="m-type">// PARAM_LOG</span>
+                    </div>
+                </div>
+                <p class="modal-body-text" id="m-desc">Matrix Node Payload description.</p>
+                <div class="modal-status-box" id="m-use">
+                    EXECUTION PIPELINE READY
+                </div>
             </div>
         </div>
+
+        <!-- MAIN DASHBOARD WINDOW -->
+        <div class="terminal-container draggable-window" style="top: 5%; left: 10%;">
+            
+            <!-- WINDOW TITLE BAR -->
+            <div class="window-titlebar">
+                <span class="titlebar-text">BenKormos Navigator - Command Center</span>
+                <div class="titlebar-controls">
+                    <button class="titlebar-btn"><i class="fas fa-minus"></i></button>
+                    <button class="titlebar-btn"><i class="far fa-square"></i></button>
+                    <button class="titlebar-btn"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+
+            <div class="window-content main-window-layout">
+                <!-- SIDEBAR PLATFORM HUB -->
+                <aside class="profile-axis">
+                    <div class="avatar-box" id="secret-avatar-trigger" style="cursor: pointer;">
+                        <img src="pictures/benkormos.profilbild.jpg" alt="BenKormos">
+                        <div>
+                            <div class="status-badge">
+                                <div class="status-dot"></div> SECURE_NODE // 2026
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="profile-title">
+                        <h1>BenKormos <i class="fas fa-check-circle verified-badge" title="Verified Systems Architect"></i></h1>
+                        <p>Owner</p>
+                    </div>
+
+                    <nav class="link-mesh">
+                        <a href="https://github.com/benbroc" target="_blank" class="link-node"><span>GitHub</span><i class="fab fa-github"></i></a>
+                        <a href="https://youtube.com/@benkormos" target="_blank" class="link-node"><span>YouTube</span><i class="fab fa-youtube"></i></a>
+                        <a href="https://twitch.tv/benkormos" target="_blank" class="link-node"><span>Twitch</span><i class="fab fa-twitch"></i></a>
+                        <a href="https://dc.gg/ben" target="_blank" class="link-node"><span>Discord</span><i class="fab fa-discord"></i></a>
+                        <a href="https://last.fm/user/ben_bro_c" target="_blank" class="link-node"><span>Last.fm</span><i class="fab fa-lastfm"></i></a>
+                        <a href="https://open.spotify.com/user/31i3aleb3cwqqmmbmpj67duj73qu?si=b36abe2678d14e1f" target="_blank" class="link-node"><span>Spotify</span><i class="fab fa-spotify"></i></a>
+                    </nav>
+                </aside>
+
+                <!-- DATA VIEWPORT -->
+                <main class="content-axis">
+                    
+                    <!-- SUMMARY -->
+                    <section class="deck-section">
+                        <div class="section-tag"><i class="fas fa-user-terminal"></i> 01 / Identity Core</div>
+                        <p class="bio-text">
+                            Welcome to my space! I love building codes, tinkering with code, and sharing my latest projects and favorite links right here with you. Everything is built to adapt dynamically.
+                        </p>
+                        <div class="sub-grid">
+                            <div class="interactive-card" onclick="window.open('https://github.com/SynergyStation', '_blank')">
+                                <div class="card-core">
+                                    <i class="fas fa-satellite"></i>
+                                    <div class="card-meta">
+                                        <h4>SYNERGYstation</h4>
+                                        <p>Owner & Main Developer</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-external-link-alt" style="font-size: 0.8rem; opacity: 0.5;"></i>
+                            </div>
+                            <div class="interactive-card" onclick="window.open('https://github.com/Benkormos', '_blank')">
+                                <div class="card-core">
+                                    <i class="fas fa-code-branch"></i>
+                                    <div class="card-meta">
+                                        <h4>BenKormos Prod.</h4>
+                                        <p>Owner & Developer</p>
+                                    </div>
+                                </div>
+                                <i class="fas fa-external-link-alt" style="font-size: 0.8rem; opacity: 0.5;"></i>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- ENVIRONMENT DECK -->
+                    <section class="deck-section">
+                        <div class="section-tag"><i class="fas fa-server"></i> 02 / Environment Matrix</div>
+                        
+                        <!-- OS Cards -->
+                        <div class="sub-grid">
+                            <div class="interactive-card" data-node="win10">
+                                <div class="card-core">
+                                    <i class="fab fa-windows"></i>
+                                    <div class="card-meta">
+                                        <h4>Windows 10</h4>
+                                        <p>Host Workstation</p>
+                                    </div>
+                                </div>
+                                <span class="badge-pill prime">Host</span>
+                            </div>
+
+                            <div class="interactive-card" data-node="macos">
+                                <div class="card-core">
+                                    <i class="fab fa-apple"></i>
+                                    <div class="card-meta">
+                                        <h4>macOS Ventura</h4>
+                                        <p>v13.7.8 Architecture</p>
+                                    </div>
+                                </div>
+                                <span class="badge-pill prime">2nd Main</span>
+                            </div>
+
+                            <div class="interactive-card" data-node="win11">
+                                <div class="card-core">
+                                    <i class="fab fa-windows"></i>
+                                    <div class="card-meta">
+                                        <h4>Windows Server</h4>
+                                        <p>Server 2026 Edition</p>
+                                    </div>
+                                </div>
+                                <span class="badge-pill">2nd Server</span>
+                            </div>
+
+                            <div class="interactive-card" data-node="ubuntu">
+                                <div class="card-core">
+                                    <i class="fab fa-ubuntu"></i>
+                                    <div class="card-meta">
+                                        <h4>Ubuntu Server</h4>
+                                        <p>v24.04 LTS Kernel</p>
+                                    </div>
+                                </div>
+                                <span class="badge-pill">Backend</span>
+                            </div>
+                        </div>
+
+                        <!-- Language Tokens -->
+                        <div class="tech-matrix">
+                            <div class="tech-token" data-node="html"><i class="devicon-html5-plain" style="color: #e34c26;"></i> HTML5</div>
+                            <div class="tech-token" data-node="css"><i class="devicon-css3-plain" style="color: #264de4;"></i> CSS3</div>
+                            <div class="tech-token" data-node="js"><i class="devicon-javascript-plain" style="color: #f7df1e;"></i> JavaScript</div>
+                            <div class="tech-token" data-node="python"><i class="devicon-python-plain" style="color: #3776ab;"></i> Python</div>
+                            <div class="tech-token" data-node="cpp"><i class="devicon-cplusplus-plain" style="color: #00599c;"></i> C++</div>
+                            <div class="tech-token" data-node="java"><i class="devicon-java-plain" style="color: #f89820;"></i> Java</div>
+                        </div>
+                    </section>
+
+                    <!-- CODE REPOSITORIES -->
+                    <section class="deck-section">
+                        <div class="section-tag"><i class="fas fa-folder-open"></i> 03 / Code Vaults</div>
+                        <div class="repo-rack">
+                            <div class="repo-banner">
+                                <div class="repo-info">
+                                    <h4>Malware Database</h4>
+                                    <p>My Malware Database for entertainment purposes only.</p>
+                                </div>
+                                <a href="https://github.com/BenKormos/MalwareDatabase/tree/main/SteamTrashVirus" target="_blank" class="action-link">Open Source <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                            <div class="repo-banner">
+                                <div class="repo-info">
+                                    <h4>Voltix Minecraft</h4>
+                                    <p>Began February 11th, terminated in May/June. Assets public.</p>
+                                </div>
+                                <a href="https://github.com/SynergyStation/voltix-website-2.0" target="_blank" class="action-link">Open Source <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <a href="https://github.com/BenKormos" target="_blank" class="cyber-btn">Access Global Repository</a>
+                        </div>
+                    </section>
+
+                </main>
+            </div>
+
+            <!-- DASHBOARD SYSTEM FOOTER -->
+            <footer class="terminal-footer">
+                <a href="/" class="footer-left-btn"><i class="fas fa-code-branch"></i> return_to_root</a>
+                <span>SYSTEM_STATUS: OPERATIONAL // RUNTIME_2026 // @BENKORMOS</span>
+            </footer>
+
+        </div>
+
+        <!-- WINAMP STYLE FLOATING MUSIC PLAYER -->
+        <div class="winamp-player draggable-window" style="bottom: 60px; right: 20px;">
+            <div class="window-titlebar winamp-title">
+                <span class="titlebar-text"><i class="fas fa-music"></i> WINAMP - PIPELINE AUDIO</span>
+                <div class="titlebar-controls">
+                    <button class="titlebar-btn"><i class="fas fa-minus"></i></button>
+                    <button class="titlebar-btn"><i class="fas fa-times"></i></button>
+                </div>
+            </div>
+            
+            <div class="winamp-display">
+                <div class="winamp-track-info" id="player-status">TRACK 1</div>
+                <div class="winamp-timer" id="player-time">00:00</div>
+            </div>
+
+            <div class="winamp-controls">
+                <button class="winamp-btn" id="btn-prev" title="Previous"><i class="fas fa-step-backward"></i></button>
+                <button class="winamp-btn" id="btn-play" title="Play"><i class="fas fa-play"></i></button>
+                <button class="winamp-btn" id="btn-pause" title="Pause"><i class="fas fa-pause"></i></button>
+                <button class="winamp-btn" id="btn-stop" title="Stop"><i class="fas fa-stop"></i></button>
+                <button class="winamp-btn" id="btn-next" title="Next"><i class="fas fa-step-forward"></i></button>
+            </div>
+        </div>
+
     </div>
 
-    <!-- MAIN DASHBOARD -->
-    <div class="terminal-container">
-        
-        <!-- SIDEBAR PLATFORM HUB -->
-        <aside class="profile-axis">
-            <div class="avatar-box" id="secret-avatar-trigger" style="cursor: pointer;">
-                <img src="pictures/benkormos.profilbild.jpg" alt="BenKormos">
-                <div>
-                    <div class="status-badge">
-                        <div class="status-dot"></div> SECURE_NODE // 2026
-                    </div>
-                </div>
-            </div>
-
-            <div class="profile-title">
-                <h1>BenKormos <i class="fas fa-check-circle verified-badge" title="Verified Systems Architect"></i></h1>
-                <p>Owner</p>
-            </div>
-
-            <nav class="link-mesh">
-                <a href="https://github.com/benbroc" target="_blank" class="link-node"><span>GitHub</span><i class="fab fa-github"></i></a>
-                <a href="https://youtube.com/@benkormos" target="_blank" class="link-node"><span>YouTube</span><i class="fab fa-youtube"></i></a>
-                <a href="https://twitch.tv/benkormos" target="_blank" class="link-node"><span>Twitch</span><i class="fab fa-twitch"></i></a>
-                <a href="https://dc.gg/ben" target="_blank" class="link-node"><span>Discord</span><i class="fab fa-discord"></i></a>
-                <a href="https://last.fm/user/ben_bro_c" target="_blank" class="link-node"><span>Last.fm</span><i class="fab fa-lastfm"></i></a>
-                <a href="https://open.spotify.com/user/31i3aleb3cwqqmmbmpj67duj73qu?si=b36abe2678d14e1f" target="_blank" class="link-node"><span>Spotify</span><i class="fab fa-spotify"></i></a>
-            </nav>
-        </aside>
-
-        <!-- DATA VIEWPORT -->
-        <main class="content-axis">
+    <!-- WINDOWS 95 BOTTOM TASKBAR & START MENU -->
+    <div class="win95-taskbar">
+        <div class="start-menu-container">
+            <button class="start-btn" id="start-button">
+                <i class="fab fa-windows" style="color: #000000; font-size: 14px;"></i>
+                <span>Start</span>
+            </button>
             
-            <!-- SUMMARY -->
-            <section class="deck-section">
-                <div class="section-tag"><i class="fas fa-user-terminal"></i> 01 / Identity Core</div>
-                <p class="bio-text">
-                    Welcome to my space! I love building codes, tinkering with code, and sharing my latest projects and favorite links right here with you. Everything is built to adapt dynamically.
-                </p>
-                <div class="sub-grid">
-                    <div class="interactive-card" onclick="window.open('https://github.com/SynergyStation', '_blank')">
-                        <div class="card-core">
-                            <i class="fas fa-satellite"></i>
-                            <div class="card-meta">
-                                <h4>SYNERGYstation</h4>
-                                <p>Owner & Main Developer</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-external-link-alt" style="font-size: 0.8rem; opacity: 0.5;"></i>
-                    </div>
-                    <div class="interactive-card" onclick="window.open('https://github.com/Benkormos', '_blank')">
-                        <div class="card-core">
-                            <i class="fas fa-code-branch"></i>
-                            <div class="card-meta">
-                                <h4>BenKormos Prod.</h4>
-                                <p>Owner & Developer</p>
-                            </div>
-                        </div>
-                        <i class="fas fa-external-link-alt" style="font-size: 0.8rem; opacity: 0.5;"></i>
-                    </div>
+            <!-- THE START MENU PANEL -->
+            <div class="start-menu-panel" id="start-menu">
+                <div class="start-sidebar">
+                    <div class="sidebar-rotator">Windows<span>95</span></div>
                 </div>
-            </section>
-
-            <!-- ENVIRONMENT DECK -->
-            <section class="deck-section">
-                <div class="section-tag"><i class="fas fa-server"></i> 02 / Environment Matrix</div>
-                
-                <!-- OS Cards -->
-                <div class="sub-grid">
-                    <div class="interactive-card" data-node="win10">
-                        <div class="card-core">
-                            <i class="fab fa-windows"></i>
-                            <div class="card-meta">
-                                <h4>Windows 10</h4>
-                                <p>Host Workstation</p>
-                            </div>
-                        </div>
-                        <span class="badge-pill prime">Host</span>
-                    </div>
-
-                    <div class="interactive-card" data-node="macos">
-                        <div class="card-core">
-                            <i class="fab fa-apple"></i>
-                            <div class="card-meta">
-                                <h4>macOS Ventura</h4>
-                                <p>v13.7.8 Architecture</p>
-                            </div>
-                        </div>
-                        <span class="badge-pill prime">2nd Main</span>
-                    </div>
-
-                    <div class="interactive-card" data-node="win11">
-                        <div class="card-core">
-                            <i class="fab fa-windows"></i>
-                            <div class="card-meta">
-                                <h4>Windows Server</h4>
-                                <p>Server 2026 Edition</p>
-                            </div>
-                        </div>
-                        <span class="badge-pill">2nd Server</span>
-                    </div>
-
-                    <div class="interactive-card" data-node="ubuntu">
-                        <div class="card-core">
-                            <i class="fab fa-ubuntu"></i>
-                            <div class="card-meta">
-                                <h4>Ubuntu Server</h4>
-                                <p>v24.04 LTS Kernel</p>
-                            </div>
-                        </div>
-                        <span class="badge-pill">Backend</span>
-                    </div>
+                <div class="start-menu-links">
+                    <a href="https://github.com/benbroc" target="_blank" class="menu-item"><i class="fab fa-github"></i> GitHub Profile</a>
+                    <a href="https://youtube.com/@benkormos" target="_blank" class="menu-item"><i class="fab fa-youtube"></i> YouTube Node</a>
+                    <div class="menu-separator"></div>
+                    <a href="#" class="menu-item" onclick="location.reload();"><i class="fas fa-sync-alt"></i> Restart System...</a>
                 </div>
+            </div>
+        </div>
 
-                <!-- Language Tokens -->
-                <div class="tech-matrix">
-                    <div class="tech-token" data-node="html"><i class="devicon-html5-plain" style="color: #e34c26;"></i> HTML5</div>
-                    <div class="tech-token" data-node="css"><i class="devicon-css3-plain" style="color: #264de4;"></i> CSS3</div>
-                    <div class="tech-token" data-node="js"><i class="devicon-javascript-plain" style="color: #f7df1e;"></i> JavaScript</div>
-                    <div class="tech-token" data-node="python"><i class="devicon-python-plain" style="color: #3776ab;"></i> Python</div>
-                    <div class="tech-token" data-node="cpp"><i class="devicon-cplusplus-plain" style="color: #00599c;"></i> C++</div>
-                    <div class="tech-token" data-node="java"><i class="devicon-java-plain" style="color: #f89820;"></i> Java</div>
-                </div>
-            </section>
+        <div class="taskbar-windows-list">
+            <div class="taskbar-tab active">BenKormos Nav...</div>
+            <div class="taskbar-tab">Winamp</div>
+        </div>
 
-            <!-- CODE REPOSITORIES -->
-            <section class="deck-section">
-                <div class="section-tag"><i class="fas fa-folder-open"></i> 03 / Code Vaults</div>
-                <div class="repo-rack">
-                    <div class="repo-banner">
-                        <div class="repo-info">
-                            <h4>Malware Database</h4>
-                            <p>My Malware Database for entertainment purposes only.</p>
-                        </div>
-                        <a href="https://github.com/BenKormos/MalwareDatabase/tree/main/SteamTrashVirus" target="_blank" class="action-link">Open Source <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                    <div class="repo-banner">
-                        <div class="repo-info">
-                            <h4>Voltix Minecraft</h4>
-                            <p>Began February 11th, terminated in May/June. Assets public.</p>
-                        </div>
-                        <a href="https://github.com/SynergyStation/voltix-website-2.0" target="_blank" class="action-link">Open Source <i class="fas fa-arrow-right"></i></a>
-                    </div>
-                </div>
-                <div style="margin-top: 10px;">
-                    <a href="https://github.com/BenKormos" target="_blank" class="cyber-btn">Access Global Repository</a>
-                </div>
-            </section>
-
-        </main>
-
-        <!-- DASHBOARD SYSTEM FOOTER -->
-        <footer class="terminal-footer">
-            <a href="/" class="footer-left-btn"><i class="fas fa-code-branch"></i> return_to_root</a>
-            <span>SYSTEM_STATUS: OPERATIONAL // RUNTIME_2026 // @BENKORMOS</span>
-        </footer>
-
+        <div class="taskbar-right-tray">
+            <!-- System Tray -->
+            <div class="system-tray">
+                <i class="fas fa-volume-up"></i>
+                <span id="tray-clock">15:00</span>
+            </div>
+        </div>
     </div>
 
     <!-- LOGIC PROCESSING SYSTEM -->
@@ -307,104 +389,169 @@
                     mDesc.textContent = dataset.desc;
                     mUse.textContent = dataset.use;
 
-                    modal.classList.add('active');
+                    modal.style.display = 'block';
+                    bringToFront(modal);
                 }
             });
         });
 
         // Close Logic
-        closeModalBtn.addEventListener('click', () => modal.classList.remove('active'));
-        modal.addEventListener('click', (e) => {
-            if(e.target === modal) modal.classList.remove('active');
+        closeModalBtn.addEventListener('click', () => modal.style.display = 'none');
+
+        // --- WINDOWS 95 START MENU LOGIC ---
+        const startButton = document.getElementById('start-button');
+        const startMenu = document.getElementById('start-menu');
+
+        startButton.addEventListener('click', (e) => {
+            e.stopPropagation();
+            startMenu.classList.toggle('active');
+            startButton.classList.toggle('active');
         });
 
-        // Background Track Processing
+        document.addEventListener('click', () => {
+            startMenu.classList.remove('active');
+            startButton.classList.remove('active');
+        });
+
+        startMenu.addEventListener('click', (e) => e.stopPropagation());
+
+        // --- SYSTEM TRAY CLOCK RENDER ---
+        function updateTrayClock() {
+            const now = new Date();
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('tray-clock').textContent = `${hours}:${minutes}`;
+        }
+        setInterval(updateTrayClock, 1000);
+        updateTrayClock();
+
+        // --- WINAMP AUDIO PLAYLIST ENGINE ---
+        // HIER DEINE 3 DATEIPFADE EINTRAGEN
+        const playlist = [
+            "songs/song1.mp3",
+            "songs/song2.mp3",
+            "songs/song3.mp3"
+        ];
+        
+        let currentTrackIndex = 0;
         const audio = document.getElementById('bg-music');
+        const btnPlay = document.getElementById('btn-play');
+        const btnPause = document.getElementById('btn-pause');
+        const btnStop = document.getElementById('btn-stop');
+        const btnNext = document.getElementById('btn-next');
+        const btnPrev = document.getElementById('btn-prev');
+        const playerStatus = document.getElementById('player-status');
+        const playerTime = document.getElementById('player-time');
+        
         audio.volume = 0.25;
 
-        function initializeAudioStream() {
+        function loadTrack(index) {
+            audio.src = playlist[index];
+            playerStatus.textContent = `TRACK ${index + 1} .MP3`;
+        }
+
+        loadTrack(currentTrackIndex);
+
+        function playTrack() {
             audio.play().then(() => {
-                window.removeEventListener('click', initializeAudioStream);
-                window.removeEventListener('touchstart', initializeAudioStream);
+                playerStatus.classList.add('marquee-active');
             }).catch(() => {});
         }
-        window.addEventListener('DOMContentLoaded', initializeAudioStream);
-        window.addEventListener('click', initializeAudioStream);
-        window.addEventListener('touchstart', initializeAudioStream);
 
-        // --- SECRET CONFETTI MODULE ---
-        const avatarTrigger = document.getElementById('secret-avatar-trigger');
-        const confettiColors = ['#00ffb3', '#0ea5e9', '#38bdf8', '#ffffff', '#0d9488'];
-
-        avatarTrigger.addEventListener('click', (e) => {
-            // Skaliert das Profilbild kurz beim Klicken für Feedback
-            const img = avatarTrigger.querySelector('img');
-            img.style.transform = 'scale(0.9) rotate(-3deg)';
-            setTimeout(() => img.style.transform = '', 150);
-
-            // Holt die genaue Position des Bildes als Startpunkt
-            const rect = img.getBoundingClientRect();
-            const startX = rect.left + rect.width / 2;
-            const startY = rect.top + rect.height / 2;
-
-            // Erzeugt 40 Konfetti-Partikel
-            for (let i = 0; i < 40; i++) {
-                createConfettiParticle(startX, startY);
+        // Erste Interaktion
+        function handleFirstInteraction() {
+            if (audio.paused && audio.src) {
+                playTrack();
             }
+            window.removeEventListener('click', handleFirstInteraction);
+        }
+        window.addEventListener('click', handleFirstInteraction);
+
+        // Control Listeners
+        btnPlay.addEventListener('click', (e) => { e.stopPropagation(); playTrack(); });
+        btnPause.addEventListener('click', (e) => { e.stopPropagation(); audio.pause(); });
+        btnStop.addEventListener('click', (e) => {
+            e.stopPropagation();
+            audio.pause();
+            audio.currentTime = 0;
         });
 
-        function createConfettiParticle(x, y) {
-            const particle = document.createElement('div');
-            particle.className = 'cyber-confetti';
+        btnNext.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            loadTrack(currentTrackIndex);
+            playTrack();
+        });
+
+        btnPrev.addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
+            loadTrack(currentTrackIndex);
+            playTrack();
+        });
+
+        audio.addEventListener('ended', () => {
+            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
+            loadTrack(currentTrackIndex);
+            playTrack();
+        });
+
+        // Winamp Zeitaktualisierung
+        audio.addEventListener('timeupdate', () => {
+            let mins = Math.floor(audio.currentTime / 60);
+            let secs = Math.floor(audio.currentTime % 60);
+            mins = mins < 10 ? '0' + mins : mins;
+            secs = secs < 10 ? '0' + secs : secs;
+            playerTime.textContent = `${mins}:${secs}`;
+        });
+
+        // --- AUTHENTIC DRAG AND DROP ENGINE ---
+        let highestZIndex = 10;
+        function bringToFront(element) {
+            highestZIndex++;
+            element.style.zIndex = highestZIndex;
+        }
+
+        document.querySelectorAll('.draggable-window').forEach(windowEl => {
+            const titlebar = windowEl.querySelector('.window-titlebar');
             
-            // Zufällige Eigenschaften für Tech-Look
-            const size = Math.random() * 8 + 4;
-            const color = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-            
-            particle.style.width = `${size}px`;
-            particle.style.height = `${Math.random() > 0.5 ? size : size / 2}px`; // Teils Quadrate, teils Streifen
-            particle.style.backgroundColor = color;
-            particle.style.position = 'fixed';
-            particle.style.left = `${x}px`;
-            particle.style.top = `${y}px`;
-            particle.style.borderRadius = Math.random() > 0.7 ? '50%' : '2px';
-            particle.style.pointerEvents = 'none';
-            particle.style.zIndex = '9999';
-            particle.style.boxShadow = `0 0 8px ${color}`;
+            windowEl.addEventListener('mousedown', () => bringToFront(windowEl));
 
-            // Berechnung der Flugbahn (Explosionseffekt)
-            const angle = Math.random() * Math.PI * 2;
-            const velocity = Math.random() * 8 + 4;
-            let velX = Math.cos(angle) * velocity;
-            let velY = Math.sin(angle) * velocity - 2; // Leicht nach oben gerichtet
-            
-            document.body.appendChild(particle);
-
-            let currentX = x;
-            let currentY = y;
-            let opacity = 1;
-
-            function updateAnimation() {
-                velY += 0.2; // Schwerkraft
-                velX *= 0.98; // Luftwiderstand
-                currentX += velX;
-                currentY += velY;
-                opacity -= 0.015; // Ausblenden
-
-                particle.style.left = `${currentX}px`;
-                particle.style.top = `${currentY}px`;
-                particle.style.opacity = opacity;
-                particle.style.transform = `rotate(${currentY * 2}deg)`;
-
-                if (opacity > 0) {
-                    requestAnimationFrame(updateAnimation);
-                } else {
-                    particle.remove();
-                }
+            if (titlebar) {
+                titlebar.addEventListener('mousedown', dragStart);
             }
 
-            requestAnimationFrame(updateAnimation);
-        }
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+            function dragStart(e) {
+                e = e || window.event;
+                if(e.target.closest('button')) return;
+                
+                e.preventDefault();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                document.onmouseup = dragEnd;
+                document.onmousemove = dragElement;
+            }
+
+            function dragElement(e) {
+                e = e || window.event;
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                windowEl.style.top = (windowEl.offsetTop - pos2) + "px";
+                windowEl.style.left = (windowEl.offsetLeft - pos1) + "px";
+            }
+
+            function dragEnd() {
+                document.onmouseup = null;
+                document.onmousemove = null;
+            }
+        });
     </script>
 </body>
 </html>
