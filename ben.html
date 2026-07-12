@@ -42,6 +42,63 @@
         .link-node:nth-child(5):hover .avatar-fallback { color: var(--accent-stamp); }
         .link-node:nth-child(6):hover { border-color: var(--accent-ok); }
         .link-node:nth-child(6):hover .avatar-fallback { color: var(--accent-ok); }
+
+        /* --- SPOTIFY NOW-PLAYING WIDGET --- */
+        .spotify-btn {
+            max-width: 190px;
+            gap: 8px;
+            border-color: var(--accent-ok);
+            color: var(--text-main);
+        }
+
+        .spotify-btn:hover {
+            background: var(--bg-surface);
+            border-style: solid;
+        }
+
+        .spotify-art {
+            width: 22px;
+            height: 22px;
+            border-radius: 2px;
+            object-fit: cover;
+            border: 1px solid var(--border-active);
+            flex-shrink: 0;
+            background: var(--bg-main);
+        }
+
+        .spotify-track-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.25;
+            overflow: hidden;
+            text-align: left;
+        }
+
+        .spotify-label {
+            font-size: 0.5rem;
+            color: var(--accent-ok);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .spotify-track-info .track-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 130px;
+            color: var(--text-pure);
+            font-size: 0.62rem;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        @media (max-width: 620px) {
+            .spotify-track-info { display: none; }
+            .spotify-btn { max-width: none; padding: 6px 8px; }
+        }
     </style>
 </head>
 <body>
@@ -52,6 +109,13 @@
             <a href="/" class="nav-btn dev-btn">
                 <i class="fas fa-arrow-left"></i>
                 <span>Hub</span>
+            </a>
+            <a href="#" id="spotify-widget" class="nav-btn spotify-btn" target="_blank" rel="noopener" style="display: none;">
+                <img id="spotify-art" class="spotify-art" src="" alt="">
+                <span class="spotify-track-info">
+                    <span class="spotify-label"><i class="fas fa-circle-notch fa-spin" id="spotify-label-icon" style="font-size: 0.5rem;"></i> LAST_PLAYED</span>
+                    <span class="track-name" id="spotify-track-name">—</span>
+                </span>
             </a>
             <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Hell/Dunkel umschalten">
                 <i class="fas fa-gear"></i>
@@ -170,6 +234,42 @@
             });
 
             syncIcon();
+        })();
+
+        // --- SPOTIFY LAST-PLAYED WIDGET ---
+        (function () {
+            var widget = document.getElementById('spotify-widget');
+            var art = document.getElementById('spotify-art');
+            var trackName = document.getElementById('spotify-track-name');
+            var labelIcon = document.getElementById('spotify-label-icon');
+
+            fetch('/api/recently-played')
+                .then(function (res) {
+                    if (!res.ok) throw new Error('no data');
+                    return res.json();
+                })
+                .then(function (data) {
+                    if (!data || !data.name) throw new Error('empty');
+
+                    art.src = data.image || '';
+                    art.alt = data.name;
+                    trackName.textContent = data.name + ' — ' + data.artist;
+                    widget.href = data.url || '#';
+
+                    labelIcon.classList.remove('fa-circle-notch', 'fa-spin');
+                    labelIcon.classList.add(data.isPlaying ? 'fa-play' : 'fa-clock');
+
+                    var labelText = widget.querySelector('.spotify-label');
+                    labelText.lastChild ? null : null;
+                    labelText.childNodes[labelText.childNodes.length - 1].textContent =
+                        ' ' + (data.isPlaying ? 'NOW_PLAYING' : 'LAST_PLAYED');
+
+                    widget.style.display = 'flex';
+                })
+                .catch(function () {
+                    // No data / endpoint not set up yet — keep the widget hidden, fail silently
+                    widget.style.display = 'none';
+                });
         })();
     </script>
 </body>
