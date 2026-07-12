@@ -4,800 +4,173 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BenKormos</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/jpeg" href="pictures/benkormos.profilbild.jpg">
-    
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
 
-    <!-- External Stylesheet -->
+    <!-- Theme must be applied before CSS paints, to avoid a flash of the wrong mode -->
+    <script>
+        (function () {
+            var saved = localStorage.getItem('synergy-theme');
+            var theme = saved || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+            document.documentElement.setAttribute('data-theme', theme);
+        })();
+    </script>
+
+    <link rel="icon" type="image/jpeg" href="pictures/benkormos.profilbild.jpg">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="css/benkormos/style.css">
+
+    <style>
+        /* Page-specific: bio text + per-platform accent cycling for the link roster */
+        .bio-text {
+            font-size: 0.85rem;
+            line-height: 1.7;
+            color: var(--text-main);
+        }
+
+        .link-node .avatar-fallback { color: var(--text-muted); }
+        .link-node:nth-child(1):hover { border-color: var(--accent-stamp); }
+        .link-node:nth-child(1):hover .avatar-fallback { color: var(--accent-stamp); }
+        .link-node:nth-child(2):hover { border-color: var(--accent-alert); }
+        .link-node:nth-child(2):hover .avatar-fallback { color: var(--accent-alert); }
+        .link-node:nth-child(3):hover { border-color: var(--accent-ok); }
+        .link-node:nth-child(3):hover .avatar-fallback { color: var(--accent-ok); }
+        .link-node:nth-child(4):hover { border-color: var(--accent-hazard); }
+        .link-node:nth-child(4):hover .avatar-fallback { color: var(--accent-hazard); }
+        .link-node:nth-child(5):hover { border-color: var(--accent-stamp); }
+        .link-node:nth-child(5):hover .avatar-fallback { color: var(--accent-stamp); }
+        .link-node:nth-child(6):hover { border-color: var(--accent-ok); }
+        .link-node:nth-child(6):hover .avatar-fallback { color: var(--accent-ok); }
+    </style>
 </head>
 <body>
 
-    <div class="bg-glow-orb"></div>
-    
-    <!-- Audio Node -->
-    <audio id="bg-music"></audio>
-
-    <!-- 1. KDE PLASMA REAL LOGIN SCREEN -->
-    <div class="kde-login-screen" id="login-screen">
-        <div class="login-wrapper">
-            <div class="user-avatar-area">
-                <img src="pictures/benkormos.profilbild.jpg" alt="BenKormos" class="login-avatar">
-                <h1 class="login-username">BenKormos</h1>
-            </div>
-            <div class="login-input-form">
-                <input type="password" id="login-password-input" placeholder="Passwort eingeben...">
-                <button id="btn-submit-login"><i class="fas fa-arrow-right"></i></button>
-            </div>
-            <p id="login-error-msg" class="login-error-text"></p>
-            <div class="login-bottom-actions">
-                <button onclick="alert('Shutdown blockiert im Login-Modus.')"><i class="fas fa-power-off"></i> Herunterfahren</button>
-                <button onclick="alert('Session: Plasma (Wayland)')"><i class="fas fa-cog"></i> Plasma (Wayland)</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. KDE PLASMA BOOT SPLASH SCREEN ANIMATION -->
-    <div class="kde-splash-screen" id="splash-screen">
-        <div class="splash-content">
-            <!-- KDE Gear / Logo gear-like layout representation -->
-            <div class="kde-logo-animation">
-                <i class="fab fa-kde"></i>
-            </div>
-            <div class="kde-splash-spinner"></div>
-        </div>
-    </div>
-
-    <!-- SHUTDOWN SCREEN OVERLAY -->
-    <div class="shutdown-overlay" id="shutdown-screen">
-        <div class="shutdown-box">
-            <i class="fas fa-power-off shutdown-icon"></i>
-            <h2 id="shutdown-text">System wird heruntergefahren...</h2>
-            <div class="kde-spinner"></div>
-        </div>
-    </div>
-
-    <!-- DESKTOP WORKSPACE (Contains draggable windows) -->
-    <div class="desktop-area">
-
-        <!-- CORE INTERFACE DIALOG BOX (MODAL) -->
-        <div class="modal-vault draggable-window" id="info-modal" style="display: none; top: 15%; left: 35%;">
-            <div class="window-titlebar">
-                <span class="titlebar-text"><i class="fas fa-info-circle"></i> Properties</span>
-                <button class="close-vault-btn" id="close-modal"><i class="fas fa-times"></i></button>
-            </div>
-            <div class="window-content">
-                <div class="modal-lead-row">
-                    <i id="m-icon"></i>
-                    <div class="modal-lead-titles">
-                        <h3 id="m-title">Registry Node</h3>
-                        <span id="m-type">// PARAM_LOG</span>
-                    </div>
-                </div>
-                <p class="modal-body-text" id="m-desc">Matrix Node Payload description.</p>
-                <div class="modal-status-box" id="m-use">
-                    EXECUTION PIPELINE READY
-                </div>
-            </div>
-        </div>
-
-        <!-- MAIN DASHBOARD WINDOW -->
-        <div class="terminal-container draggable-window" id="main-window" style="top: 5%; left: 10%;">
-            
-            <!-- WINDOW TITLE BAR -->
-            <div class="window-titlebar">
-                <span class="titlebar-text"><i class="fas fa-sliders-h"></i> Control Windows</span>
-                <div class="titlebar-controls">
-                    <button class="titlebar-btn" id="btn-minimize-main"><i class="fas fa-minus"></i></button>
-                    <button class="titlebar-btn" id="btn-maximize-main"><i class="far fa-square"></i></button>
-                    <button class="titlebar-btn close-btn" id="btn-close-main"><i class="fas fa-times"></i></button>
-                </div>
-            </div>
-
-            <div class="window-content main-window-layout">
-                <!-- SIDEBAR PLATFORM HUB -->
-                <aside class="profile-axis">
-                    <div class="avatar-box" id="secret-avatar-trigger" style="cursor: pointer;">
-                        <img src="pictures/benkormos.profilbild.jpg" alt="BenKormos">
-                        <div>
-                            <div class="status-badge">
-                                <div class="status-dot"></div> SECURE_NODE // 2026
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="profile-title">
-                        <h1>BenKormos <i class="fas fa-check-circle verified-badge" title="Verified Systems Architect"></i></h1>
-                        <p>Owner</p>
-                    </div>
-
-                    <nav class="link-mesh">
-                        <a href="https://github.com/benbroc" target="_blank" class="link-node"><span>GitHub</span><i class="fab fa-github"></i></a>
-                        <a href="https://youtube.com/@benkormos" target="_blank" class="link-node"><span>YouTube</span><i class="fab fa-youtube"></i></a>
-                        <a href="https://twitch.tv/benkormos" target="_blank" class="link-node"><span>Twitch</span><i class="fab fa-twitch"></i></a>
-                        <a href="https://dc.gg/ben" target="_blank" class="link-node"><span>Discord</span><i class="fab fa-discord"></i></a>
-                        <a href="https://last.fm/user/ben_bro_c" target="_blank" class="link-node"><span>Last.fm</span><i class="fab fa-lastfm"></i></a>
-                        <a href="https://open.spotify.com/user/31i3aleb3cwqqmmbmpj67duj73qu?si=b36abe2678d14e1f" target="_blank" class="link-node"><span>Spotify</span><i class="fab fa-spotify"></i></a>
-                    </nav>
-                </aside>
-
-                <!-- DATA VIEWPORT -->
-                <main class="content-axis">
-                    
-                    <!-- SUMMARY -->
-                    <section class="deck-section">
-                        <div class="section-tag"><i class="fas fa-terminal"></i> 01 / Identity Core</div>
-                        <p class="bio-text">
-                            Welcome to my space! I love building codes, tinkering with code, and sharing my latest projects and favorite links right here with you. Everything is built to adapt dynamically.
-                        </p>
-                        <div class="sub-grid">
-                            <div class="interactive-card" onclick="window.open('https://github.com/SynergyStation', '_blank')">
-                                <div class="card-core">
-                                    <i class="fas fa-satellite"></i>
-                                    <div class="card-meta">
-                                        <h4>SYNERGYstation</h4>
-                                        <p>Owner & Main Developer</p>
-                                    </div>
-                                </div>
-                                <i class="fas fa-external-link-alt" style="font-size: 0.8rem; opacity: 0.5;"></i>
-                            </div>
-                            <div class="interactive-card" onclick="window.open('https://github.com/Benkormos', '_blank')">
-                                <div class="card-core">
-                                    <i class="fas fa-code-branch"></i>
-                                    <div class="card-meta">
-                                        <h4>BenKormos Prod.</h4>
-                                        <p>Owner & Developer</p>
-                                    </div>
-                                </div>
-                                <i class="fas fa-external-link-alt" style="font-size: 0.8rem; opacity: 0.5;"></i>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- ENVIRONMENT DECK -->
-                    <section class="deck-section">
-                        <div class="section-tag"><i class="fas fa-server"></i> 02 / Environment Matrix</div>
-                        
-                        <!-- OS Cards -->
-                        <div class="sub-grid">
-                            <div class="interactive-card" data-node="win10">
-                                <div class="card-core">
-                                    <i class="fab fa-windows"></i>
-                                    <div class="card-meta">
-                                        <h4>Windows 10</h4>
-                                        <p>Host Workstation</p>
-                                    </div>
-                                </div>
-                                <span class="badge-pill prime">Host</span>
-                            </div>
-
-                            <div class="interactive-card" data-node="macos">
-                                <div class="card-core">
-                                    <i class="fab fa-apple"></i>
-                                    <div class="card-meta">
-                                        <h4>macOS Ventura</h4>
-                                        <p>v13.7.8 Architecture</p>
-                                    </div>
-                                </div>
-                                <span class="badge-pill prime">2nd Main</span>
-                            </div>
-
-                            <div class="interactive-card" data-node="win11">
-                                <div class="card-core">
-                                    <i class="fab fa-windows"></i>
-                                    <div class="card-meta">
-                                        <h4>Windows Server</h4>
-                                        <p>Server 2026 Edition</p>
-                                    </div>
-                                </div>
-                                <span class="badge-pill">2nd Server</span>
-                            </div>
-
-                            <div class="interactive-card" data-node="ubuntu">
-                                <div class="card-core">
-                                    <i class="fab fa-ubuntu"></i>
-                                    <div class="card-meta">
-                                        <h4>Ubuntu Server</h4>
-                                        <p>v24.04 LTS Kernel</p>
-                                    </div>
-                                </div>
-                                <span class="badge-pill">Backend</span>
-                            </div>
-                        </div>
-
-                        <!-- Language Tokens -->
-                        <div class="tech-matrix">
-                            <div class="tech-token" data-node="html"><i class="devicon-html5-plain" style="color: #e34c26;"></i> HTML5</div>
-                            <div class="tech-token" data-node="css"><i class="devicon-css3-plain" style="color: #264de4;"></i> CSS3</div>
-                            <div class="tech-token" data-node="js"><i class="devicon-javascript-plain" style="color: #f7df1e;"></i> JavaScript</div>
-                            <div class="tech-token" data-node="python"><i class="devicon-python-plain" style="color: #3776ab;"></i> Python</div>
-                            <div class="tech-token" data-node="cpp"><i class="devicon-cplusplus-plain" style="color: #00599c;"></i> C++</div>
-                            <div class="tech-token" data-node="java"><i class="devicon-java-plain" style="color: #f89820;"></i> Java</div>
-                        </div>
-                    </section>
-
-                    <!-- CODE REPOSITORIES -->
-                    <section class="deck-section">
-                        <div class="section-tag"><i class="fas fa-folder-open"></i> 03 / Code Vaults</div>
-                        <div class="repo-rack">
-                            <div class="repo-banner">
-                                <div class="repo-info">
-                                    <h4>Malware Database</h4>
-                                    <p>My Malware Database for entertainment purposes only.</p>
-                                </div>
-                                <a href="https://github.com/BenKormos/MalwareDatabase/tree/main/SteamTrashVirus" target="_blank" class="action-link">Open Source <i class="fas fa-arrow-right"></i></a>
-                            </div>
-                            <div class="repo-banner">
-                                <div class="repo-info">
-                                    <h4>Voltix Minecraft</h4>
-                                    <p>Began February 11th, terminated in May/June. Assets public.</p>
-                                </div>
-                                <a href="https://github.com/SynergyStation/voltix-website-2.0" target="_blank" class="action-link">Open Source <i class="fas fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                        <div style="margin-top: 10px;">
-                            <a href="https://github.com/BenKormos" target="_blank" class="cyber-btn">Access Global Repository</a>
-                        </div>
-                    </section>
-
-                </main>
-            </div>
-
-            <!-- DASHBOARD SYSTEM FOOTER -->
-            <footer class="terminal-footer">
-                <a href="/" class="footer-left-btn"><i class="fas fa-code-branch"></i> return_to_root</a>
-                <span>SYSTEM_STATUS: OPERATIONAL // RUNTIME_2026 // @BENKORMOS</span>
-            </footer>
-
-        </div>
-
-        <!-- REAL WEB BROWSER WINDOW (Updated Default URL & Added Frame Sandbox Alert Meta) -->
-        <div class="terminal-container draggable-window" id="browser-window" style="top: 12%; left: 20%; display: none; width: 800px; height: 520px;">
-            <div class="window-titlebar">
-                <span class="titlebar-text"><i class="fas fa-globe"></i> Falkon Web Browser</span>
-                <div class="titlebar-controls">
-                    <button class="titlebar-btn" id="btn-minimize-browser"><i class="fas fa-minus"></i></button>
-                    <button class="titlebar-btn" id="btn-maximize-browser"><i class="far fa-square"></i></button>
-                    <button class="titlebar-btn close-btn" id="btn-close-browser"><i class="fas fa-times"></i></button>
-                </div>
-            </div>
-            <div class="browser-address-bar">
-                <button class="browser-nav-btn" onclick="document.getElementById('web-frame').contentWindow.history.back()"><i class="fas fa-arrow-left"></i></button>
-                <input type="text" id="browser-url-input" value="https://www.wikipedia.org" placeholder="URL eingeben (z.B. https://wikipedia.org)...">
-                <button class="browser-nav-btn" id="btn-browser-go"><i class="fas fa-arrow-right"></i></button>
-            </div>
-            <div class="browser-security-banner">
-                <i class="fas fa-exclamation-triangle"></i> Einige Seiten blockieren die Einbettung (SAMEORIGIN). Nutze z.B. Wikipedia oder eigene Unterseiten.
-            </div>
-            <div style="flex: 1; position: relative; background: #fff;">
-                <iframe id="web-frame" src="https://www.wikipedia.org" style="width: 100%; height: 100%; border: none;"></iframe>
-            </div>
-        </div>
-
-        <!-- WINAMP STYLE FLOATING MUSIC PLAYER -->
-        <div class="winamp-player draggable-window" id="winamp-window" style="bottom: 70px; right: 20px; width: 320px; height: 155px;">
-            <div class="window-titlebar winamp-title">
-                <span class="titlebar-text"><i class="fas fa-music"></i> Elisa - Audio Player</span>
-                <div class="titlebar-controls">
-                    <button class="titlebar-btn" id="btn-minimize-amp"><i class="fas fa-minus"></i></button>
-                    <button class="titlebar-btn close-btn" id="btn-close-amp"><i class="fas fa-times"></i></button>
-                </div>
-            </div>
-            
-            <div class="winamp-display">
-                <div class="winamp-track-info" id="player-status">TRACK 1</div>
-                <div class="winamp-timer" id="player-time">00:00</div>
-            </div>
-
-            <div class="winamp-controls">
-                <button class="winamp-btn" id="btn-prev" title="Previous"><i class="fas fa-step-backward"></i></button>
-                <button class="winamp-btn" id="btn-play" title="Play"><i class="fas fa-play"></i></button>
-                <button class="winamp-btn" id="btn-pause" title="Pause"><i class="fas fa-pause"></i></button>
-                <button class="winamp-btn" id="btn-stop" title="Stop"><i class="fas fa-stop"></i></button>
-                <button class="winamp-btn" id="btn-next" title="Next"><i class="fas fa-step-forward"></i></button>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- KDE PLASMA BOTTOM TASKBAR / PANEL -->
-    <div class="win95-taskbar">
-        <div class="start-menu-container">
-            <button class="start-btn" id="start-button">
-                <i class="fas fa-th-large" style="color: #3daee9; font-size: 16px;"></i>
+    <nav class="navbar">
+        <a href="/" class="nav-logo">BEN<span>KORMOS</span></a>
+        <div class="nav-links">
+            <a href="/" class="nav-btn dev-btn">
+                <i class="fas fa-arrow-left"></i>
+                <span>Hub</span>
+            </a>
+            <button type="button" class="theme-toggle-btn" id="theme-toggle" aria-label="Hell/Dunkel umschalten">
+                <i class="fas fa-gear"></i>
             </button>
-            
-            <!-- THE START MENU PANEL (KDE Kickoff style) -->
-            <div class="start-menu-panel" id="start-menu">
-                <div class="start-sidebar">
-                    <div class="kde-user-meta">
-                        <img src="pictures/benkormos.profilbild.jpg" alt="User">
-                        <span>BenKormos</span>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <header class="hub-header">
+            <div class="avatar-mainframe">
+                <img src="pictures/benkormos.profilbild.jpg" alt="BenKormos" class="hub-avatar">
+            </div>
+            <h1 class="hub-title">BenKormos</h1>
+            <p class="hub-tagline">Owner & Systems Architect</p>
+        </header>
+
+        <section class="panel">
+            <div class="panel-title">
+                <span><i class="fas fa-terminal"></i> IDENTITY_CORE</span>
+                <span class="badge">BIO</span>
+            </div>
+            <p class="bio-text">
+                Welcome to my space! I love building things, tinkering with code, and sharing my latest projects and favorite links right here with you.
+            </p>
+        </section>
+
+        <section class="panel">
+            <div class="panel-title">
+                <span><i class="fas fa-link"></i> SOCIAL_LINKS</span>
+                <span class="badge">06 NODES</span>
+            </div>
+            <div class="holo-grid">
+                <a href="https://github.com/benbroc" target="_blank" class="link-node profile-node">
+                    <i class="fab fa-github avatar-fallback"></i>
+                    <h4>GitHub</h4>
+                    <span>@benbroc</span>
+                </a>
+                <a href="https://youtube.com/@benkormos" target="_blank" class="link-node profile-node">
+                    <i class="fab fa-youtube avatar-fallback"></i>
+                    <h4>YouTube</h4>
+                    <span>@benkormos</span>
+                </a>
+                <a href="https://twitch.tv/benkormos" target="_blank" class="link-node profile-node">
+                    <i class="fab fa-twitch avatar-fallback"></i>
+                    <h4>Twitch</h4>
+                    <span>benkormos</span>
+                </a>
+                <a href="https://dc.gg/ben" target="_blank" class="link-node profile-node">
+                    <i class="fab fa-discord avatar-fallback"></i>
+                    <h4>Discord</h4>
+                    <span>Join Server</span>
+                </a>
+                <a href="https://last.fm/user/ben_bro_c" target="_blank" class="link-node profile-node">
+                    <i class="fab fa-lastfm avatar-fallback"></i>
+                    <h4>Last.fm</h4>
+                    <span>ben_bro_c</span>
+                </a>
+                <a href="https://open.spotify.com/user/31i3aleb3cwqqmmbmpj67duj73qu?si=b36abe2678d14e1f" target="_blank" class="link-node profile-node">
+                    <i class="fab fa-spotify avatar-fallback"></i>
+                    <h4>Spotify</h4>
+                    <span>Profile</span>
+                </a>
+            </div>
+        </section>
+
+        <section class="panel">
+            <div class="panel-title">
+                <span><i class="fas fa-code-branch"></i> PROJECTS</span>
+                <span class="badge">02 REPOS</span>
+            </div>
+            <a href="https://github.com/SynergyStation" target="_blank" class="oss-container" style="margin-bottom: 10px;">
+                <div class="oss-meta">
+                    <i class="fas fa-satellite"></i>
+                    <div class="oss-details">
+                        <h4>SYNERGYstation</h4>
+                        <p>Owner & Main Developer</p>
                     </div>
                 </div>
-                <div class="start-menu-links">
-                    <div class="menu-category">Favorites</div>
-                    <a href="#" class="menu-item" id="start-open-browser"><i class="fas fa-globe"></i> Falkon Browser</a>
-                    <a href="https://github.com/benbroc" target="_blank" class="menu-item"><i class="fab fa-github"></i> GitHub</a>
-                    <a href="https://youtube.com/@benkormos" target="_blank" class="menu-item"><i class="fab fa-youtube"></i> YouTube</a>
-                    <a href="https://twitch.tv/benkormos" target="_blank" class="menu-item"><i class="fab fa-twitch"></i> Twitch</a>
-                    <div class="menu-separator"></div>
-                    <a href="#" class="menu-item" id="menu-logout"><i class="fas fa-sign-out-alt"></i> Log Out...</a>
-                    <a href="#" class="menu-item" id="menu-shutdown"><i class="fas fa-power-off"></i> Restart System...</a>
+                <i class="fas fa-external-link-alt" style="font-size: 0.8rem; opacity: 0.5;"></i>
+            </a>
+            <a href="https://github.com/Benkormos" target="_blank" class="oss-container">
+                <div class="oss-meta">
+                    <i class="fas fa-code-branch"></i>
+                    <div class="oss-details">
+                        <h4>BenKormos Prod.</h4>
+                        <p>Owner & Developer</p>
+                    </div>
                 </div>
-            </div>
-        </div>
+                <i class="fas fa-external-link-alt" style="font-size: 0.8rem; opacity: 0.5;"></i>
+            </a>
+        </section>
 
-        <div class="taskbar-windows-list">
-            <div class="taskbar-tab active" id="tab-main-window"><i class="fas fa-sliders-h"></i> Control Windows</div>
-            <div class="taskbar-tab" id="tab-browser-window" style="display: none;"><i class="fas fa-globe"></i> Falkon Browser</div>
-            <div class="taskbar-tab active" id="tab-winamp-window"><i class="fas fa-music"></i> Audio Player</div>
-        </div>
-
-        <div class="taskbar-right-tray">
-            <!-- System Tray -->
-            <div class="system-tray">
-                <i class="fas fa-wifi"></i>
-                <i class="fas fa-volume-up"></i>
-                <span id="tray-clock">15:00</span>
-            </div>
-        </div>
+        <footer class="hub-footer">
+            // BenKormosProductions // PROFILE_NODE //
+        </footer>
     </div>
 
-    <!-- LOGIC PROCESSING SYSTEM -->
     <script>
-        const centralDatabase = {
-            html: {
-                title: "HTML5 Engine",
-                type: "DOM_STRUCTURE_MARKUP",
-                icon: "devicon-html5-plain",
-                color: "#e34c26",
-                desc: "Hypertext Markup Language. The structural skeleton of web modules. Deployed to map out layouts, viewport anchors, and semantic elements inside the centralized document model.",
-                use: "TASK: Blueprint Compilation & Layout Formatting"
-            },
-            css: {
-                title: "CSS3 Matrix",
-                type: "GRAPHICS_SHADING_INTERFACE",
-                icon: "devicon-css3-plain",
-                color: "#264de4",
-                desc: "Cascading Style Sheets. Controls the entire asset layout properties, modern glassmorphic blurring tokens, variables pipelines, and active hover state feedback.",
-                use: "TASK: Glassmorphism Render, UI Formatting & Custom Responsive Shaders"
-            },
-            js: {
-                title: "JavaScript Runtime",
-                type: "ASYNCHRONOUS_CORE_SCRIPTS",
-                icon: "devicon-javascript-plain",
-                color: "#f7df1e",
-                desc: "High-level ECMAScript controller engine. Drives interactive modal execution pipelines, background loop checks, and state monitoring without overhead delays.",
-                use: "TASK: Event Infiltration & DOM Node Control"
-            },
-            python: {
-                title: "Python Engine",
-                type: "INTERPRETED_AUTOMATION_NODE",
-                icon: "devicon-python-plain",
-                color: "#3776ab",
-                desc: "Object-oriented language optimized for automation tasks, data streaming, file parsers, and custom local software automation layers.",
-                use: "TASK: System Micro-Automation & Analytical Scrapers"
-            },
-            cpp: {
-                title: "C++ Compiler Core",
-                type: "LOW_LEVEL_NATIVE_EXECUTION",
-                icon: "devicon-cplusplus-plain",
-                color: "#00599c",
-                desc: "High-speed compiled native architecture. Grants absolute hardware abstraction layers, deterministic speed capabilities, and precise system runtime configuration controls.",
-                use: "TASK: Heavy System Computations & Hardware Integration Modules"
-            },
-            java: {
-                title: "Java Runtime Stack",
-                type: "JVM_VIRTUALIZATION_ENVIRONMENT",
-                icon: "devicon-java-plain",
-                color: "#f89820",
-                desc: "Robust object-oriented development framework running on the Java Virtual Machine (JVM). Provides cross-platform compliance and extensive deployment scale for heavy logic operations.",
-                use: "TASK: Enterprise Application Logic & Multiplatform Backends"
-            },
-            win10: {
-                title: "Windows 10 Workstation",
-                type: "PRIMARY_HARDWARE_HOST_OS",
-                icon: "fab fa-windows",
-                color: "#00a3ee",
-                desc: "Primary operating host workstation. Anchors heavy software environments, virtualization frameworks, sandbox security tools, and main active engineering workflows.",
-                use: "CORE HOST: Central Production Workspace & Engineering Terminal"
-            },
-            macos: {
-                title: "macOS Ventura 13.7.8",
-                type: "SECONDARY_MAIN_MACHINE_NODE",
-                icon: "fab fa-apple",
-                color: "#ffc837",
-                desc: "Second active main machine framework. Unix-certified workstation environment utilized for native diagnostic tasks, multi-compiler cross-testing, and direct platform deployment testing.",
-                use: "CORE SUBHOST: Secondary Main Terminal // Native Unix Stack"
-            },
-            win11: {
-                title: "Windows Server 2026 Edition",
-                type: "VIRTUAL_SANDBOX_SUBSYSTEM",
-                icon: "fab fa-windows",
-                color: "#0078d4",
-                desc: "Modern NT core environment deployed for framework evaluation, interface validation, automated pipeline builds, and multi-threaded virtualization layers.",
-                use: "ENVIRONMENT: Secondary Sandbox & Multi-Thread Testing"
-            },
-            ubuntu: {
-                title: "Ubuntu Server 24.04 LTS",
-                type: "HEADLESS_LINUX_BACKEND",
-                icon: "fab fa-ubuntu",
-                color: "#e95420",
-                desc: "Headless Linux container engine built on Noble Numbat code layers. Configured specifically for secure automated cronjobs, backend scripts, and microservice testing configurations.",
-                use: "ENVIRONMENT: Background Microservices & Host Database Testing"
+        // --- THEME TOGGLE ---
+        (function () {
+            var toggleBtn = document.getElementById('theme-toggle');
+            var icon = toggleBtn.querySelector('i');
+
+            function syncIcon() {
+                var current = document.documentElement.getAttribute('data-theme');
+                icon.className = current === 'light' ? 'fas fa-moon' : 'fas fa-sun';
             }
-        };
 
-        // DOM Handles
-        const modal = document.getElementById('info-modal');
-        const closeModalBtn = document.getElementById('close-modal');
-        const targetNodes = document.querySelectorAll('[data-node]');
-
-        const mIcon = document.getElementById('m-icon');
-        const mTitle = document.getElementById('m-title');
-        const mType = document.getElementById('m-type');
-        const mDesc = document.getElementById('m-desc');
-        const mUse = document.getElementById('m-use');
-
-        // Modal Open Logic
-        targetNodes.forEach(node => {
-            node.addEventListener('click', () => {
-                const key = node.getAttribute('data-node');
-                const dataset = centralDatabase[key];
-
-                if(dataset) {
-                    mIcon.className = dataset.icon;
-                    mIcon.style.color = dataset.color;
-                    modal.style.setProperty('--accent-primary', dataset.color);
-                    mTitle.textContent = dataset.title;
-                    mType.textContent = `// REGISTRY: ${dataset.type}`;
-                    mDesc.textContent = dataset.desc;
-                    mUse.textContent = dataset.use;
-
-                    modal.style.display = 'block';
-                    bringToFront(modal);
-                }
+            toggleBtn.addEventListener('click', function () {
+                var current = document.documentElement.getAttribute('data-theme');
+                var next = current === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', next);
+                localStorage.setItem('synergy-theme', next);
+                syncIcon();
             });
-        });
 
-        // Close Logic
-        closeModalBtn.addEventListener('click', () => modal.style.display = 'none');
-
-        // --- AUTHENTIC KDE LOGIN & BOOT SEQUENCE SYSTEM ---
-        const loginScreen = document.getElementById('login-screen');
-        const splashScreen = document.getElementById('splash-screen');
-        const passwordInput = document.getElementById('login-password-input');
-        const btnSubmitLogin = document.getElementById('btn-submit-login');
-        const loginErrorMsg = document.getElementById('login-error-msg');
-
-        function verifyLogin() {
-            if(passwordInput.value === '1234') {
-                loginErrorMsg.textContent = "";
-                // Phase 1: Hide login screen
-                loginScreen.classList.add('hide-sequence');
-                
-                // Phase 2: Trigger KDE Plasma Splash Screen Boot Animation
-                setTimeout(() => {
-                    loginScreen.style.display = 'none';
-                    splashScreen.classList.add('active');
-                    
-                    // Phase 3: Load Desktop Workspace after boot animation completes
-                    setTimeout(() => {
-                        splashScreen.classList.add('hide-sequence');
-                        setTimeout(() => {
-                            splashScreen.style.display = 'none';
-                            // Start Background Tracks if allowed
-                            if(audio.paused && audio.src) { playTrack(); }
-                        }, 600);
-                    }, 2500); // Animation duration
-                    
-                }, 400);
-            } else {
-                loginErrorMsg.textContent = "Ungültiges Passwort! Versuche es erneut.";
-                passwordInput.classList.add('shake-anim');
-                passwordInput.value = '';
-                setTimeout(() => passwordInput.classList.remove('shake-anim'), 400);
-            }
-        }
-
-        btnSubmitLogin.addEventListener('click', verifyLogin);
-        passwordInput.addEventListener('keypress', (e) => {
-            if(e.key === 'Enter') verifyLogin();
-        });
-
-        // --- WINDOWS 95 START MENU LOGIC ---
-        const startButton = document.getElementById('start-button');
-        const startMenu = document.getElementById('start-menu');
-
-        startButton.addEventListener('click', (e) => {
-            e.stopPropagation();
-            startMenu.classList.toggle('active');
-            startButton.classList.toggle('active');
-        });
-
-        document.addEventListener('click', () => {
-            startMenu.classList.remove('active');
-            startButton.classList.remove('active');
-        });
-
-        startMenu.addEventListener('click', (e) => e.stopPropagation());
-
-        // --- SHUTDOWN & LOGOUT ANIMATION LOGIC ---
-        const shutdownScreen = document.getElementById('shutdown-screen');
-        const shutdownText = document.getElementById('shutdown-text');
-
-        function triggerPowerSequence(text, isLogout = false) {
-            shutdownText.textContent = text;
-            shutdownScreen.classList.add('active');
-            
-            setTimeout(() => {
-                shutdownScreen.classList.remove('active');
-                if(isLogout) {
-                    // Reset to login architecture state
-                    passwordInput.value = '';
-                    loginScreen.classList.remove('hide-sequence');
-                    splashScreen.classList.remove('hide-sequence', 'active');
-                    loginScreen.style.display = 'flex';
-                    splashScreen.style.display = 'flex';
-                    audio.pause();
-                } else {
-                    location.reload();
-                }
-            }, 3000);
-        }
-
-        document.getElementById('menu-shutdown').addEventListener('click', (e) => {
-            e.preventDefault();
-            triggerPowerSequence("System wird neu gestartet...");
-        });
-
-        document.getElementById('menu-logout').addEventListener('click', (e) => {
-            e.preventDefault();
-            triggerPowerSequence("Benutzer BenKormos wird abgemeldet...", true);
-        });
-
-        // --- SYSTEM TRAY CLOCK RENDER ---
-        function updateTrayClock() {
-            const now = new Date();
-            let hours = now.getHours();
-            let minutes = now.getMinutes();
-            hours = hours < 10 ? '0' + hours : hours;
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            document.getElementById('tray-clock').textContent = `${hours}:${minutes}`;
-        }
-        setInterval(updateTrayClock, 1000);
-        updateTrayClock();
-
-        // --- WINDOW INTERACTION LOGIC (MINIMIZE, MAXIMIZE, CLOSE) ---
-        const mainWindow = document.getElementById('main-window');
-        const winampWindow = document.getElementById('winamp-window');
-        const browserWindow = document.getElementById('browser-window');
-        
-        const tabMain = document.getElementById('tab-main-window');
-        const tabWinamp = document.getElementById('tab-winamp-window');
-        const tabBrowser = document.getElementById('tab-browser-window');
-
-        // Main Window UI Controls
-        document.getElementById('btn-minimize-main').addEventListener('click', (e) => {
-            e.stopPropagation();
-            mainWindow.style.display = 'none';
-            tabMain.classList.remove('active');
-        });
-        document.getElementById('btn-maximize-main').addEventListener('click', (e) => {
-            e.stopPropagation();
-            mainWindow.classList.toggle('fullscreen-window');
-        });
-        document.getElementById('btn-close-main').addEventListener('click', (e) => {
-            e.stopPropagation();
-            mainWindow.style.display = 'none';
-            tabMain.classList.remove('active');
-        });
-
-        // Winamp UI Controls
-        document.getElementById('btn-minimize-amp').addEventListener('click', (e) => {
-            e.stopPropagation();
-            winampWindow.style.display = 'none';
-            tabWinamp.classList.remove('active');
-        });
-        document.getElementById('btn-close-amp').addEventListener('click', (e) => {
-            e.stopPropagation();
-            winampWindow.style.display = 'none';
-            tabWinamp.classList.remove('active');
-        });
-
-        // Browser UI Controls
-        document.getElementById('start-open-browser').addEventListener('click', (e) => {
-            e.preventDefault();
-            browserWindow.style.display = 'flex';
-            tabBrowser.style.display = 'flex';
-            tabBrowser.classList.add('active');
-            startMenu.classList.remove('active');
-            bringToFront(browserWindow);
-        });
-        document.getElementById('btn-minimize-browser').addEventListener('click', (e) => {
-            e.stopPropagation();
-            browserWindow.style.display = 'none';
-            tabBrowser.classList.remove('active');
-        });
-        document.getElementById('btn-maximize-browser').addEventListener('click', (e) => {
-            e.stopPropagation();
-            browserWindow.classList.toggle('fullscreen-window');
-        });
-        document.getElementById('btn-close-browser').addEventListener('click', (e) => {
-            e.stopPropagation();
-            browserWindow.style.display = 'none';
-            tabBrowser.classList.remove('active');
-        });
-
-        // Browser Navigation Action
-        const webFrame = document.getElementById('web-frame');
-        const urlInput = document.getElementById('browser-url-input');
-        
-        function navigateBrowser() {
-            let url = urlInput.value.trim();
-            if (!/^https?:\/\//i.test(url)) {
-                url = 'https://' + url;
-            }
-            webFrame.src = url;
-            urlInput.value = url;
-        }
-        document.getElementById('btn-browser-go').addEventListener('click', navigateBrowser);
-        urlInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') navigateBrowser();
-        });
-
-        // Taskbar Tabs Functionality
-        tabMain.addEventListener('click', () => {
-            if (mainWindow.style.display === 'none' || !tabMain.classList.contains('active')) {
-                mainWindow.style.display = 'flex';
-                tabMain.classList.add('active');
-                bringToFront(mainWindow);
-            } else {
-                mainWindow.style.display = 'none';
-                tabMain.classList.remove('active');
-            }
-        });
-
-        tabWinamp.addEventListener('click', () => {
-            if (winampWindow.style.display === 'none' || !tabWinamp.classList.contains('active')) {
-                winampWindow.style.display = 'block';
-                tabWinamp.classList.add('active');
-                bringToFront(winampWindow);
-            } else {
-                winampWindow.style.display = 'none';
-                tabWinamp.classList.remove('active');
-            }
-        });
-
-        tabBrowser.addEventListener('click', () => {
-            if (browserWindow.style.display === 'none' || !tabBrowser.classList.contains('active')) {
-                browserWindow.style.display = 'flex';
-                tabBrowser.classList.add('active');
-                bringToFront(browserWindow);
-            } else {
-                browserWindow.style.display = 'none';
-                tabBrowser.classList.remove('active');
-            }
-        });
-
-        // --- WINAMP AUDIO PLAYLIST ENGINE ---
-        const playlist = [
-            "music/ben/fish.mp3",
-            "music/ben/pubc.mp3",
-            "music/ben/ballernundsaufen.mp3"
-        ];
-        
-        let currentTrackIndex = 0;
-        const audio = document.getElementById('bg-music');
-        const btnPlay = document.getElementById('btn-play');
-        const btnPause = document.getElementById('btn-pause');
-        const btnStop = document.getElementById('btn-stop');
-        const btnNext = document.getElementById('btn-next');
-        const btnPrev = document.getElementById('btn-prev');
-        const playerStatus = document.getElementById('player-status');
-        const playerTime = document.getElementById('player-time');
-        
-        audio.volume = 0.25;
-
-        function loadTrack(index) {
-            audio.src = playlist[index];
-            playerStatus.textContent = `TRACK ${index + 1} .MP3`;
-        }
-
-        loadTrack(currentTrackIndex);
-
-        function playTrack() {
-            audio.play().then(() => {
-                playerStatus.classList.add('marquee-active');
-            }).catch(() => {});
-        }
-
-        btnPlay.addEventListener('click', (e) => { e.stopPropagation(); playTrack(); });
-        btnPause.addEventListener('click', (e) => { e.stopPropagation(); audio.pause(); });
-        btnStop.addEventListener('click', (e) => {
-            e.stopPropagation();
-            audio.pause();
-            audio.currentTime = 0;
-        });
-
-        btnNext.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-            loadTrack(currentTrackIndex);
-            playTrack();
-        });
-
-        btnPrev.addEventListener('click', (e) => {
-            e.stopPropagation();
-            currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-            loadTrack(currentTrackIndex);
-            playTrack();
-        });
-
-        audio.addEventListener('ended', () => {
-            currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-            loadTrack(currentTrackIndex);
-            playTrack();
-        });
-
-        audio.addEventListener('timeupdate', () => {
-            let mins = Math.floor(audio.currentTime / 60);
-            let secs = Math.floor(audio.currentTime % 60);
-            mins = mins < 10 ? '0' + mins : mins;
-            secs = secs < 10 ? '0' + secs : secs;
-            playerTime.textContent = `${mins}:${secs}`;
-        });
-
-        // --- AUTHENTIC DRAG AND DROP ENGINE ---
-        let highestZIndex = 10;
-        function bringToFront(element) {
-            highestZIndex++;
-            element.style.zIndex = highestZIndex;
-        }
-
-        document.querySelectorAll('.draggable-window').forEach(windowEl => {
-            const titlebar = windowEl.querySelector('.window-titlebar');
-            
-            windowEl.addEventListener('mousedown', () => bringToFront(windowEl));
-
-            if (titlebar) {
-                titlebar.addEventListener('mousedown', dragStart);
-            }
-
-            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-
-            function dragStart(e) {
-                e = e || window.event;
-                if(e.target.closest('button') || e.target.closest('input')) return;
-                
-                e.preventDefault();
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                document.onmouseup = dragEnd;
-                document.onmousemove = dragElement;
-            }
-
-            function dragElement(e) {
-                e = e || window.event;
-                e.preventDefault();
-                pos1 = pos3 - e.clientX;
-                pos2 = pos4 - e.clientY;
-                pos3 = e.clientX;
-                pos4 = e.clientY;
-                windowEl.style.top = (windowEl.offsetTop - pos2) + "px";
-                windowEl.style.left = (windowEl.offsetLeft - pos1) + "px";
-            }
-
-            function dragEnd() {
-                document.onmouseup = null;
-                document.onmousemove = null;
-            }
-        });
+            syncIcon();
+        })();
     </script>
 </body>
 </html>
